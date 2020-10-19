@@ -78,9 +78,9 @@ public class UserController extends  BaseController {
         Map<String, Object> map3 = JwtUtil.parseToken(token2);
         System.out.println(map3);
 
-        RedisCache redisCache = new RedisCache();
+//        RedisCache redisCache = new RedisCache();
 //        Collection<String> keys = redisCache.keys("login_tokens:*");
-        Object obj = redisCache.getCacheObject("38400000-8cf0-11bd-b23e-10b96e4ef00d");
+//        Object obj = redisCache.getCacheObject("38400000-8cf0-11bd-b23e-10b96e4ef00d");
 //        System.out.println(keys );
 
         return new AjaxResult(resultInfo,resultInfo.getCode().equals("1")?null:dd);

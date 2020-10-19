@@ -5,7 +5,6 @@ import com.example.xb.domain.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -21,11 +20,7 @@ public class TokenUtil {
     public  String createToken(LoginUser loginUser)
     {
         String token = UUID.fromString(loginUser.getUser().getUserId()).toString();
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("login_tokens:", token);
-        claims.put("user_name", loginUser.getUser().getUserName());
-        claims.put("nick_name", loginUser.getUser().getNickName());
-        String jwt =JwtUtil.createToken(claims);
+        String jwt =loginToken(loginUser,token);
         redisCache.setCacheObject(loginUser.getUser().getUserId(), jwt, 30, TimeUnit.MINUTES);
 
         return jwt;
@@ -40,14 +35,19 @@ public class TokenUtil {
     {
         String token = UUID.fromString(loginUser.getUser().getUserId()).toString();
         String userId = loginUser.getUser().getUserId();
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("login_tokens:", token);
-        claims.put("user_name", loginUser.getUser().getUserName());
-        claims.put("nick_name", loginUser.getUser().getNickName());
-        String jwt =JwtUtil.createToken(claims);
+        String jwt =loginToken(loginUser,token);
         redisCache.setCacheObject(userId, loginUser, 30, TimeUnit.MINUTES);
 
         return jwt;
+    }
+
+    public  String loginToken(LoginUser loginUser,String token) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("user_name", loginUser.getUser().getUserName());
+        claims.put("nick_name", loginUser.getUser().getNickName());
+        claims.put("user_id", loginUser.getUser().getUserId());
+
+        return JwtUtil.createToken(claims);
     }
 
 }
