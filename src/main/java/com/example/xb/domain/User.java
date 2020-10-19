@@ -6,7 +6,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
-public class User extends Base {
+public class User extends Base  {
     /**
      * 用户Id
      */

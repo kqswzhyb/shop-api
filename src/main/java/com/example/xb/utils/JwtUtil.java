@@ -18,7 +18,7 @@ public class JwtUtil {
     /**
      * 过期时间（毫秒单位）
      */
-    private final static long TOKEN_EXPIRE_MILLIS = 1000 * 60 * 60;
+    private final static long TOKEN_EXPIRE_MILLIS = 1000 * 60 * 30;
 
     /**
      * 创建token
