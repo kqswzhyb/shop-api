@@ -19,6 +19,12 @@
 
     <select id="selectUserList" parameterType="User" resultMap="userResult">
         select  *  from  user
+        WHERE
+          user.status = '0'
+        <if test="nickName != null and nickName != ''">
+            and user.nick_name
+            like CONCAT('%',#{nickName},'%')
+        </if>
     </select>
 
 </mapper>

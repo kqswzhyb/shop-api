@@ -17,10 +17,8 @@ public class TokenUtil {
     private RedisCache redisCache;
 
 
-    public  String createToken(LoginUser loginUser)
-    {
-        String token = UUID.fromString(loginUser.getUser().getUserId()).toString();
-        String jwt =loginToken(loginUser,token);
+    public String createToken(LoginUser loginUser) {
+        String jwt = loginToken(loginUser);
         redisCache.setCacheObject(loginUser.getUser().getUserId(), jwt, 30, TimeUnit.MINUTES);
 
         return jwt;
@@ -31,21 +29,21 @@ public class TokenUtil {
      *
      * @param loginUser 登录信息
      */
-    public String refreshToken(LoginUser loginUser)
-    {
-        String token = UUID.fromString(loginUser.getUser().getUserId()).toString();
+    public String refreshToken(LoginUser loginUser) {
         String userId = loginUser.getUser().getUserId();
-        String jwt =loginToken(loginUser,token);
+        String jwt = loginToken(loginUser);
         redisCache.setCacheObject(userId, loginUser, 30, TimeUnit.MINUTES);
 
         return jwt;
     }
 
-    public  String loginToken(LoginUser loginUser,String token) {
+    public String loginToken(LoginUser loginUser) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("user_name", loginUser.getUser().getUserName());
         claims.put("nick_name", loginUser.getUser().getNickName());
         claims.put("user_id", loginUser.getUser().getUserId());
+        claims.put("role_id", loginUser.getUser().getRoleId());
+        claims.put("phone", loginUser.getUser().getPhone());
 
         return JwtUtil.createToken(claims);
     }

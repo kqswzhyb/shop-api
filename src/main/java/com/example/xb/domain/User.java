@@ -36,4 +36,9 @@ public class User extends Base  {
      * 状态（0 正常  1 停用)
      */
     private  String status;
+
+    /**
+     * 手机号码
+     */
+    private  String phone;
 }

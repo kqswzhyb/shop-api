@@ -22,6 +22,7 @@ public class JwtUtil {
 
     /**
      * 创建token
+     *
      * @param claimMap
      * @return
      */
@@ -32,12 +33,13 @@ public class JwtUtil {
                 .setIssuedAt(new Date(currentTimeMillis))    // 设置签发时间
                 .setExpiration(new Date(currentTimeMillis + TOKEN_EXPIRE_MILLIS))   // 设置过期时间
                 .addClaims(claimMap)
-                .signWith(SignatureAlgorithm.HS256,generateKey())
+                .signWith(SignatureAlgorithm.HS256, generateKey())
                 .compact();
     }
 
     /**
      * 验证token
+     *
      * @param token
      * @return 0 验证成功，1、2、3、4、5 验证失败
      */
@@ -65,6 +67,7 @@ public class JwtUtil {
 
     /**
      * 解析token
+     *
      * @param token
      * @return
      */
@@ -77,6 +80,7 @@ public class JwtUtil {
 
     /**
      * 生成安全密钥
+     *
      * @return
      */
     public static Key generateKey() {
@@ -85,6 +89,7 @@ public class JwtUtil {
 
     /**
      * 获取请求中的token
+     *
      * @param req
      * @return
      */

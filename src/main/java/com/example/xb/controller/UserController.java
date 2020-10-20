@@ -28,15 +28,19 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/user")
 @Api(tags = "用户管理")
-public class UserController extends  BaseController {
+public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
     @Autowired
     private TokenUtil tokenUtil;
 
+    @Autowired
+    private RedisCache redisCache;
+
     /**
      * 获取用户列表
+     *
      * @return
      */
     @GetMapping("/list")
@@ -46,43 +50,31 @@ public class UserController extends  BaseController {
             @ApiImplicitParam(name = "size", value = "每页数量", defaultValue = "10")
     }
     )
-    public AjaxResult list(@ApiIgnore()User user, String current, String size)
-    {
-        DataDomain dd= new DataDomain();
+    public AjaxResult list(@ApiIgnore() User user, String current, String size) {
+        DataDomain dd = new DataDomain();
         dd.setCurrent(current);
         dd.setSize(size);
-        ResultInfo resultInfo=startPage(dd);
+        ResultInfo resultInfo = startPage(dd);
         List<User> list = userService.selectUserList(user);
         dd.setRecords(list);
-        PageInfo pageInfo= new PageInfo(list);
+        PageInfo pageInfo = new PageInfo(list);
         dd.setTotal(pageInfo.getTotal());
 
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("userId", 1002);
-//        map.put("userName", "张晓明");
-//        map.put("age", 12);
-//        map.put("address", "山东省青岛市李沧区");
-//        String token = JwtUtil.createToken(map);
-//        System.out.println(token);
-//        Map<String, Object> map2 = JwtUtil.parseToken(token);
-//        System.out.println(map2);
-
-        User user2=new User();
-        user2.setUserId("38400000-8cf0-11bd-b23e-10b96e4ef00d");
+        User user2 = new User();
+        user2.setUserId("f9149b3a247b4106af112227e1ade9fb");
         user2.setNickName("123");
         user2.setUserName("456");
         LoginUser loginUser = new LoginUser();
         loginUser.setUser(user2);
-        String token2= tokenUtil.createToken(loginUser);
+        String token2 = tokenUtil.createToken(loginUser);
         System.out.println(token2);
         Map<String, Object> map3 = JwtUtil.parseToken(token2);
         System.out.println(map3);
 
-//        RedisCache redisCache = new RedisCache();
-//        Collection<String> keys = redisCache.keys("login_tokens:*");
-//        Object obj = redisCache.getCacheObject("38400000-8cf0-11bd-b23e-10b96e4ef00d");
-//        System.out.println(keys );
 
-        return new AjaxResult(resultInfo,resultInfo.getCode().equals("1")?null:dd);
+        Object obj = redisCache.getCacheObject("f9149b3a247b4106af112227e1ade9fb");
+        System.out.println(obj);
+
+        return new AjaxResult(resultInfo, resultInfo.getCode().equals("1") ? null : dd);
     }
 }
