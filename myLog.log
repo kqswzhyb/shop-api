@@ -66,3 +66,36 @@
 2020-10-20 18:44:43.466 DEBUG 12716 --- [http-nio-8099-exec-1] c.e.xb.mapper.UserMapper.selectUserList  : ==>  Preparing: select * from user WHERE user.status = '0' LIMIT ?, ?
 2020-10-20 18:44:43.467 DEBUG 12716 --- [http-nio-8099-exec-1] c.e.xb.mapper.UserMapper.selectUserList  : ==> Parameters: 10(Long), 10(Integer)
 2020-10-20 18:44:43.469 DEBUG 12716 --- [http-nio-8099-exec-1] c.e.xb.mapper.UserMapper.selectUserList  : <==      Total: 1
+2020-10-20 22:24:55.364  INFO 11872 --- [main] com.example.xb.XbApplication             : Starting XbApplication on LAPTOP-MAQT0GF0 with PID 11872 (C:\Users\hp\Desktop\shop-test\target\classes started by hp in C:\Users\hp\Desktop\shop-test)
+2020-10-20 22:24:55.366  INFO 11872 --- [main] com.example.xb.XbApplication             : No active profile set, falling back to default profiles: default
+2020-10-20 22:24:56.096  INFO 11872 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-10-20 22:24:56.098  INFO 11872 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-10-20 22:24:56.125  INFO 11872 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13ms. Found 0 Redis repository interfaces.
+2020-10-20 22:24:56.315  INFO 11872 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfig' of type [com.example.xb.config.RedisConfig$$EnhancerBySpringCGLIB$$c2b73e18] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-10-20 22:24:56.364  INFO 11872 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@345cf395' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-10-20 22:24:56.369  INFO 11872 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-10-20 22:24:56.589  INFO 11872 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8099 (http)
+2020-10-20 22:24:56.596  INFO 11872 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-10-20 22:24:56.596  INFO 11872 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.38]
+2020-10-20 22:24:56.683  INFO 11872 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-10-20 22:24:56.683  INFO 11872 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1282 ms
+2020-10-20 22:24:57.537  INFO 11872 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@11787b64, org.springframework.security.web.context.SecurityContextPersistenceFilter@5f0a2638, org.springframework.security.web.header.HeaderWriterFilter@3e046e39, org.springframework.security.web.authentication.logout.LogoutFilter@8f40022, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7069f076, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@37a0ec3c, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@5707f613, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@6ad1701a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@77cb452c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2c719bd4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@77b3752b, org.springframework.security.web.session.SessionManagementFilter@46fc522d, org.springframework.security.web.access.ExceptionTranslationFilter@7f0b93b4, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1bbddada]
+2020-10-20 22:24:57.556  INFO 11872 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-10-20 22:24:57.644  INFO 11872 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-10-20 22:24:57.751  WARN 11872 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2020-10-20 22:24:57.930  INFO 11872 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8099 (http) with context path ''
+2020-10-20 22:24:57.931  INFO 11872 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2020-10-20 22:24:57.944  INFO 11872 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2020-10-20 22:24:57.967  INFO 11872 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2020-10-20 22:24:58.056  INFO 11872 --- [main] com.example.xb.XbApplication             : Started XbApplication in 2.977 seconds (JVM running for 3.911)
+2020-10-20 22:26:26.706  INFO 11872 --- [http-nio-8099-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-10-20 22:26:26.706  INFO 11872 --- [http-nio-8099-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-10-20 22:26:26.712  INFO 11872 --- [http-nio-8099-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2020-10-20 22:26:26.824  INFO 11872 --- [http-nio-8099-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-10-20 22:26:26.919  INFO 11872 --- [http-nio-8099-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-10-20 22:26:26.926 DEBUG 11872 --- [http-nio-8099-exec-1] c.e.x.m.UserMapper.selectUserList_COUNT  : ==>  Preparing: SELECT count(0) FROM user WHERE user.status = '0'
+2020-10-20 22:26:26.942 DEBUG 11872 --- [http-nio-8099-exec-1] c.e.x.m.UserMapper.selectUserList_COUNT  : ==> Parameters: 
+2020-10-20 22:26:26.957 DEBUG 11872 --- [http-nio-8099-exec-1] c.e.x.m.UserMapper.selectUserList_COUNT  : <==      Total: 1
+2020-10-20 22:26:26.962 DEBUG 11872 --- [http-nio-8099-exec-1] c.e.xb.mapper.UserMapper.selectUserList  : ==>  Preparing: select * from user WHERE user.status = '0' LIMIT ?
+2020-10-20 22:26:26.962 DEBUG 11872 --- [http-nio-8099-exec-1] c.e.xb.mapper.UserMapper.selectUserList  : ==> Parameters: 10(Integer)
+2020-10-20 22:26:26.965 DEBUG 11872 --- [http-nio-8099-exec-1] c.e.xb.mapper.UserMapper.selectUserList  : <==      Total: 10
