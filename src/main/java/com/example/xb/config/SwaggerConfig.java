@@ -19,6 +19,9 @@ public class SwaggerConfig {
     /** 设置请求的统一前缀 */
     @Value("${swagger.pathMapping}")
     private String pathMapping;
+    /** 是否开启swagger */
+    @Value("${swagger.enable}")
+    private Boolean enable;
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("API接口文档")
@@ -30,10 +33,10 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
+                .enable(enable)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
-                .paths(PathSelectors.any())
-                .build()
-                .pathMapping(pathMapping);
+                .paths(PathSelectors.ant(pathMapping+"/**"))
+                .build();
     }
 }

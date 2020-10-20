@@ -1,6 +1,8 @@
 package com.example.xb.utils;
 
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
@@ -9,16 +11,19 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
+@Component
 public class JwtUtil {
 
     /**
      * key（按照签名算法的字节长度设置key）
      */
-    private final static String SECRET_KEY = "xbxbxbxbxbxbxbxb";
+    @Value("${token.secret}")
+    private String SECRET_KEY;
     /**
      * 过期时间（毫秒单位）
      */
-    private final static long TOKEN_EXPIRE_MILLIS = 1000 * 60 * 30;
+    @Value("${token.expireTime}")
+    private long TOKEN_EXPIRE_MILLIS;
 
     /**
      * 创建token
@@ -26,7 +31,7 @@ public class JwtUtil {
      * @param claimMap
      * @return
      */
-    public static String createToken(Map<String, Object> claimMap) {
+    public String createToken(Map<String, Object> claimMap) {
         long currentTimeMillis = System.currentTimeMillis();
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
@@ -43,7 +48,7 @@ public class JwtUtil {
      * @param token
      * @return 0 验证成功，1、2、3、4、5 验证失败
      */
-    public static int verifyToken(String token) {
+    public int verifyToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
             return 0;
@@ -71,7 +76,7 @@ public class JwtUtil {
      * @param token
      * @return
      */
-    public static Map<String, Object> parseToken(String token) {
+    public Map<String, Object> parseToken(String token) {
         return Jwts.parser()  // 得到DefaultJwtParser
                 .setSigningKey(generateKey()) // 设置签名密钥
                 .parseClaimsJws(token)
@@ -83,7 +88,7 @@ public class JwtUtil {
      *
      * @return
      */
-    public static Key generateKey() {
+    public Key generateKey() {
         return new SecretKeySpec(SECRET_KEY.getBytes(), SignatureAlgorithm.HS256.getJcaName());
     }
 
@@ -93,7 +98,7 @@ public class JwtUtil {
      * @param req
      * @return
      */
-    public static String resolveToken(HttpServletRequest req) {
+    public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());

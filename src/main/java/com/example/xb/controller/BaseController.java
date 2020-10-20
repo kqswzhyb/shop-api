@@ -3,6 +3,7 @@ package com.example.xb.controller;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.ResultInfo;
 import com.github.pagehelper.PageHelper;
+import org.springframework.util.StringUtils;
 
 public class BaseController {
 
@@ -10,8 +11,8 @@ public class BaseController {
         ResultInfo resultInfo =new ResultInfo();
         resultInfo.success(null);
         try {
-            int pageNum = dd.getCurrent() != null && !"".equals(dd.getCurrent()) ? Integer.parseInt(String.valueOf(dd.getCurrent())) : 1;
-            int pageSize = dd.getSize() != null && !"".equals(dd.getSize()) ? Integer.parseInt(String.valueOf(dd.getSize())) : 10;
+            int pageNum = !StringUtils.isEmpty(dd.getCurrent()) ? Integer.parseInt(String.valueOf(dd.getCurrent())) : 1;
+            int pageSize = !StringUtils.isEmpty(dd.getSize()) ? Integer.parseInt(String.valueOf(dd.getSize())) : 10;
             PageHelper.startPage(pageNum, pageSize);
         }catch (Exception e) {
             if(e.toString().contains("NumberFormatException")) {

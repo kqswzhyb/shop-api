@@ -3,6 +3,7 @@ package com.example.xb.utils;
 
 import com.example.xb.domain.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -16,10 +17,16 @@ public class TokenUtil {
     @Autowired
     private RedisCache redisCache;
 
+    @Autowired
+    private  JwtUtil jwtUtil;
+
+    @Value("${token.expireTime}")
+    private  long expire;
+
 
     public String createToken(LoginUser loginUser) {
         String jwt = loginToken(loginUser);
-        redisCache.setCacheObject(loginUser.getUser().getUserId(), jwt, 30, TimeUnit.MINUTES);
+        redisCache.setCacheObject(loginUser.getUser().getUserId(), jwt, (int) expire, TimeUnit.MILLISECONDS);
 
         return jwt;
     }
@@ -32,7 +39,7 @@ public class TokenUtil {
     public String refreshToken(LoginUser loginUser) {
         String userId = loginUser.getUser().getUserId();
         String jwt = loginToken(loginUser);
-        redisCache.setCacheObject(userId, loginUser, 30, TimeUnit.MINUTES);
+        redisCache.setCacheObject(userId, loginUser, (int) expire, TimeUnit.MILLISECONDS);
 
         return jwt;
     }
@@ -45,7 +52,7 @@ public class TokenUtil {
         claims.put("role_id", loginUser.getUser().getRoleId());
         claims.put("phone", loginUser.getUser().getPhone());
 
-        return JwtUtil.createToken(claims);
+        return jwtUtil.createToken(claims);
     }
 
 }

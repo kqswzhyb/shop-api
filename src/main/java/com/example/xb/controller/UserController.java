@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Collection;
@@ -26,7 +27,7 @@ import java.util.Map;
  * @author Administrator
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/v1/user")
 @Api(tags = "用户管理")
 public class UserController extends BaseController {
     @Autowired
@@ -37,6 +38,9 @@ public class UserController extends BaseController {
 
     @Autowired
     private RedisCache redisCache;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     /**
      * 获取用户列表
@@ -52,8 +56,9 @@ public class UserController extends BaseController {
     )
     public AjaxResult list(@ApiIgnore() User user, String current, String size) {
         DataDomain dd = new DataDomain();
-        dd.setCurrent(current);
-        dd.setSize(size);
+        Boolean result=StringUtils.isEmpty(current);
+        dd.setCurrent(!StringUtils.isEmpty(current)?current:"1");
+        dd.setSize(!StringUtils.isEmpty(size)?size:"10");
         ResultInfo resultInfo = startPage(dd);
         List<User> list = userService.selectUserList(user);
         dd.setRecords(list);
@@ -68,7 +73,7 @@ public class UserController extends BaseController {
         loginUser.setUser(user2);
         String token2 = tokenUtil.createToken(loginUser);
         System.out.println(token2);
-        Map<String, Object> map3 = JwtUtil.parseToken(token2);
+        Map<String, Object> map3 = jwtUtil.parseToken(token2);
         System.out.println(map3);
 
 

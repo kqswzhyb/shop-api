@@ -1,13 +1,23 @@
 {
   "properties": [
     {
-      "name": "jwt.tokenmillis",
+      "name": "token.expireTime",
       "type": "java.lang.Long",
-      "description": "Description for jwt.tokenmillis."
+      "description": "token过期时间毫秒值."
     },
     {
-      "name": "jwt.secretkey",
+      "name": "token.secret",
       "type": "java.lang.String",
-      "description": "Description for jwt.secretkey."
+      "description": "token密钥."
+    },
+    {
+      "name": "swagger.pathMapping",
+      "type": "java.lang.String",
+      "description": "swagger请求路径映射."
+    },
+    {
+      "name": "swagger.enable",
+      "type": "java.lang.Boolean",
+      "description": "是否开启swagger."
     }
   ] }
