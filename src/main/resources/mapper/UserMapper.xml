@@ -27,4 +27,48 @@
         </if>
     </select>
 
+    <insert id="saveUser" parameterType="User">
+        insert into user(
+        <if test="userId != null and userId != ''">user_id,</if>
+        <if test="roleId != null and roleId != ''">role_id,</if>
+        <if test="phone != null and phone != ''">phone,</if>
+        <if test="userName != null and userName != ''">user_name,</if>
+        <if test="nickName != null and nickName != ''">nick_name,</if>
+        <if test="password != null and password != ''">password,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_at,
+        update_at
+        )values(
+        <if test="userId != null and userId != ''">#{userId},</if>
+        <if test="roleId != null and roleId != ''">#{roleId},</if>
+        <if test="phone != null and phone != ''">#{phone},</if>
+        <if test="userName != null and userName != ''">#{userName},</if>
+        <if test="nickName != null and nickName != ''">#{nickName},</if>
+        <if test="password != null and password != ''">#{password},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate(),
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        update user
+        <set>
+            <if test="roleId != null and roleId != ''">role_id = #{roleId},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_at = sysdate()
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteUserById" parameterType="String">
+ 		delete from user where user_id = #{userId}
+ 	</delete>
+
 </mapper>

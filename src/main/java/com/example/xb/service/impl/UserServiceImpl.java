@@ -27,4 +27,19 @@ public class UserServiceImpl implements IUserService {
     {
         return userMapeer.selectUserList(user);
     }
+
+    @Override
+    public int saveUser(User user) {
+        return userMapeer.saveUser(user);
+    }
+
+    @Override
+    public int updateUser(User user) {
+        return userMapeer.updateUser(user);
+    }
+
+    @Override
+    public  int deleteUserById(String userId) {
+        return userMapeer.deleteUserById(userId);
+    }
 }
