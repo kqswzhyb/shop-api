@@ -4,6 +4,7 @@ import com.example.xb.domain.LoginBody;
 import com.example.xb.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
@@ -50,5 +51,5 @@ public interface UserMapper {
      * @param loginBody 用户信息
      * @return 用户数据信息
      */
-    int userLogin(LoginBody loginBody);
+    String userLogin(LoginBody loginBody);
 }

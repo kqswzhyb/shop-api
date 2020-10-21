@@ -1,7 +1,12 @@
 package com.example.xb.utils;
 
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -24,6 +29,12 @@ public class JwtUtil {
      */
     @Value("${token.expireTime}")
     private long TOKEN_EXPIRE_MILLIS;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private  RedisCache redisCache;
 
     /**
      * 创建token
@@ -48,25 +59,25 @@ public class JwtUtil {
      * @param token
      * @return 0 验证成功，1、2、3、4、5 验证失败
      */
-    public int verifyToken(String token) {
+    public boolean verifyToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
-            return 0;
+            return true;
         } catch (ExpiredJwtException e) {
             e.printStackTrace();
-            return 1;
+            return false;
         } catch (UnsupportedJwtException e) {
             e.printStackTrace();
-            return 2;
+            return false;
         } catch (MalformedJwtException e) {
             e.printStackTrace();
-            return 3;
+            return false;
         } catch (SignatureException e) {
             e.printStackTrace();
-            return 4;
+            return false;
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return 5;
+            return false;
         }
     }
 
@@ -104,5 +115,19 @@ public class JwtUtil {
             return bearerToken.substring(7, bearerToken.length());
         }
         return null;
+    }
+
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    public String getUsername(String token) {
+//        String token = redisCache.getCacheObject(userId);
+        Jws<Claims> claims = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
+        System.out.println(claims.getBody());
+        return (String) claims.getBody().get("user_name");
+//        Map<String, Object> map = this.parseToken(token);
+//        return (String) map.get("user_name");
     }
 }

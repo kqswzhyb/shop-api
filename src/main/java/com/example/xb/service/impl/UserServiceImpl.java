@@ -45,7 +45,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public  int userLogin(LoginBody loginBody) {
+    public  String userLogin(LoginBody loginBody) {
         return userMapeer.userLogin(loginBody);
     }
 }

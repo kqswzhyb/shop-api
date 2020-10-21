@@ -19,5 +19,10 @@
       "name": "swagger.enable",
       "type": "java.lang.Boolean",
       "description": "是否开启swagger."
+    },
+    {
+      "name": "token.password.secret",
+      "type": "java.lang.String",
+      "description": "密码密钥."
     }
   ] }

@@ -55,5 +55,5 @@ public interface IUserService extends UserMapper {
      * @return 结果
      */
     @Override
-    int userLogin(LoginBody loginBody);
+    String userLogin(LoginBody loginBody);
 }
