@@ -27,6 +27,18 @@
         </if>
     </select>
 
+    <select id="userLogin" parameterType="User" resultMap="userResult">
+        select  user_id  from  user
+        WHERE
+        user.status = '0'
+        <if test="userName != null and userName != ''">
+            and user.user_name = #{userName}
+        </if>
+        <if test="password != null and password != ''">
+            and user.password = #{password}
+        </if>
+    </select>
+
     <insert id="saveUser" parameterType="User">
         insert into user(
         <if test="userId != null and userId != ''">user_id,</if>

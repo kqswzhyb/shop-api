@@ -1,5 +1,6 @@
 package com.example.xb.service.impl;
 
+import com.example.xb.domain.LoginBody;
 import com.example.xb.domain.User;
 import com.example.xb.mapper.UserMapper;
 import com.example.xb.service.IUserService;
@@ -41,5 +42,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public  int deleteUserById(String userId) {
         return userMapeer.deleteUserById(userId);
+    }
+
+    @Override
+    public  int userLogin(LoginBody loginBody) {
+        return userMapeer.userLogin(loginBody);
     }
 }

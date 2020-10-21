@@ -1,5 +1,6 @@
 package com.example.xb.service;
 
+import com.example.xb.domain.LoginBody;
 import com.example.xb.domain.User;
 import com.example.xb.mapper.UserMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -46,4 +47,13 @@ public interface IUserService extends UserMapper {
      */
     @Override
     int deleteUserById(String userId);
+
+    /**
+     * 登录
+     *
+     * @param loginBody 登录体
+     * @return 结果
+     */
+    @Override
+    int userLogin(LoginBody loginBody);
 }

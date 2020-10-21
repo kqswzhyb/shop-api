@@ -1,5 +1,6 @@
 package com.example.xb.mapper;
 
+import com.example.xb.domain.LoginBody;
 import com.example.xb.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.context.annotation.Bean;
@@ -42,4 +43,12 @@ public interface UserMapper {
      * @return 结果
      */
     int deleteUserById(String userId);
+
+    /**
+     * 登录
+     *
+     * @param loginBody 用户信息
+     * @return 用户数据信息
+     */
+    int userLogin(LoginBody loginBody);
 }
