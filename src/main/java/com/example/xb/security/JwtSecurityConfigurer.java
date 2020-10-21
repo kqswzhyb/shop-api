@@ -4,8 +4,11 @@ import com.example.xb.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.servlet.http.HttpServletResponse;
 
 public class JwtSecurityConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 	@Autowired
@@ -17,10 +20,14 @@ public class JwtSecurityConfigurer extends SecurityConfigurerAdapter<DefaultSecu
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        JwtTokenAuthenticationFilter customFilter = new JwtTokenAuthenticationFilter(jwtTokenProvider);
-        http.exceptionHandling()
-        .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+        http
+                .csrf().disable()
+                // make sure we use stateless session; session won't be used to store user's state.
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
         .and()
-        .addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterAfter(new JwtTokenAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .authorizeRequests().anyRequest().authenticated();
     }
 }
