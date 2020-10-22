@@ -30,6 +30,14 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public List<User> queryByUserName(String userName)
+    {
+        return  userMapeer.queryByUserName(userName);
+
+
+    }
+
+    @Override
     public int saveUser(User user) {
         return userMapeer.saveUser(user);
     }

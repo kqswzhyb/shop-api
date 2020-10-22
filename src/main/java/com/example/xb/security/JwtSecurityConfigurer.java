@@ -10,8 +10,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author Administrator
+ */
 public class JwtSecurityConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
-	@Autowired
+    @Autowired
     private final JwtUtil jwtTokenProvider;
 
     public JwtSecurityConfigurer(JwtUtil jwtTokenProvider) {
@@ -21,13 +24,8 @@ public class JwtSecurityConfigurer extends SecurityConfigurerAdapter<DefaultSecu
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                // make sure we use stateless session; session won't be used to store user's state.
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
                 .and()
-                .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-        .and()
-        .addFilterAfter(new JwtTokenAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-                .authorizeRequests().anyRequest().authenticated();
+                .addFilterBefore(new JwtTokenAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }
 }

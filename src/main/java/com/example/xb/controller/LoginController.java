@@ -81,7 +81,7 @@ public class LoginController {
 
             resultInfo.success("登录成功");
 
-            return new AjaxResult(resultInfo, map.get("jti"));
+            return new AjaxResult(resultInfo, token);
         }
 
 

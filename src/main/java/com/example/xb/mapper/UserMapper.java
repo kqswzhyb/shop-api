@@ -21,6 +21,16 @@ public interface UserMapper {
      */
     List<User> selectUserList(User user);
 
+
+
+    /**
+     * 根据username查询
+     *
+     * @param userName 用户信息
+     * @return 用户数据集合信息
+     */
+    List<User> queryByUserName(String userName);
+
     /**
      * 创建新用户数据
      *

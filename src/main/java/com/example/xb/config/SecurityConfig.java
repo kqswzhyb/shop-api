@@ -13,6 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+/**
+ * @author Administrator
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -22,26 +25,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private  JwtUtil jwtUtil;
+    private JwtUtil jwtUtil;
 
-    /** 设置请求的统一前缀 */
+    /**
+     * 设置请求的统一前缀
+     */
     @Value("${swagger.pathMapping}")
     private String pathMapping;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-        // 由于使用的是JWT，我们这里不需要csrf
-        .csrf().disable()
-        // 基于token，所以不需要session
-//        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-        .authorizeRequests()
-        .antMatchers(pathMapping+"/user/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, pathMapping+"/**").permitAll()
-        .anyRequest().authenticated()
-        .and()
-//                .apply(new JwtSecurityConfigurer(jwtUtil));
-        .formLogin().and()
-        .httpBasic();
+                // 由于使用的是JWT，我们这里不需要csrf
+                .csrf().disable()
+                // 基于token，所以不需要session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/v2/**").permitAll()
+                .antMatchers("/csrf").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/swagger**").permitAll()
+//        .antMatchers(pathMapping+"/user/**").permitAll()
+                .antMatchers(pathMapping + "/login").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, pathMapping + "/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .apply(new JwtSecurityConfigurer(jwtUtil));
+//        .formLogin().and()
+//        .httpBasic();
     }
 }

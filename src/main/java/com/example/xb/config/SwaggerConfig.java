@@ -23,10 +23,14 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    /** 设置请求的统一前缀 */
+    /**
+     * 设置请求的统一前缀
+     */
     @Value("${swagger.pathMapping}")
     private String pathMapping;
-    /** 是否开启swagger */
+    /**
+     * 是否开启swagger
+     */
     @Value("${swagger.enable}")
     private Boolean enable;
 
@@ -39,6 +43,7 @@ public class SwaggerConfig {
                 .version("1.0.0")
                 .build();
     }
+
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -48,18 +53,21 @@ public class SwaggerConfig {
                 .enable(enable)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
-                .paths(PathSelectors.ant(pathMapping+"/**"))
+                .paths(PathSelectors.ant(pathMapping + "/**"))
                 .build();
     }
+
     private ApiKey apiKey() {
         return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
     }
+
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
                 .forPaths(PathSelectors.regex(DEFAULT_INCLUDE_PATTERN))
                 .build();
     }
+
     List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope
                 = new AuthorizationScope("global", "accessEverything");
