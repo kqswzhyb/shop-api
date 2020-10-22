@@ -17,19 +17,18 @@ import java.io.IOException;
 
 public class JwtTokenAuthenticationFilter extends GenericFilterBean {
     @Autowired
-    private final JwtUtil jwtTokenProvider;
+    private final JwtUtil jwtUtil;
 
-    public JwtTokenAuthenticationFilter(JwtUtil jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
+    public JwtTokenAuthenticationFilter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
             throws IOException, ServletException {
-        String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
-        if (token != null && jwtTokenProvider.verifyToken(token)) {
-            ((HttpServletResponse) res).setStatus(HttpStatus.OK.value());
-            Authentication auth = jwtTokenProvider.getAuthentication(token);
+        String token = jwtUtil.resolveToken((HttpServletRequest) req);
+        if (token != null && jwtUtil.verifyToken(token)) {
+            Authentication auth = jwtUtil.getAuthentication(token);
 
             if (auth != null) {
                 SecurityContextHolder.getContext().setAuthentication(auth);

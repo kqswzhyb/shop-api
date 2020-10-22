@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class JwtSecurityConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
     @Autowired
-    private final JwtUtil jwtTokenProvider;
+    private final JwtUtil jwtUtil;
 
-    public JwtSecurityConfigurer(JwtUtil jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
+    public JwtSecurityConfigurer(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
@@ -26,6 +26,6 @@ public class JwtSecurityConfigurer extends SecurityConfigurerAdapter<DefaultSecu
         http
                 .exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
                 .and()
-                .addFilterBefore(new JwtTokenAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtTokenAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
     }
 }

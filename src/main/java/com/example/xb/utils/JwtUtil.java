@@ -62,20 +62,16 @@ public class JwtUtil {
     public boolean verifyToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
-            return true;
-        } catch (ExpiredJwtException e) {
-            e.printStackTrace();
-            return false;
-        } catch (UnsupportedJwtException e) {
-            e.printStackTrace();
-            return false;
-        } catch (MalformedJwtException e) {
-            e.printStackTrace();
-            return false;
-        } catch (SignatureException e) {
-            e.printStackTrace();
-            return false;
-        } catch (IllegalArgumentException e) {
+            Object userId=claims.getBody().get("user_id");
+            Object userName=claims.getBody().get("user_name");
+            String cache= redisCache.getCacheObject((String) userId);
+            if(cache!=null) {
+                Map<String, Object> map = this.parseToken(cache);
+                return map.get("user_name").toString().equals(userName.toString());
+            }else {
+                return false;
+            }
+        } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
             e.printStackTrace();
             return false;
         }
@@ -119,16 +115,12 @@ public class JwtUtil {
 
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
-        //userDetails.getAuthorities()
         return new UsernamePasswordAuthenticationToken(userDetails, "", null);
     }
 
     public String getUsername(String token) {
-//        String token = redisCache.getCacheObject(userId);
         Jws<Claims> claims = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
         System.out.println(claims.getBody());
         return (String) claims.getBody().get("user_name");
-//        Map<String, Object> map = this.parseToken(token);
-//        return (String) map.get("user_name");
     }
 }
