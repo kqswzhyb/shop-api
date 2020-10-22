@@ -2,9 +2,8 @@ package com.example.xb.mapper;
 
 import com.example.xb.domain.LoginBody;
 import com.example.xb.domain.User;
+import com.example.xb.domain.Password;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
@@ -62,4 +61,19 @@ public interface UserMapper {
      * @return 用户数据信息
      */
     String userLogin(LoginBody loginBody);
+
+    /**
+     * 根据userId查询密码
+     *
+     * @param userId 用户ID
+     * @return 用户数据信息
+     */
+    String queryPasswordById(String userId);
+
+    /**
+     *  修改密码
+     * @param password 密码实体
+     * @return 结果
+     */
+    int updatePassword(Password password);
 }

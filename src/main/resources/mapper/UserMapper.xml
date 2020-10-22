@@ -48,6 +48,13 @@
         </if>
     </select>
 
+    <select id="queryPasswordById" parameterType="String" resultType="String">
+        select  password  from  user
+        WHERE
+        user.status = '0'
+        and user.user_id = #{userId}
+    </select>
+
     <insert id="saveUser" parameterType="User">
         insert into user(
         <if test="userId != null and userId != ''">user_id,</if>
@@ -83,6 +90,15 @@
             <if test="phone != null and phone != ''">phone = #{phone},</if>
             <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
             <if test="remark != null">remark = #{remark},</if>
+            update_at = sysdate()
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <update id="updatePassword" parameterType="Password">
+        update user
+        <set>
+            <if test="newPassword != null and newPassword != ''">password = #{newPassword},</if>
             update_at = sysdate()
         </set>
         where user_id = #{userId}

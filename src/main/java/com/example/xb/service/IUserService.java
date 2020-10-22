@@ -2,8 +2,8 @@ package com.example.xb.service;
 
 import com.example.xb.domain.LoginBody;
 import com.example.xb.domain.User;
+import com.example.xb.domain.Password;
 import com.example.xb.mapper.UserMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -65,4 +65,20 @@ public interface IUserService extends UserMapper {
      */
     @Override
     String userLogin(LoginBody loginBody);
+
+    /**
+     *  修改密码
+     * @param password 密码实体
+     * @return 结果
+     */
+    @Override
+    int updatePassword(Password password);
+
+    /**
+     * 通过userId找密码
+     * @param userId 用户ID
+     * @return 密码
+     */
+    @Override
+    String queryPasswordById(String userId);
 }

@@ -2,9 +2,12 @@ package com.example.xb.service.impl;
 
 import com.example.xb.domain.LoginBody;
 import com.example.xb.domain.User;
+import com.example.xb.domain.Password;
 import com.example.xb.mapper.UserMapper;
 import com.example.xb.service.IUserService;
+import com.example.xb.utils.AESUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +19,9 @@ import java.util.List;
 public class UserServiceImpl implements IUserService {
     @Autowired
     private UserMapper userMapeer;
+
+    @Value("${token.password.secret}")
+    private String secretKey;
 
     /**
      * 根据条件分页查询用户数据
@@ -80,5 +86,20 @@ public class UserServiceImpl implements IUserService {
     @Override
     public  String userLogin(LoginBody loginBody) {
         return userMapeer.userLogin(loginBody);
+    }
+
+    @Override
+    public int updatePassword(Password password) {
+        String oldPassword2= userMapeer.queryPasswordById(password.getUserId());
+        if(oldPassword2.equals(AESUtil.encryptIntoHexString(password.getOldPassword(), secretKey))) {
+            password.setNewPassword(AESUtil.encryptIntoHexString(password.getNewPassword(), secretKey));
+            return userMapeer.updatePassword(password);
+        }
+        return 0;
+    }
+
+    @Override
+    public  String queryPasswordById(String userId) {
+        return userMapeer.queryPasswordById(userId);
     }
 }

@@ -1,10 +1,10 @@
 package com.example.xb.controller;
 
-import com.example.xb.domain.LoginUser;
 import com.example.xb.domain.User;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
+import com.example.xb.domain.Password;
 import com.example.xb.service.IUserService;
 import com.example.xb.utils.*;
 import com.github.pagehelper.PageInfo;
@@ -111,7 +111,6 @@ public class UserController extends BaseController {
             resultInfo.error("userId为空");
             return new AjaxResult(resultInfo, null);
         }
-
         int i = userService.updateUser(user);
         if(i==1) {
             resultInfo.success("更新成功");
@@ -139,6 +138,39 @@ public class UserController extends BaseController {
             resultInfo.success("删除成功");
         }else {
             resultInfo.error("该userId不存在，无法删除");
+        }
+        return new AjaxResult(resultInfo, null);
+    }
+
+    /**
+     * 更新密码
+     *
+     * @return
+     */
+    @PutMapping("/updatePassword")
+    @ApiOperation(value = "更新密码", notes = "更新密码")
+    public AjaxResult updatePassword(@RequestBody Password password) {
+        System.out.println(password);
+        ResultInfo resultInfo = new ResultInfo();
+        if(StringUtils.isEmptyOrWhitespace(password.getUserId())) {
+            resultInfo.error("userId为空");
+            return new AjaxResult(resultInfo, null);
+        }
+
+        if(StringUtils.isEmptyOrWhitespace(password.getOldPassword())) {
+            resultInfo.error("原始密码为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if(StringUtils.isEmptyOrWhitespace(password.getNewPassword())) {
+            resultInfo.error("新密码为空");
+            return new AjaxResult(resultInfo, null);
+        }
+
+        int i = userService.updatePassword(password);
+        if(i==1) {
+            resultInfo.success("更新成功");
+        }else {
+            resultInfo.error("更新失败");
         }
         return new AjaxResult(resultInfo, null);
     }
