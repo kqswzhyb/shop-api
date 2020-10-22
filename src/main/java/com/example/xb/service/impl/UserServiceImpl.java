@@ -29,6 +29,11 @@ public class UserServiceImpl implements IUserService {
         return userMapeer.selectUserList(user);
     }
 
+    /**
+     *
+     * @param userName 用户信息
+     * @return
+     */
     @Override
     public List<User> queryByUserName(String userName)
     {
@@ -37,21 +42,41 @@ public class UserServiceImpl implements IUserService {
 
     }
 
+    /**
+     *
+     * @param user 用户信息
+     * @return
+     */
     @Override
     public int saveUser(User user) {
         return userMapeer.saveUser(user);
     }
 
+    /**
+     *
+     * @param user 用户信息
+     * @return
+     */
     @Override
     public int updateUser(User user) {
         return userMapeer.updateUser(user);
     }
 
+    /**
+     *
+     * @param userId 用户ID
+     * @return
+     */
     @Override
     public  int deleteUserById(String userId) {
         return userMapeer.deleteUserById(userId);
     }
 
+    /**
+     *
+     * @param loginBody 登录体
+     * @return
+     */
     @Override
     public  String userLogin(LoginBody loginBody) {
         return userMapeer.userLogin(loginBody);

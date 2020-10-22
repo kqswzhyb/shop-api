@@ -52,7 +52,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtSecurityConfigurer(jwtUtil));
-//        .formLogin().and()
-//        .httpBasic();
     }
 }

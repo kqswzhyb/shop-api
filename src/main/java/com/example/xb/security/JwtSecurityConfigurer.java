@@ -24,7 +24,7 @@ public class JwtSecurityConfigurer extends SecurityConfigurerAdapter<DefaultSecu
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+                .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Jwt authentication failed"))
                 .and()
                 .addFilterBefore(new JwtTokenAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
     }
