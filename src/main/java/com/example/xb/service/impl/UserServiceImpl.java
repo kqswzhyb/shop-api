@@ -91,7 +91,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public int updatePassword(Password password) {
         String oldPassword2= userMapeer.queryPasswordById(password.getUserId());
-        if(oldPassword2.equals(AESUtil.encryptIntoHexString(password.getOldPassword(), secretKey))) {
+        if(AESUtil.encryptIntoHexString(password.getOldPassword(), secretKey).equals(oldPassword2)) {
             password.setNewPassword(AESUtil.encryptIntoHexString(password.getNewPassword(), secretKey));
             return userMapeer.updatePassword(password);
         }
@@ -101,5 +101,15 @@ public class UserServiceImpl implements IUserService {
     @Override
     public  String queryPasswordById(String userId) {
         return userMapeer.queryPasswordById(userId);
+    }
+
+    @Override
+    public  int queryCountByName(String userName) {
+        return userMapeer.queryCountByName(userName);
+    }
+
+    @Override
+    public  int queryCountById(String userId) {
+        return userMapeer.queryCountById(userId);
     }
 }

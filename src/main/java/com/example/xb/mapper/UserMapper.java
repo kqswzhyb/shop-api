@@ -21,7 +21,6 @@ public interface UserMapper {
     List<User> selectUserList(User user);
 
 
-
     /**
      * 根据username查询
      *
@@ -71,9 +70,25 @@ public interface UserMapper {
     String queryPasswordById(String userId);
 
     /**
-     *  修改密码
+     * 修改密码
+     *
      * @param password 密码实体
      * @return 结果
      */
     int updatePassword(Password password);
+
+
+    /**
+     * 根据userName查询个数
+     * @param userName 用户名
+     * @return 结果
+     */
+    int queryCountByName(String userName);
+
+    /**
+     * 根据userId查询个数
+     * @param userId 用户名
+     * @return 结果
+     */
+    int queryCountById(String userId);
 }

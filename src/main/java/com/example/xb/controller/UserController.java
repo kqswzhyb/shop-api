@@ -27,15 +27,6 @@ public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
-    @Autowired
-    private TokenUtil tokenUtil;
-
-    @Autowired
-    private RedisCache redisCache;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
     @Value("${token.password.secret}")
     private String SECRET_KEY;
 
@@ -53,8 +44,8 @@ public class UserController extends BaseController {
     )
     public AjaxResult list(@ApiIgnore() User user, String current, String size) {
         DataDomain dd = new DataDomain();
-        dd.setCurrent(!StringUtils.isEmptyOrWhitespace(current)?current:"1");
-        dd.setSize(!StringUtils.isEmptyOrWhitespace(size)?size:"10");
+        dd.setCurrent(!StringUtils.isEmptyOrWhitespace(current) ? current : "1");
+        dd.setSize(!StringUtils.isEmptyOrWhitespace(size) ? size : "10");
         ResultInfo resultInfo = startPage(dd);
         List<User> list = userService.selectUserList(user);
         dd.setRecords(list);
@@ -73,27 +64,32 @@ public class UserController extends BaseController {
     @ApiOperation(value = "创建新用户", notes = "创建新用户")
     public AjaxResult save(@RequestBody User user) {
         ResultInfo resultInfo = new ResultInfo();
-        if(StringUtils.isEmptyOrWhitespace(user.getUserName())) {
+        if (StringUtils.isEmptyOrWhitespace(user.getUserName())) {
             resultInfo.error("用户名为空");
             return new AjaxResult(resultInfo, null);
         }
-        if(StringUtils.isEmptyOrWhitespace(user.getPassword())) {
+        if (StringUtils.isEmptyOrWhitespace(user.getPassword())) {
             resultInfo.error("密码为空");
             return new AjaxResult(resultInfo, null);
         }
-        if(StringUtils.isEmptyOrWhitespace(user.getNickName())) {
-            user.setNickName("用户"+UUIDUtil.NewLowUUID().substring(0,10));
+        if (StringUtils.isEmptyOrWhitespace(user.getNickName())) {
+            user.setNickName("用户" + UUIDUtil.NewLowUUID().substring(0, 10));
         }
-        user.setPassword(AESUtil.encryptIntoHexString(user.getPassword(), SECRET_KEY));
-        user.setUserId(UUIDUtil.NewUUID());
-        user.setStatus("0");
-        user.setRoleId("1");
+        int count = userService.queryCountByName(user.getUserName());
+        if (count == 0) {
+            user.setPassword(AESUtil.encryptIntoHexString(user.getPassword(), SECRET_KEY));
+            user.setUserId(UUIDUtil.NewUUID());
+            user.setStatus("0");
+            user.setRoleId("1");
 
-        int i = userService.saveUser(user);
-        if(i==1) {
-            resultInfo.success("创建成功");
-        }else {
-            resultInfo.error("创建失败");
+            int i = userService.saveUser(user);
+            if (i == 1) {
+                resultInfo.success("创建成功");
+            } else {
+                resultInfo.error("创建失败");
+            }
+        } else {
+            resultInfo.error("该用户名重复");
         }
         return new AjaxResult(resultInfo, null);
     }
@@ -107,15 +103,20 @@ public class UserController extends BaseController {
     @ApiOperation(value = "更新用户", notes = "更新用户")
     public AjaxResult update(@RequestBody User user) {
         ResultInfo resultInfo = new ResultInfo();
-        if(StringUtils.isEmptyOrWhitespace(user.getUserId())) {
+        if (StringUtils.isEmptyOrWhitespace(user.getUserId())) {
             resultInfo.error("userId为空");
             return new AjaxResult(resultInfo, null);
         }
-        int i = userService.updateUser(user);
-        if(i==1) {
-            resultInfo.success("更新成功");
-        }else {
-            resultInfo.error("更新失败");
+        int count = userService.queryCountById(user.getUserId());
+        if (count == 0) {
+            resultInfo.error("用户名不存在");
+        } else {
+            int i = userService.updateUser(user);
+            if (i == 1) {
+                resultInfo.success("更新成功");
+            } else {
+                resultInfo.error("更新失败");
+            }
         }
         return new AjaxResult(resultInfo, null);
     }
@@ -129,14 +130,14 @@ public class UserController extends BaseController {
     @ApiOperation(value = "根据id删除用户", notes = "根据id删除用户")
     public AjaxResult save(String userId) {
         ResultInfo resultInfo = new ResultInfo();
-        if(StringUtils.isEmptyOrWhitespace(userId)) {
+        if (StringUtils.isEmptyOrWhitespace(userId)) {
             resultInfo.error("userId不能为空");
             return new AjaxResult(resultInfo, null);
         }
         int i = userService.deleteUserById(userId);
-        if(i==1) {
+        if (i == 1) {
             resultInfo.success("删除成功");
-        }else {
+        } else {
             resultInfo.error("该userId不存在，无法删除");
         }
         return new AjaxResult(resultInfo, null);
@@ -150,28 +151,58 @@ public class UserController extends BaseController {
     @PutMapping("/updatePassword")
     @ApiOperation(value = "更新密码", notes = "更新密码")
     public AjaxResult updatePassword(@RequestBody Password password) {
-        System.out.println(password);
         ResultInfo resultInfo = new ResultInfo();
-        if(StringUtils.isEmptyOrWhitespace(password.getUserId())) {
+        if (StringUtils.isEmptyOrWhitespace(password.getUserId())) {
             resultInfo.error("userId为空");
             return new AjaxResult(resultInfo, null);
         }
 
-        if(StringUtils.isEmptyOrWhitespace(password.getOldPassword())) {
+        if (StringUtils.isEmptyOrWhitespace(password.getOldPassword())) {
             resultInfo.error("原始密码为空");
             return new AjaxResult(resultInfo, null);
         }
-        if(StringUtils.isEmptyOrWhitespace(password.getNewPassword())) {
+        if (StringUtils.isEmptyOrWhitespace(password.getNewPassword())) {
             resultInfo.error("新密码为空");
             return new AjaxResult(resultInfo, null);
         }
-
-        int i = userService.updatePassword(password);
-        if(i==1) {
-            resultInfo.success("更新成功");
-        }else {
-            resultInfo.error("更新失败");
+        int count = userService.queryCountById(password.getUserId());
+        if (count == 0) {
+            resultInfo.error("用户名不存在");
+        } else {
+            int i = userService.updatePassword(password);
+            if (i == 1) {
+                resultInfo.success("更新成功");
+            } else {
+                resultInfo.error("更新失败");
+            }
         }
+        return new AjaxResult(resultInfo, null);
+    }
+
+    /**
+     * 通过用户名查询个数
+     *
+     * @return
+     */
+    @GetMapping("/queryCountByName")
+    @ApiOperation(value = "通过用户名查询个数", notes = "通过用户名查询个数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName", value = "用户名", required = true),
+    }
+    )
+    public AjaxResult queryCountByName(String userName) {
+        ResultInfo resultInfo = new ResultInfo();
+        if (StringUtils.isEmptyOrWhitespace(userName)) {
+            resultInfo.error("用户名为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        int count = userService.queryCountByName(userName);
+        if (count == 0) {
+            resultInfo.success("该用户名可用");
+        } else {
+            resultInfo.error("该用户名重复");
+        }
+
         return new AjaxResult(resultInfo, null);
     }
 }

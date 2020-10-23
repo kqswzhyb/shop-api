@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ApiOperation(value = "登录", notes = "登录")
-    public AjaxResult list(@RequestBody LoginBody loginBody) {
+    public AjaxResult login(@RequestBody LoginBody loginBody) {
         ResultInfo resultInfo = new ResultInfo();
 
         loginBody.setPassword(AESUtil.encryptIntoHexString(loginBody.getPassword(), SECRET_KEY));
@@ -83,8 +84,25 @@ public class LoginController {
 
             return new AjaxResult(resultInfo, token);
         }
-
-
     }
 
+    /**
+     * 退出登录
+     *
+     * @return
+     */
+    @GetMapping("/logout")
+    @ApiOperation(value = "退出登录", notes = "退出登录")
+    public AjaxResult logout(HttpServletRequest req) {
+        ResultInfo resultInfo = new ResultInfo();
+        try {
+            String token = jwtUtil.resolveToken(req);
+            Map<String, Object> map = jwtUtil.parseToken(token);
+            redisCache.deleteObject((String) map.get("user_id"));
+            resultInfo.success("退出成功");
+        }catch (Exception e) {
+            resultInfo.error("失败");
+        }
+        return new AjaxResult(resultInfo, null);
+    }
 }

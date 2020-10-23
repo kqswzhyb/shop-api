@@ -52,7 +52,25 @@
         select  password  from  user
         WHERE
         user.status = '0'
-        and user.user_id = #{userId}
+        <if test="userId != null and userId != ''">
+            and user.user_id = #{userId}
+        </if>
+    </select>
+
+    <select id="queryCountByName" parameterType="String" resultType="int">
+        select  count(user_id)  from  user
+        <if test="userName != null and userName != ''">
+            WHERE
+            user.user_name = #{userName}
+        </if>
+    </select>
+
+    <select id="queryCountById" parameterType="String" resultType="int">
+        select  count(user_id)  from  user
+        <if test="userId != null and userId != ''">
+            WHERE
+            user.user_id = #{userId}
+        </if>
     </select>
 
     <insert id="saveUser" parameterType="User">

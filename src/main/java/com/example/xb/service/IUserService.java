@@ -81,4 +81,20 @@ public interface IUserService extends UserMapper {
      */
     @Override
     String queryPasswordById(String userId);
+
+    /**
+     * 根据userName查询个数
+     * @param userName 用户名
+     * @return 结果
+     */
+    @Override
+    int queryCountByName(String userName);
+
+    /**
+     * 根据userId查询个数
+     * @param userId 用户名
+     * @return 结果
+     */
+    @Override
+    int queryCountById(String userId);
 }
