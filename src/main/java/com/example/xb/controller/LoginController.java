@@ -4,27 +4,21 @@ package com.example.xb.controller;
 import com.example.xb.domain.LoginBody;
 import com.example.xb.domain.LoginUser;
 import com.example.xb.domain.User;
-import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
-import com.example.xb.service.IUserService;
+import com.example.xb.service.UserService;
 import com.example.xb.utils.AESUtil;
 import com.example.xb.utils.JwtUtil;
 import com.example.xb.utils.RedisCache;
 import com.example.xb.utils.TokenUtil;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,7 +39,7 @@ public class LoginController {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @Value("${token.password.secret}")
     private String SECRET_KEY;

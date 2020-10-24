@@ -1,7 +1,7 @@
 package com.example.xb.security;
 
 import com.example.xb.domain.User;
-import com.example.xb.service.IUserService;
+import com.example.xb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,9 +16,9 @@ import java.util.List;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private IUserService users;
+    private UserService users;
 
-    public CustomUserDetailsService(IUserService users) {
+    public CustomUserDetailsService(UserService users) {
         this.users = users;
     }
 
@@ -37,12 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
             @Override
             public String getUsername() {
-                List<User> list =users.queryByUserName(username);
-                if(list.size()==0) {
-                    return null;
-                }else {
-                    return list.get(0).getUserName();
-                }
+                return username;
             }
 
             @Override

@@ -4,7 +4,7 @@ import com.example.xb.domain.LoginBody;
 import com.example.xb.domain.User;
 import com.example.xb.domain.Password;
 import com.example.xb.mapper.UserMapper;
-import com.example.xb.service.IUserService;
+import com.example.xb.service.UserService;
 import com.example.xb.utils.AESUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author Administrator
  */
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapeer;
 

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Administrator
  */
-public interface IUserService extends UserMapper {
+public interface UserService extends UserMapper {
     /**
      * 根据条件分页查询用户数据
      *

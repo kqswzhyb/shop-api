@@ -114,13 +114,29 @@ public class JwtUtil {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
+        String jti = getJti(token);
+        String userId=getUserId(token);
+        String cache= redisCache.getCacheObject(userId);
+        String username = null;
+        if(cache!=null) {
+            Map<String, Object> map = this.parseToken(cache);
+            username = map.get("jti").toString().equals(jti)?getUsername(token):null;
+        }
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
         return new UsernamePasswordAuthenticationToken(userDetails, "", null);
     }
 
     public String getUsername(String token) {
         Jws<Claims> claims = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
-        System.out.println(claims.getBody());
         return (String) claims.getBody().get("user_name");
+    }
+
+    public String getUserId(String token) {
+        Jws<Claims> claims = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
+        return (String) claims.getBody().get("user_id");
+    }
+    public String getJti(String token) {
+        Jws<Claims> claims = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
+        return (String) claims.getBody().get("jti");
     }
 }

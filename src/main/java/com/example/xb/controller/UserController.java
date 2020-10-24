@@ -5,7 +5,7 @@ import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
 import com.example.xb.domain.Password;
-import com.example.xb.service.IUserService;
+import com.example.xb.service.UserService;
 import com.example.xb.utils.*;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
@@ -25,7 +25,7 @@ import java.util.*;
 @Api(tags = "用户管理")
 public class UserController extends BaseController {
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @Value("${token.password.secret}")
     private String SECRET_KEY;
@@ -128,7 +128,7 @@ public class UserController extends BaseController {
      */
     @DeleteMapping("/delete")
     @ApiOperation(value = "根据id删除用户", notes = "根据id删除用户")
-    public AjaxResult save(String userId) {
+    public AjaxResult delete(String userId) {
         ResultInfo resultInfo = new ResultInfo();
         if (StringUtils.isEmptyOrWhitespace(userId)) {
             resultInfo.error("userId不能为空");

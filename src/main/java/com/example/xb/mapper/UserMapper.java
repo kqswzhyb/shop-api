@@ -46,7 +46,7 @@ public interface UserMapper {
     int updateUser(User user);
 
     /**
-     * 通过用户ID删除角色
+     * 通过用户ID删除用户
      *
      * @param userId 用户ID
      * @return 结果
