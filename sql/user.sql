@@ -1,6 +1,6 @@
 create table user (
   user_id           varchar(64)      not null auto_increment    comment '用户ID',
-  role_id           bigint(20)      default null               comment '角色ID',
+  role_id           varchar(64)      default null               comment '角色ID',
   phone         varchar(13)     default null                   comment '手机号',
   user_name         varchar(30)     not null                   comment '用户账号',
   nick_name         varchar(30)     not null                   comment '用户昵称',

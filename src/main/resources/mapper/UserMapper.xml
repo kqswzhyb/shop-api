@@ -17,10 +17,38 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-    <select id="selectUserList" parameterType="User" resultMap="userResult">
-        select  *  from  user
+    <resultMap type="UserVo" id="userVoResult">
+        <id property="userId" column="user_id"/>
+        <result property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="userName" column="user_name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <select id="selectUserList" parameterType="User" resultMap="userVoResult">
+        select
+        user.user_id,
+        user.role_id,
+        role.role_name,
+        user.user_name,
+        user.nick_name,
+        user.password,
+        user.status,
+        user.create_by,
+        user.create_at,
+        user.update_at,
+        user.remark
+        from user
+        LEFT JOIN role
+        ON role.role_id=user.role_id
         WHERE
-          user.status = '0'
+        user.status = '0'
         <if test="nickName != null and nickName != ''">
             and user.nick_name
             like CONCAT('%',#{nickName},'%')
@@ -28,7 +56,7 @@
     </select>
 
     <select id="queryByUserName" parameterType="String" resultMap="userResult">
-        select  *  from  user
+        select * from user
         WHERE
         user.status = '0'
         <if test="nickName != null and nickName != ''">
@@ -37,7 +65,7 @@
     </select>
 
     <select id="userLogin" parameterType="User" resultType="String">
-        select  user_id  from  user
+        select user_id from user
         WHERE
         user.status = '0'
         <if test="userName != null and userName != ''">
@@ -49,7 +77,7 @@
     </select>
 
     <select id="queryPasswordById" parameterType="String" resultType="String">
-        select  password  from  user
+        select password from user
         WHERE
         user.status = '0'
         <if test="userId != null and userId != ''">
@@ -58,7 +86,7 @@
     </select>
 
     <select id="queryCountByName" parameterType="String" resultType="int">
-        select  count(user_id)  from  user
+        select count(user_id) from user
         <if test="userName != null and userName != ''">
             WHERE
             user.user_name = #{userName}
@@ -66,7 +94,7 @@
     </select>
 
     <select id="queryCountById" parameterType="String" resultType="int">
-        select  count(user_id)  from  user
+        select count(user_id) from user
         <if test="userId != null and userId != ''">
             WHERE
             user.user_id = #{userId}

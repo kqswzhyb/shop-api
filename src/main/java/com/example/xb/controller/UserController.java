@@ -80,7 +80,6 @@ public class UserController extends BaseController {
             user.setPassword(AESUtil.encryptIntoHexString(user.getPassword(), SECRET_KEY));
             user.setUserId(UUIDUtil.NewUUID());
             user.setStatus("0");
-            user.setRoleId("1");
 
             int i = userService.saveUser(user);
             if (i == 1) {
