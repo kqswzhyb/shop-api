@@ -1,6 +1,5 @@
 package com.example.xb.security;
 
-import com.example.xb.domain.User;
 import com.example.xb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
-import java.util.List;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {

@@ -24,5 +24,30 @@
       "name": "token.password.secret",
       "type": "java.lang.String",
       "description": "密码密钥."
+    },
+    {
+      "name": "cloudSetting.secretId",
+      "type": "java.lang.String",
+      "description": "腾讯云密钥Id."
+    },
+    {
+      "name": "cloudSetting.secretKey",
+      "type": "java.lang.String",
+      "description": "腾讯云密钥key."
+    },
+    {
+      "name": "cloudSetting.region",
+      "type": "java.lang.String",
+      "description": "对象存储桶区域简称."
+    },
+    {
+      "name": "cloudSetting.bucketName",
+      "type": "java.lang.String",
+      "description": "存储桶名称."
+    },
+    {
+      "name": "cloudSetting.uri",
+      "type": "java.lang.String",
+      "description": "文件路径前半部分.uri."
     }
   ] }

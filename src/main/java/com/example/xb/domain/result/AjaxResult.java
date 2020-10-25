@@ -1,6 +1,5 @@
 package com.example.xb.domain.result;
 
-import com.example.xb.enums.Code;
 import lombok.Data;
 
 import java.io.Serializable;

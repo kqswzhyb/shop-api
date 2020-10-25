@@ -2,12 +2,10 @@ package com.example.xb.controller;
 
 
 import com.example.xb.domain.Role;
-import com.example.xb.domain.User;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
 import com.example.xb.service.RoleService;
-import com.example.xb.utils.AESUtil;
 import com.example.xb.utils.UUIDUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;

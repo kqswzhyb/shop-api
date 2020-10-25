@@ -1,7 +1,6 @@
 package com.example.xb.service;
 
 import com.example.xb.domain.Role;
-import com.example.xb.domain.User;
 import com.example.xb.mapper.RoleMapper;
 
 import java.util.List;

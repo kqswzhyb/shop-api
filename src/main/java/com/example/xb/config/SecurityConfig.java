@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -52,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/csrf").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/swagger**").permitAll()
-//        .antMatchers(pathMapping+"/user/**").permitAll()
+        .antMatchers(pathMapping+"/file/**").permitAll()
                 .antMatchers(pathMapping + "/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, pathMapping + "/**").permitAll()
                 .anyRequest().authenticated()
