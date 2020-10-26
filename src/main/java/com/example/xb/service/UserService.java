@@ -3,21 +3,19 @@ package com.example.xb.service;
 import com.example.xb.domain.LoginBody;
 import com.example.xb.domain.User;
 import com.example.xb.domain.Password;
-import com.example.xb.mapper.UserMapper;
 
 import java.util.List;
 
 /**
  * @author Administrator
  */
-public interface UserService extends UserMapper {
+public interface UserService {
     /**
      * 根据条件分页查询用户数据
      *
      * @param user 用户信息
      * @return 用户数据集合信息
      */
-    @Override
     List<User> selectUserList(User user);
 
     /**
@@ -26,7 +24,6 @@ public interface UserService extends UserMapper {
      * @param userName 用户信息
      * @return 用户数据集合信息
      */
-    @Override
     List<User> queryByUserName(String userName);
 
     /**
@@ -35,7 +32,6 @@ public interface UserService extends UserMapper {
      * @param user 用户信息
      * @return 用户数据信息
      */
-    @Override
     int saveUser(User user);
 
     /**
@@ -44,7 +40,6 @@ public interface UserService extends UserMapper {
      * @param user 用户信息
      * @return 用户数据信息
      */
-    @Override
     int updateUser(User user);
 
 
@@ -54,7 +49,6 @@ public interface UserService extends UserMapper {
      * @param userId 用户ID
      * @return 结果
      */
-    @Override
     int deleteUserById(String userId);
 
     /**
@@ -63,7 +57,6 @@ public interface UserService extends UserMapper {
      * @param loginBody 登录体
      * @return 结果
      */
-    @Override
     String userLogin(LoginBody loginBody);
 
     /**
@@ -71,7 +64,6 @@ public interface UserService extends UserMapper {
      * @param password 密码实体
      * @return 结果
      */
-    @Override
     int updatePassword(Password password);
 
     /**
@@ -79,7 +71,6 @@ public interface UserService extends UserMapper {
      * @param userId 用户ID
      * @return 密码
      */
-    @Override
     String queryPasswordById(String userId);
 
     /**
@@ -87,7 +78,6 @@ public interface UserService extends UserMapper {
      * @param userName 用户名
      * @return 结果
      */
-    @Override
     int queryCountByName(String userName);
 
     /**
@@ -95,6 +85,5 @@ public interface UserService extends UserMapper {
      * @param userId 用户名
      * @return 结果
      */
-    @Override
     int queryCountById(String userId);
 }

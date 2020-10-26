@@ -1,21 +1,19 @@
 package com.example.xb.service;
 
 import com.example.xb.domain.Role;
-import com.example.xb.mapper.RoleMapper;
 
 import java.util.List;
 
 /**
  * @author Administrator
  */
-public interface RoleService  extends RoleMapper {
+public interface RoleService {
     /**
      * 根据条件分页查询角色数据
      *
      * @param role 角色信息
      * @return 角色数据集合信息
      */
-    @Override
     List<Role> roleList(Role role);
 
     /**
@@ -24,7 +22,6 @@ public interface RoleService  extends RoleMapper {
      * @param role 角色信息
      * @return 角色数据信息
      */
-    @Override
     int saveRole(Role role);
 
     /**
@@ -33,7 +30,6 @@ public interface RoleService  extends RoleMapper {
      * @param role 角色信息
      * @return 角色数据信息
      */
-    @Override
     int updateRole(Role role);
 
     /**
@@ -42,6 +38,5 @@ public interface RoleService  extends RoleMapper {
      * @param roleId 角色ID
      * @return 结果
      */
-    @Override
     int deleteRoleById(String roleId);
 }
