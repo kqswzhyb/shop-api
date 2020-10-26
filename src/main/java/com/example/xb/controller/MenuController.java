@@ -1,21 +1,16 @@
 package com.example.xb.controller;
 
 import com.example.xb.domain.Menu;
-import com.example.xb.domain.Role;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
 import com.example.xb.service.MenuService;
 import com.example.xb.utils.UUIDUtil;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -78,6 +73,66 @@ public class MenuController extends  BaseController {
             resultInfo.success("创建成功");
         } else {
             resultInfo.error("创建失败");
+        }
+        return new AjaxResult(resultInfo, null);
+    }
+
+    /**
+     * 更新权限
+     *
+     * @return
+     */
+    @PutMapping("/update")
+    @ApiOperation(value = "更新权限", notes = "更新权限")
+    public AjaxResult update(@RequestBody Menu menu) {
+        ResultInfo resultInfo = new ResultInfo();
+        if (StringUtils.isEmptyOrWhitespace(menu.getName())) {
+            resultInfo.error("权限名称为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if (StringUtils.isEmptyOrWhitespace(menu.getMenuId())) {
+            resultInfo.error("权限id为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if (StringUtils.isEmptyOrWhitespace(menu.getType())) {
+            resultInfo.error("类型为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if (StringUtils.isEmptyOrWhitespace(menu.getParentId())) {
+            resultInfo.error("父级id为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if (StringUtils.isEmptyOrWhitespace(menu.getPermission())) {
+            resultInfo.error("权限变量名为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        int i = menuService.updateMenu(menu);
+        if (i == 1) {
+            resultInfo.success("更新成功");
+        } else {
+            resultInfo.error("更新失败");
+        }
+        return new AjaxResult(resultInfo, null);
+    }
+
+    /**
+     * 根据id删除权限
+     *
+     * @return
+     */
+    @DeleteMapping("/delete")
+    @ApiOperation(value = "根据id删除权限", notes = "根据id删除权限")
+    public AjaxResult deleteMenuById(String menuId) {
+        ResultInfo resultInfo = new ResultInfo();
+        if (StringUtils.isEmptyOrWhitespace(menuId)) {
+            resultInfo.error("menuId不能为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        int i = menuService.deleteMenuById(menuId);
+        if (i == 1) {
+            resultInfo.success("删除成功");
+        } else {
+            resultInfo.error("该menuId不存在，无法删除");
         }
         return new AjaxResult(resultInfo, null);
     }

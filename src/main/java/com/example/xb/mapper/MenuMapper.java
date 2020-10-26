@@ -23,4 +23,18 @@ public interface MenuMapper {
      * @return 结果
      */
     int saveMenu(Menu menu);
+
+    /**
+     *更新权限
+     * @param menu 菜单
+     * @return 结果
+     */
+    int updateMenu(Menu menu);
+
+    /**
+     *删除
+     * @param menuId 菜单id
+     * @return 结果
+     */
+    int deleteMenuById(String menuId);
 }
