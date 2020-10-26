@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -31,8 +32,8 @@ public class FileController {
     @ApiOperation(value = "上传单文件", notes = "上传单文件")
     public AjaxResult simpleUpload(@RequestParam(value = "file") MultipartFile file,@RequestParam(value = "dic") String dic) {
         ResultInfo resultInfo = new ResultInfo();
-        File localFile = null;
-        String path = null;
+        File localFile;
+        Map<String,String> data;
 
         int index = Objects.requireNonNull(file.getOriginalFilename()).lastIndexOf(".");
 
@@ -45,15 +46,15 @@ public class FileController {
             localFile = File.createTempFile("temp",null);
             file.transferTo(localFile);
 
-            String fileName= UUIDUtil.NewLowUUID().substring(0,9)+"-"+String.valueOf((new Date().getTime() / 1000));
+            String fileName= UUIDUtil.NewLowUUID().substring(0,9)+"-"+System.currentTimeMillis();
 
-            path = fileUploadUtil.SimpleUploadFileFromStream(fileName, localFile,extName,dic);
+            data = fileUploadUtil.SimpleUploadFileFromStream(fileName, localFile,extName,dic);
             resultInfo.success("上传成功");
         }catch (Exception e){
             resultInfo.error("上传失败");
             throw new RuntimeException(e.getMessage());
         }
 
-        return new AjaxResult(resultInfo, path);
+        return new AjaxResult(resultInfo, data);
     }
 }

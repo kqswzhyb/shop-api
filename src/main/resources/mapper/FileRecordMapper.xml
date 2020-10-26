@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xb.mapper.FileRecordMapper">
+    <insert id="saveFile" parameterType="FileRecord">
+        insert into file(
+        <if test="fileId != null and fileId != ''">file_id,</if>
+        <if test="recordId != null and recordId != ''">record_id,</if>
+        <if test="fileName != null and fileName != ''">file_name,</if>
+        <if test="filePath != null and filePath != ''">file_path,</if>
+        <if test="fileFullPath != null and fileFullPath != ''">file_full_path,</if>
+        <if test="fileExt != null and fileExt != ''">file_ext,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_at,
+        update_at
+        )values(
+        <if test="fileId != null and fileId != ''">#{fileId},</if>
+        <if test="recordId != null and recordId != ''">#{recordId},</if>
+        <if test="fileName != null and fileName != ''">#{fileName},</if>
+        <if test="filePath != null and filePath != ''">#{filePath},</if>
+        <if test="fileFullPath != null and fileFullPath != ''">#{fileFullPath},</if>
+        <if test="fileExt != null and fileExt != ''">#{fileExt},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate(),
+        sysdate()
+        )
+    </insert>
+</mapper>

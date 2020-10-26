@@ -2,6 +2,7 @@ package com.example.xb.utils;
 
 
 import com.example.xb.domain.upload.CloudSetting;
+import com.example.xb.service.FileRecordService;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Component;
 import org.thymeleaf.util.StringUtils;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class FileUploadUtil {
@@ -23,11 +26,14 @@ public class FileUploadUtil {
     @Autowired
     private CloudSetting cloudSetting;
 
+    @Autowired
+    private FileRecordService fileService;
+
     @Value("${cloudSetting.uri}")
     private String uri;
 
-    public  String SimpleUploadFileFromStream(String key, File localFile, String extName,String dic) {
-        String etag ="";
+    public  Map<String,String> SimpleUploadFileFromStream(String key, File localFile, String extName,String dic) {
+        Map<String,String> map = new HashMap<>();
         String path = StringUtils.isEmptyOrWhitespace(dic) ?"common":dic+"/"+key+"."+extName;
         String secretKey = cloudSetting.getSecretKey();
         String secretId = cloudSetting.getSecretId();
@@ -40,15 +46,16 @@ public class FileUploadUtil {
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, path, localFile);
         try {
             PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
-//            System.out.println(putObjectResult.getExpirationTime());
-            // putobjectResult会返回文件的etag
-            etag = putObjectResult.getETag();
+            map.put("fileName",key);
+            map.put("fileFullPath",uri+path);
+            map.put("filePath",StringUtils.isEmptyOrWhitespace(dic) ?"common":dic+"/");
+            map.put("fileExt",extName);
         } catch (CosClientException e) {
             e.printStackTrace();
         }
 
         // 关闭客户端
         cosClient.shutdown();
-        return uri+path;
+        return map;
     }
 }

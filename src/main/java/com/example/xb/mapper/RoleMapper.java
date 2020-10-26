@@ -2,7 +2,6 @@ package com.example.xb.mapper;
 
 
 import com.example.xb.domain.Role;
-import com.example.xb.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
