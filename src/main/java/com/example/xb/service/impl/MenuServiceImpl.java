@@ -1,6 +1,7 @@
 package com.example.xb.service.impl;
 
 import com.example.xb.domain.Menu;
+import com.example.xb.domain.vo.MenuVo;
 import com.example.xb.mapper.MenuMapper;
 import com.example.xb.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class MenuServiceImpl implements MenuService {
     private MenuMapper menuMapper;
 
     @Override
-    public List<Menu> queryMenuList() {
+    public List<MenuVo> queryMenuList() {
         return menuMapper.queryMenuList();
     }
 

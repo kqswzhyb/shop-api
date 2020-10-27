@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -117,12 +119,13 @@ public class JwtUtil {
         String jti = getJti(token);
         String userId=getUserId(token);
         String cache= redisCache.getCacheObject(userId);
-        String username = null;
+        String username=null;
+        Map<String, Object> map=new HashMap<>();
         if(cache!=null) {
-            Map<String, Object> map = this.parseToken(cache);
+            map = this.parseToken(cache);
             username = map.get("jti").toString().equals(jti)?getUsername(token):null;
         }
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(map.get("user_id").toString());
         return new UsernamePasswordAuthenticationToken(userDetails, "", null);
     }
 
@@ -139,4 +142,9 @@ public class JwtUtil {
         Jws<Claims> claims = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
         return (String) claims.getBody().get("jti");
     }
+
+    public String getJwtUserId() {
+       return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+    }
+
 }

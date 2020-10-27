@@ -6,6 +6,7 @@ import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
 import com.example.xb.service.RoleService;
+import com.example.xb.utils.JwtUtil;
 import com.example.xb.utils.UUIDUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -29,6 +30,9 @@ public class RoleController extends BaseController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     /**
      * 获取角色列表
@@ -69,6 +73,7 @@ public class RoleController extends BaseController {
             return new AjaxResult(resultInfo, null);
         }
         role.setRoleId(UUIDUtil.NewUUID());
+        role.setCreateBy(jwtUtil.getJwtUserId());
         role.setStatus("0");
         int i = roleService.saveRole(role);
         if (i == 1) {

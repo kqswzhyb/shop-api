@@ -1,6 +1,7 @@
 package com.example.xb.mapper;
 
 import com.example.xb.domain.Menu;
+import com.example.xb.domain.vo.MenuVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface MenuMapper {
      * 获取权限列表
      * @return 权限列表
      */
-    List<Menu> queryMenuList();
+    List<MenuVo> queryMenuList();
 
 
     /**

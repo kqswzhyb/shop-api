@@ -30,6 +30,9 @@ public class UserController extends BaseController {
     @Value("${token.password.secret}")
     private String SECRET_KEY;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     /**
      * 获取用户列表
      *
@@ -79,6 +82,7 @@ public class UserController extends BaseController {
         if (count == 0) {
             user.setPassword(AESUtil.encryptIntoHexString(user.getPassword(), SECRET_KEY));
             user.setUserId(UUIDUtil.NewUUID());
+            user.setCreateBy(jwtUtil.getJwtUserId());
             user.setStatus("0");
 
             int i = userService.saveUser(user);

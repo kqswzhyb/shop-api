@@ -1,6 +1,7 @@
 package com.example.xb.service;
 
 import com.example.xb.domain.Menu;
+import com.example.xb.domain.vo.MenuVo;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface MenuService {
      * @return 权限列表
      */
 
-    List<Menu> queryMenuList();
+    List<MenuVo> queryMenuList();
 
     /**
      *创建权限
