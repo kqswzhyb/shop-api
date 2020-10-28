@@ -1,5 +1,8 @@
 package com.example.xb.controller;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.example.xb.domain.User;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
@@ -15,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -56,6 +63,48 @@ public class UserController extends BaseController {
         dd.setTotal(pageInfo.getTotal());
 
         return new AjaxResult(resultInfo, resultInfo.getCode().equals("1") ? null : dd);
+    }
+
+    /**
+     * 获取用户excel
+     *
+     * @return
+     */
+    @GetMapping("/userExcel")
+    @ApiOperation(value = "获取用户Excel", notes = "获取Excel")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "current", value = "当前页", defaultValue = "1"),
+            @ApiImplicitParam(name = "size", value = "每页数量", defaultValue = "10")
+    }
+    )
+    public void excel(String current, String size, HttpServletResponse response) throws IOException {
+
+        DataDomain dd = new DataDomain();
+        dd.setCurrent(!StringUtils.isEmptyOrWhitespace(current) ? current : "1");
+        dd.setSize(!StringUtils.isEmptyOrWhitespace(size) ? size : "10");
+        startPage(dd);
+        List<User> list =userService.selectUserList(new User());
+        for(User child:list) {
+            child.setStatus(child.getStatus().equals("0")?"正常":"禁用");
+        }
+        String fileName = "用户列表.xlsx";
+        response.setContentType("application/octet-stream");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Content-Disposition", " attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+        ExcelWriter excelWriter = null;
+        try {
+            excelWriter = EasyExcel.write(response.getOutputStream(),User.class).build();
+            WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
+            excelWriter.write(list, writeSheet);
+
+        } finally {
+            // 千万别忘记finish 会帮忙关闭流
+            if (excelWriter != null) {
+                excelWriter.finish();
+            }
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+        }
     }
 
     /**
@@ -208,4 +257,6 @@ public class UserController extends BaseController {
 
         return new AjaxResult(resultInfo, null);
     }
+
+
 }
