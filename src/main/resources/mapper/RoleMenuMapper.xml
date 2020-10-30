@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xb.mapper.RoleMenuMapper">
+    <resultMap type="MenuVo" id="roleMenuResult">
+        <id property="menuId" column="menu_id"/>
+        <result property="name" column="name"/>
+        <result property="permission" column="permission"/>
+        <result property="path" column="path"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="icon" column="icon"/>
+        <result property="component" column="component"/>
+        <result property="sort" column="sort"/>
+        <result property="keepAlive" column="keep_alive"/>
+        <result property="type" column="type"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <select id="queryRoleMenuList" parameterType="String" resultMap="roleMenuResult">
+        SELECT
+            menu.menu_id,
+            menu.name,
+            menu.permission,
+            menu.path,
+            menu.parent_id,
+            menu.component,
+            menu.permission,
+            menu.icon,
+            menu.remark,
+            menu.sort,
+            menu.type,
+            menu.keep_alive
+        FROM
+            role_menu
+            LEFT JOIN menu ON role_menu.menu_id = menu.menu_id
+        WHERE
+            role_menu.role_id = #{roleId} AND menu.`status` = '0'
+    </select>
+
+    <insert id="batchSave" parameterType="java.util.List">
+        insert into role_menu(role_id,menu_id) values
+        <!--item就是List里每一项的对象名，要用","分割每一条数据，最后要";"结尾-->
+        <foreach collection="list" item="balance" separator="," close=";">
+            (#{balance.roleId},#{balance.menuId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteRoleById" parameterType="String">
+ 		delete from role_menu where role_id = #{roleId}
+ 	</delete>
+</mapper>

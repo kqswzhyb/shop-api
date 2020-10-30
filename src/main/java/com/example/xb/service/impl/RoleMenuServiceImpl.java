@@ -1,9 +1,9 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.Menu;
+import com.example.xb.domain.RoleMenu;
 import com.example.xb.domain.vo.MenuVo;
-import com.example.xb.mapper.MenuMapper;
-import com.example.xb.service.MenuService;
+import com.example.xb.mapper.RoleMenuMapper;
+import com.example.xb.service.RoleMenuService;
 import com.example.xb.utils.MenuUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,18 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @author Administrator
- */
 @Service
-public class MenuServiceImpl implements MenuService {
+public class RoleMenuServiceImpl implements RoleMenuService {
 
     @Autowired
-    private MenuMapper menuMapper;
+    private RoleMenuMapper roleMenuMapper;
 
     @Override
-    public List<MenuVo> queryMenuList() {
-        List<MenuVo>list = menuMapper.queryMenuList();
+    public List<MenuVo> queryRoleMenuList(String roleId) {
+        List<MenuVo> list= roleMenuMapper.queryRoleMenuList(roleId);
         List<MenuVo> treeList = list.stream()
                 .filter(v -> "0".equals(v.getParentId()))
                 .map(menu -> {
@@ -49,17 +46,12 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public int saveMenu(Menu menu) {
-        return menuMapper.saveMenu(menu);
+    public int batchSave(List<RoleMenu> list) {
+        return roleMenuMapper.batchSave(list);
     }
 
     @Override
-    public int updateMenu(Menu menu) {
-        return menuMapper.updateMenu(menu);
-    }
-
-    @Override
-    public int deleteMenuById(String menuId) {
-        return menuMapper.deleteMenuById(menuId);
+    public int deleteRoleById(String roleId) {
+        return roleMenuMapper.deleteRoleById(roleId);
     }
 }

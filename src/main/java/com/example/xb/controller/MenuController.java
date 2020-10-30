@@ -7,19 +7,14 @@ import com.example.xb.domain.result.ResultInfo;
 import com.example.xb.domain.vo.MenuVo;
 import com.example.xb.service.MenuService;
 import com.example.xb.utils.JwtUtil;
-import com.example.xb.utils.MenuUtil;
 import com.example.xb.utils.UUIDUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Administrator
@@ -46,31 +41,8 @@ public class MenuController extends  BaseController {
         dd.setCurrent("1");
         dd.setSize(Integer.MAX_VALUE+"");
         ResultInfo resultInfo = startPage(dd);
-        List<MenuVo> list = menuService.queryMenuList();
-        List<MenuVo> treeList = list.stream()
-                .filter(v -> "0".equals(v.getParentId()))
-                .map(menu -> {
-                    MenuVo node = new MenuVo();
-                    node.setChildren(new ArrayList<>());
-                    node.setMenuId(menu.getMenuId());
-                    node.setName(menu.getName());
-                    node.setPermission(menu.getPermission());
-                    node.setSort(menu.getSort());
-                    node.setRemark(menu.getRemark());
-                    node.setType(menu.getType());
-                    node.setParentId(menu.getParentId());
-                    if ("0".equals(menu.getType())) {
-                        node.setComponent(menu.getComponent());
-                        node.setIcon(menu.getIcon());
-                        node.setKeepAlive(menu.getKeepAlive());
-                        node.setPath(menu.getPath());
-                    }
-                    return node;
-                })
-                .collect(Collectors.toList());
-        MenuUtil menuUtil = new MenuUtil();
-        List<MenuVo> result= menuUtil.buildTree(treeList,list);
-        return new AjaxResult(resultInfo, result);
+        List<MenuVo> list = menuService.queryMenuList();;
+        return new AjaxResult(resultInfo, list);
     }
 
     /**

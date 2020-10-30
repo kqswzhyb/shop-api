@@ -2,9 +2,11 @@ package com.example.xb.controller;
 
 
 import com.example.xb.domain.Role;
+import com.example.xb.domain.RoleMenu;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
+import com.example.xb.service.RoleMenuService;
 import com.example.xb.service.RoleService;
 import com.example.xb.utils.JwtUtil;
 import com.example.xb.utils.UUIDUtil;
@@ -14,10 +16,12 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +34,9 @@ public class RoleController extends BaseController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private RoleMenuService roleMenuService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -124,6 +131,53 @@ public class RoleController extends BaseController {
             resultInfo.success("删除成功");
         } else {
             resultInfo.error("该roleId不存在，无法删除");
+        }
+        return new AjaxResult(resultInfo, null);
+    }
+
+    /**
+     * 通过roleID获取角色的权限列表
+     *
+     * @return
+     */
+    @GetMapping("/roleMenuByRoleId")
+    @ApiOperation(value = "通过roleID获取角色的权限列表", notes = "通过roleID获取角色的权限列表")
+    public AjaxResult roleMenu(String roleId) {
+        ResultInfo resultInfo = new ResultInfo();
+        resultInfo.success("操作成功");
+        return new AjaxResult(resultInfo, roleMenuService.queryRoleMenuList(roleId));
+    }
+
+    /**
+     * 通过roleID批量修改权限列表
+     *
+     * @return
+     */
+    @PostMapping("/batchSaveRoleMenu")
+    @ApiOperation(value = "通过roleID批量修改权限列表", notes = "通过roleID批量修改权限列表")
+    @Transactional(rollbackFor = Exception.class)
+    public AjaxResult batchSaveRoleMenu(@RequestParam("roleId")String roleId,@RequestParam("menus")String menus) {
+        ResultInfo resultInfo = new ResultInfo();
+        try {
+            if (StringUtils.isEmptyOrWhitespace(roleId)) {
+                resultInfo.error("roleId不能为空");
+                return new AjaxResult(resultInfo, null);
+            }
+            roleMenuService.deleteRoleById(roleId);
+            String[] list= menus.split(",");
+            List<RoleMenu> roleMenus=new ArrayList<>();
+            for(String child:list) {
+                RoleMenu roleMenu = new RoleMenu();
+                roleMenu.setRoleId(roleId);
+                roleMenu.setMenuId(child);
+                roleMenus.add(roleMenu);
+            }
+            if(!StringUtils.isEmptyOrWhitespace(menus)&&list.length!=0) {
+                roleMenuService.batchSave(roleMenus);
+            }
+            resultInfo.success("修改成功");
+        }catch (Exception e) {
+            resultInfo.error("操作失败");
         }
         return new AjaxResult(resultInfo, null);
     }

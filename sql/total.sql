@@ -60,3 +60,9 @@ CREATE TABLE `menu`  (
   `update_at` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`menu_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+
+
+CREATE TABLE `role_menu`  (
+  `role_id` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色ID',
+  `menu_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单ID'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限角色关系表' ROW_FORMAT = Dynamic;
