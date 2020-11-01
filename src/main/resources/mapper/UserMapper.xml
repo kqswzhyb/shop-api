@@ -53,6 +53,9 @@
             and user.nick_name
             like CONCAT('%',#{nickName},'%')
         </if>
+        <if test="userId != null and userId != ''">
+            and user.user_id= #{userId}
+        </if>
     </select>
 
     <select id="queryByUserName" parameterType="String" resultMap="userResult">

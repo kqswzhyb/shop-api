@@ -8,6 +8,8 @@ import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
 import com.example.xb.domain.Password;
+import com.example.xb.domain.vo.MenuVo;
+import com.example.xb.service.RoleMenuService;
 import com.example.xb.service.UserService;
 import com.example.xb.utils.*;
 import com.github.pagehelper.PageInfo;
@@ -20,7 +22,6 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -33,6 +34,9 @@ import java.util.*;
 public class UserController extends BaseController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleMenuService roleMenuService;
 
     @Value("${token.password.secret}")
     private String SECRET_KEY;
@@ -256,6 +260,24 @@ public class UserController extends BaseController {
         }
 
         return new AjaxResult(resultInfo, null);
+    }
+
+    /**
+     * 获取登录用户详情
+     *
+     * @return
+     */
+    @GetMapping("/info")
+    @ApiOperation(value = "获取登录用户详情", notes = "获取登录用户详情")
+    public AjaxResult info() {
+        User user= new User();
+        user.setUserId(jwtUtil.getJwtUserId());
+        User loginUser = userService.selectUserList(user).get(0);
+        List<MenuVo> menus= roleMenuService.queryRoleMenuList(loginUser.getRoleId());
+        HashMap<String,Object> map= new HashMap<>();
+        map.put("info",loginUser);
+        map.put("permission",menus);
+        return new AjaxResult(new ResultInfo(), map);
     }
 
 

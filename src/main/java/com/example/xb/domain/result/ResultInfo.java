@@ -10,6 +10,12 @@ public class ResultInfo {
 
     private  String info;
 
+    public  ResultInfo() {
+        this.code= Code.OK.getCode();
+        this.info= Code.OK.getInfo();
+    }
+
+
     public void success(String info) {
         this.code= Code.OK.getCode();
         this.info=info!=null?info:Code.OK.getInfo();
