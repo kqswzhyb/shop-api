@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xb.mapper.DicTypeMapper">
+
+    <resultMap type="DicType" id="dicTypeResult">
+        <id property="typeId" column="type_id"/>
+        <result property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <select id="dicTypeList" parameterType="DicType" resultMap="dicTypeResult">
+        select  *  from  dic_type
+        WHERE
+        dic_type.status = '0'
+        <if test="name != null and name != ''">
+            and dic_type.name
+            like CONCAT('%',#{name},'%')
+        </if>
+    </select>
+
+    <insert id="saveDicType" parameterType="DicType">
+        insert into dic_type(
+        <if test="typeId != null and typeId != ''">type_id,</if>
+        <if test="name != null and name != ''">name,</if>
+        <if test="code != null and code != ''">code,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_at,
+        update_at
+        )values(
+        <if test="typeId != null and typeId != ''">#{typeId},</if>
+        <if test="name != null and name != ''">#{name},</if>
+        <if test="code != null and code != ''">#{code},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate(),
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateDicType" parameterType="DicType">
+        update dic_type
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="code != null and code != ''">code = #{code},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_at = sysdate()
+        </set>
+        where type_id = #{typeId}
+    </update>
+
+    <delete id="deleteDicTypeById" parameterType="String">
+ 		delete from dic_type where type_id = #{typeId}
+ 	</delete>
+</mapper>

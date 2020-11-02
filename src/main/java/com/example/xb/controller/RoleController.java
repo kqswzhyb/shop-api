@@ -92,7 +92,7 @@ public class RoleController extends BaseController {
     }
 
     /**
-     * 更新用户
+     * 更新角色
      *
      * @return
      */
@@ -114,12 +114,12 @@ public class RoleController extends BaseController {
     }
 
     /**
-     * 根据id删除用户
+     * 根据id删除角色
      *
      * @return
      */
     @DeleteMapping("/delete")
-    @ApiOperation(value = "根据id删除用户", notes = "根据id删除用户")
+    @ApiOperation(value = "根据id删除角色", notes = "根据id删除角色")
     public AjaxResult delete(String roleId) {
         ResultInfo resultInfo = new ResultInfo();
         if (StringUtils.isEmptyOrWhitespace(roleId)) {
