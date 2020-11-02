@@ -1,5 +1,5 @@
 create table user (
-  user_id           varchar(64)      not null auto_increment    comment '用户ID',
+  user_id           varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL     comment '用户ID',
   role_id           varchar(64)      default null               comment '角色ID',
   phone         varchar(13)     default null                   comment '手机号',
   user_name         varchar(30)     not null                   comment '用户账号',
@@ -10,8 +10,8 @@ create table user (
   create_at       datetime                                   comment '创建时间',
   update_at       datetime                                   comment '更新时间',
   remark            varchar(500)    default null               comment '备注',
-  primary key (user_id)
-) engine=innodb auto_increment=100 comment = '用户信息表'
+  PRIMARY KEY (`user_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 
 CREATE TABLE `role`  (

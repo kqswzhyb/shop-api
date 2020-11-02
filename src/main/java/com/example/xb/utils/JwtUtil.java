@@ -61,7 +61,7 @@ public class JwtUtil {
      * @param token
      * @return 0 验证成功，1、2、3、4、5 验证失败
      */
-    public boolean verifyToken(String token) {
+    public boolean verifyToken(String token) throws Exception {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
             Object userId=claims.getBody().get("user_id");
@@ -71,11 +71,11 @@ public class JwtUtil {
                 Map<String, Object> map = this.parseToken(cache);
                 return map.get("user_name").toString().equals(userName.toString());
             }else {
-                return false;
+                throw new Exception("Invalid JWT");
             }
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
             e.printStackTrace();
-            return false;
+            throw new Exception("Invalid JWT");
         }
     }
 
