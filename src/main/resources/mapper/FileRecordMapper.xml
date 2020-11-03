@@ -3,6 +3,36 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.xb.mapper.FileRecordMapper">
+
+    <resultMap type="FileRecord" id="fileResult">
+        <id property="fileId" column="file_id"/>
+        <result property="recordId" column="record_id"/>
+        <result property="fileName" column="file_name"/>
+        <result property="filePath" column="file_path"/>
+        <result property="fileFullPath" column="file_full_path"/>
+        <result property="fileExt" column="file_ext"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <select id="fileList" parameterType="FileRecord" resultMap="fileResult">
+        select  *  from  file
+        WHERE
+        file.status = '0'
+        <if test="recordId != null and recordId != ''">
+            and file.record_id = #{recordId}
+        </if>
+    </select>
+    <select id="fileListById" parameterType="Integer" resultType="com.example.xb.mapper.FileRecordMapper">
+        select  *  from  file
+        WHERE
+        file.status = '0'
+        <if test="recordId != null and recordId != ''">
+            and file.record_id = #{recordId}
+        </if>
+    </select>
     <insert id="saveFile" parameterType="FileRecord">
         insert into file(
         <if test="fileId != null and fileId != ''">file_id,</if>

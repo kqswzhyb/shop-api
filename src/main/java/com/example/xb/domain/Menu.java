@@ -1,10 +1,12 @@
 package com.example.xb.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Administrator
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class Menu  extends  Base{
     /**

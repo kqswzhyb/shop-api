@@ -71,11 +71,13 @@ public class JwtUtil {
                 Map<String, Object> map = this.parseToken(cache);
                 return map.get("user_name").toString().equals(userName.toString());
             }else {
-                throw new Exception("Invalid JWT");
+//                throw new Exception("Invalid JWT");
+                return false;
             }
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
             e.printStackTrace();
-            throw new Exception("Invalid JWT");
+//            throw new Exception("Invalid JWT");
+            return false;
         }
     }
 
@@ -124,6 +126,8 @@ public class JwtUtil {
         if(cache!=null) {
             map = this.parseToken(cache);
             username = map.get("jti").toString().equals(jti)?getUsername(token):null;
+        }else {
+            return null;
         }
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(map.get("user_id").toString());
         return new UsernamePasswordAuthenticationToken(userDetails, "", null);

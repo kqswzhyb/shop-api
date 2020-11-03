@@ -1,7 +1,9 @@
 package com.example.xb.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class FileRecord extends  Base{
 
@@ -29,4 +31,9 @@ public class FileRecord extends  Base{
      * 文件拓展名
      */
     private String fileExt;
+
+    /**
+     * 状态（0 正常  1 停用)
+     */
+    private  String status;
 }
