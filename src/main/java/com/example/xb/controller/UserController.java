@@ -274,9 +274,11 @@ public class UserController extends BaseController {
         user.setUserId(jwtUtil.getJwtUserId());
         User loginUser = userService.selectUserList(user).get(0);
         List<MenuVo> menus= roleMenuService.queryRoleMenuList(loginUser.getRoleId());
+        List<String> permission = roleMenuService.queryPermissionList(loginUser.getRoleId());
         HashMap<String,Object> map= new HashMap<>();
         map.put("info",loginUser);
-        map.put("permission",menus);
+        map.put("menus",menus);
+        map.put("permission",permission);
         return new AjaxResult(new ResultInfo(), map);
     }
 

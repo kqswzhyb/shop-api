@@ -1,20 +1,24 @@
 package com.example.xb.controller;
 
 import com.example.xb.domain.Brand;
+import com.example.xb.domain.FileRecord;
+import com.example.xb.domain.Role;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
 import com.example.xb.domain.vo.BrandVo;
 import com.example.xb.service.BrandService;
+import com.example.xb.service.FileRecordService;
+import com.example.xb.utils.JwtUtil;
+import com.example.xb.utils.UUIDUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -27,6 +31,12 @@ public class BrandController extends BaseController {
 
     @Autowired
     private BrandService brandService;
+
+    @Autowired
+    private FileRecordService fileRecordService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     /**
      * 获取品牌列表
@@ -51,5 +61,113 @@ public class BrandController extends BaseController {
         dd.setTotal(pageInfo.getTotal());
 
         return new AjaxResult(resultInfo, "1".equals(resultInfo.getCode()) ? null : dd);
+    }
+
+    /**
+     * 创建新品牌
+     *
+     * @return
+     */
+    @PostMapping("/save")
+    @ApiOperation(value = "创建新品牌", notes = "创建新品牌")
+    @Transactional(rollbackFor = Exception.class)
+    public AjaxResult save(@RequestBody BrandVo brandVo) {
+        ResultInfo resultInfo = new ResultInfo();
+        if (StringUtils.isEmptyOrWhitespace(brandVo.getName())) {
+            resultInfo.error("品牌名为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if (StringUtils.isEmptyOrWhitespace(brandVo.getBrandCode())) {
+            resultInfo.error("品牌编码为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        String Uid= UUIDUtil.NewUUID();
+        List<FileRecord> fileList = brandVo.getFileRecordList();
+        int j = 1;
+        if(fileList.size()!=0) {
+            for(FileRecord child:fileList) {
+                child.setFileId(UUIDUtil.NewUUID());
+                child.setCreateBy(jwtUtil.getJwtUserId());
+                child.setStatus("0");
+                child.setRecordId(Uid);
+            }
+            j = fileRecordService.bathSaveFile(fileList);
+        }
+        brandVo.setBrandId(Uid);
+        brandVo.setCreateBy(jwtUtil.getJwtUserId());
+        brandVo.setStatus("0");
+        int i = brandService.saveBrand(brandVo);
+        if (i == 1&& j!=0) {
+            resultInfo.success("创建成功");
+        } else {
+            resultInfo.error("创建失败");
+        }
+        return new AjaxResult(resultInfo, null);
+    }
+
+    /**
+     * 更新品牌
+     *
+     * @return
+     */
+    @PutMapping("/save")
+    @ApiOperation(value = "更新品牌", notes = "更新品牌")
+    @Transactional(rollbackFor = Exception.class)
+    public AjaxResult update(@RequestBody BrandVo brandVo) {
+        ResultInfo resultInfo = new ResultInfo();
+        if (StringUtils.isEmptyOrWhitespace(brandVo.getBrandId())) {
+            resultInfo.error("品牌Id为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if (StringUtils.isEmptyOrWhitespace(brandVo.getName())) {
+            resultInfo.error("品牌名为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if (StringUtils.isEmptyOrWhitespace(brandVo.getBrandCode())) {
+            resultInfo.error("品牌编码为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        String Uid= brandVo.getBrandId();
+        List<FileRecord> fileList = brandVo.getFileRecordList();
+        int j = 1;
+        fileRecordService.deleteFileById(Uid);
+        if(fileList.size()!=0) {
+            for(FileRecord child:fileList) {
+                child.setFileId(UUIDUtil.NewUUID());
+                child.setCreateBy(jwtUtil.getJwtUserId());
+                child.setStatus("0");
+                child.setRecordId(Uid);
+            }
+            j = fileRecordService.bathSaveFile(fileList);
+        }
+        int i = brandService.updateBrand(brandVo);
+        if (i == 1&& j!=0) {
+            resultInfo.success("更新成功");
+        } else {
+            resultInfo.error("更新失败");
+        }
+        return new AjaxResult(resultInfo, null);
+    }
+
+    /**
+     * 根据id删除品牌
+     *
+     * @return
+     */
+    @DeleteMapping("/delete")
+    @ApiOperation(value = "根据id删除品牌", notes = "根据id删除品牌")
+    public AjaxResult delete(String brandId) {
+        ResultInfo resultInfo = new ResultInfo();
+        if (StringUtils.isEmptyOrWhitespace(brandId)) {
+            resultInfo.error("brandId不能为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        int i = brandService.deleteBrandById(brandId);
+        if (i == 1) {
+            resultInfo.success("删除成功");
+        } else {
+            resultInfo.error("该brandId不存在，无法删除");
+        }
+        return new AjaxResult(resultInfo, null);
     }
 }

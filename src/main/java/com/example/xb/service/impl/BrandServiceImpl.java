@@ -8,6 +8,7 @@ import com.example.xb.mapper.FileRecordMapper;
 import com.example.xb.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,5 +31,22 @@ public class BrandServiceImpl  implements BrandService {
 //            child.setFileRecordList(fileRecordMapper.fileList(fileRecord));
 //        }
 //        return list;
+    }
+
+    @Override
+    public int saveBrand(BrandVo brandVo) {
+        return brandMapper.saveBrand(brandVo);
+    }
+
+    @Override
+    public int updateBrand(BrandVo brandVo) {
+        return brandMapper.updateBrand(brandVo);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteBrandById(String brandId) {
+        fileRecordMapper.deleteFileById(brandId);
+        return brandMapper.deleteBrandById(brandId);
     }
 }

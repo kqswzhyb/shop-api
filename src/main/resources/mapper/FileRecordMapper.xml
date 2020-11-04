@@ -60,4 +60,39 @@
         sysdate()
         )
     </insert>
+
+    <insert id="bathSaveFile" parameterType="list">
+        insert into file(
+        file_id,
+        record_id,
+        file_name,
+        file_path,
+        file_full_path,
+        file_ext,
+        status,
+        remark,
+        create_by,
+        create_at,
+        update_at
+        )values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.fileId},
+            #{item.recordId},
+            #{item.fileName},
+            #{item.filePath},
+            #{item.fileFullPath},
+            #{item.fileExt},
+            #{item.status},
+            #{item.remark},
+            #{item.createBy},
+            sysdate(),
+            sysdate()
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteFileById" parameterType="String">
+ 		delete from file where record_id = #{recordId}
+ 	</delete>
 </mapper>

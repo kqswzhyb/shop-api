@@ -12,9 +12,7 @@
         <result property="createAt" column="create_at"/>
         <result property="updateAt" column="update_at"/>
         <result property="remark" column="remark"/>
-        <collection property="fileRecordList"
-                    javaType="ArrayList"
-                    ofType="FileRecord">
+        <collection property="fileRecordList" javaType="ArrayList" ofType="FileRecord">
             <id property="fileId" column="file_id"/>
             <result property="recordId" column="record_id"/>
             <result property="fileName" column="file_name"/>
@@ -53,4 +51,41 @@
             and brand.brand_code = #{brandCode}
         </if>
     </select>
+
+    <insert id="saveBrand" parameterType="BrandVo">
+        insert into brand(
+        <if test="brandId != null and brandId != ''">brand_id,</if>
+        <if test="brandCode != null and brandCode != ''">brand_code,</if>
+        <if test="name != null and name != ''">name,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_at,
+        update_at
+        )values(
+        <if test="brandId != null and brandId != ''">#{brandId},</if>
+        <if test="brandCode != null and brandCode != ''">#{brandCode},</if>
+        <if test="name != null and name != ''">#{name},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate(),
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateBrand" parameterType="BrandVo">
+        update brand
+        <set>
+            <if test="brandCode != null and brandCode != ''">brand_code = #{brandCode},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_at = sysdate()
+        </set>
+        where brand_id = #{brandId}
+    </update>
+
+    <delete id="deleteBrandById" parameterType="String">
+ 		delete from brand where brand_id = #{brandId}
+ 	</delete>
 </mapper>

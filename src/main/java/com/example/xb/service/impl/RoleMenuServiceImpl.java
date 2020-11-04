@@ -46,6 +46,16 @@ public class RoleMenuServiceImpl implements RoleMenuService {
     }
 
     @Override
+    public List<String> queryPermissionList(String roleId) {
+        List<MenuVo> list= roleMenuMapper.queryRoleMenuList(roleId).stream().filter(v->"1".equals(v.getType())).collect(Collectors.toList());
+        List<String> permission= new ArrayList<>();
+        for(MenuVo child:list) {
+            permission.add(child.getPermission());
+        }
+        return permission;
+    }
+
+    @Override
     public int batchSave(List<RoleMenu> list) {
         return roleMenuMapper.batchSave(list);
     }

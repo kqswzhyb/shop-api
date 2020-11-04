@@ -26,4 +26,18 @@ public class FileRecordServiceImpl implements FileRecordService {
     public List<FileRecord> fileList(FileRecord fileRecord) {
         return fileMapper.fileList(fileRecord);
     }
+
+    @Override
+    public int deleteFileById(String recordId) {
+        return fileMapper.deleteFileById(recordId);
+    }
+
+    @Override
+    public int bathSaveFile(List<FileRecord> list) {
+        if(list.size()==0) {
+            return 1;
+        }else {
+            return fileMapper.bathSaveFile(list);
+        }
+    }
 }

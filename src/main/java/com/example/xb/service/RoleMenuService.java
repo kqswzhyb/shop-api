@@ -15,6 +15,13 @@ public interface RoleMenuService {
     List<MenuVo> queryRoleMenuList(String roleId);
 
     /**
+     * 根据roleId获取按钮权限列表
+     * @param roleId
+     * @return
+     */
+    List<String> queryPermissionList(String roleId);
+
+    /**
      * 批量添加角色权限关系数据
      * @param list
      * @return

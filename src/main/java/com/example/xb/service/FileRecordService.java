@@ -19,4 +19,19 @@ public interface FileRecordService {
      * @return
      */
     List<FileRecord> fileList(FileRecord fileRecord);
+
+    /**
+     * 通过recordID删除文件记录
+     *
+     * @param recordId 记录ID
+     * @return 结果
+     */
+    int deleteFileById(String recordId);
+
+    /**
+     * 批量保存附件
+     * @param list
+     * @return
+     */
+    int bathSaveFile(List<FileRecord> list);
 }
