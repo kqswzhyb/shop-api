@@ -1,0 +1,18 @@
+package com.example.xb.mapper;
+
+import com.example.xb.domain.Product;
+import com.example.xb.domain.vo.ProductVo;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface ProductMapper {
+    /**
+     * 根据条件分页查询产品数据
+     *
+     * @param product 产品信息
+     * @return 产品数据集合信息
+     */
+    List<ProductVo> productList(Product product);
+}

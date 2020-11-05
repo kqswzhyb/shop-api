@@ -19,11 +19,11 @@
             <result property="filePath" column="file_path"/>
             <result property="fileFullPath" column="file_full_path"/>
             <result property="fileExt" column="file_ext"/>
-            <result property="status" column="status"/>
-            <result property="createBy" column="create_by"/>
-            <result property="createAt" column="create_at"/>
-            <result property="updateAt" column="update_at"/>
-            <result property="remark" column="remark"/>
+            <result property="status" column="f_status"/>
+            <result property="createBy" column="f_create_by"/>
+            <result property="createAt" column="f_create_at"/>
+            <result property="updateAt" column="f_update_at"/>
+            <result property="remark" column="f_remark"/>
         </collection>
     </resultMap>
     <select id="brandList" parameterType="Brand" resultMap="brandVoResult">
@@ -33,10 +33,11 @@
         file.file_path,
         file.file_full_path,
         file.file_ext,
-        file.status,
-        file.create_by,
-        file.create_at,
-        file.remark
+        file.status as f_status,
+        file.create_by as f_create_by,
+        file.create_at as f_create_at,
+        file.update_at as f_update_at,
+        file.remark as f_remark
         from  brand
         LEFT JOIN file
         ON file.record_id = brand.brand_id

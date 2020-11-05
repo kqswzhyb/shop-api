@@ -38,7 +38,7 @@ public class SwaggerConfig {
     public static final String DEFAULT_INCLUDE_PATTERN = "/v1/.*";
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("商城API接口文档")
+        return new ApiInfoBuilder().title("商城接口文档")
                 .description("商城管理")
                 .version("1.0.0")
                 .build();
