@@ -81,7 +81,7 @@
         pf.remark as pf_remark
         from  product
         LEFT JOIN file pf
-        ON pf.record_id = product.product_id
+        ON pf.record_id = product.product_id and pf.status = '0'
         LEFT JOIN (select  brand.*,
         file.record_id,
         file.file_name,
@@ -95,14 +95,14 @@
         file.remark as f_remark
         from  brand
         LEFT JOIN file
-        ON file.record_id = brand.brand_id
+        ON file.record_id = brand.brand_id and file.status = '0'
         WHERE
         brand.status = '0'
-        and file.status = '0') bf
+        ) bf
         ON product.brand_id = bf.brand_id
         WHERE
         product.status = '0'
-        and pf.status = '0'
+--         and pf.status = '0'
         <if test="name != null and name != ''">
             and product.name
             like CONCAT('%',#{name},'%')
