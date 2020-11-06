@@ -110,15 +110,16 @@ CREATE TABLE `product`  (
 
 
 CREATE TABLE `product_des`  (
-  `product_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品ID',
   `des_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品描述ID',
 	`des_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL NULL COMMENT '描述名称',
 	`content` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述内容',
+	`product_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品ID',
 	`status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '状态',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `create_at` datetime COMMENT '创建时间',
-  `update_at` datetime COMMENT '修改时间'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品描述关系表' ROW_FORMAT = Dynamic;
+  `update_at` datetime COMMENT '修改时间',
+  PRIMARY KEY (`des_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品描述表' ROW_FORMAT = Dynamic;
 
 CREATE TABLE `brand`  (
   `brand_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '品牌ID',
