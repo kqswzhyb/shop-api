@@ -53,7 +53,7 @@ public class ProductController extends BaseController{
     }
 
     /**
-     * 创建新产品基础
+     * 创建新产品
      *
      * @return
      */
@@ -103,7 +103,7 @@ public class ProductController extends BaseController{
     }
 
     /**
-     * 更新产品基础
+     * 更新产品
      *
      * @return
      */
