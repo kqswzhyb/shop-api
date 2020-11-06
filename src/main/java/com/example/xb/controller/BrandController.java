@@ -154,6 +154,7 @@ public class BrandController extends BaseController {
      */
     @DeleteMapping("/delete")
     @ApiOperation(value = "根据id删除品牌", notes = "根据id删除品牌")
+    @Transactional(rollbackFor = Exception.class)
     public AjaxResult delete(String brandId) {
         ResultInfo resultInfo = new ResultInfo();
         if (StringUtils.isEmptyOrWhitespace(brandId)) {
@@ -161,6 +162,7 @@ public class BrandController extends BaseController {
             return new AjaxResult(resultInfo, null);
         }
         int i = brandService.deleteBrandById(brandId);
+        fileRecordService.deleteFileById(brandId);
         if (i == 1) {
             resultInfo.success("删除成功");
         } else {

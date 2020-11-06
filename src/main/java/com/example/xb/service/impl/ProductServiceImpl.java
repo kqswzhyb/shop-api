@@ -19,4 +19,19 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductVo> productList(Product product) {
         return productMapper.productList(product);
     }
+
+    @Override
+    public int saveProduct(Product product) {
+        return productMapper.saveProduct(product);
+    }
+
+    @Override
+    public int updateProduct(Product product) {
+        return productMapper.updateProduct(product);
+    }
+
+    @Override
+    public int deleteProductById(String productId) {
+        return productMapper.deleteProductById(productId);
+    }
 }
