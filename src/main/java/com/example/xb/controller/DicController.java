@@ -40,13 +40,11 @@ public class DicController extends  BaseController{
     @ApiOperation(value = "分页获取字典类型列表", notes = "分页获取字典类型列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "current", value = "当前页", defaultValue = "1"),
-            @ApiImplicitParam(name = "size", value = "每页数量", defaultValue = "10")
+            @ApiImplicitParam(name = "pageSize", value = "每页数量", defaultValue = "10")
     }
     )
-    public AjaxResult listType(@ApiIgnore()DicType dicType, String current, String size) {
-        DataDomain dd = new DataDomain();
-        dd.setCurrent(!StringUtils.isEmptyOrWhitespace(current) ? current : "1");
-        dd.setSize(!StringUtils.isEmptyOrWhitespace(size) ? size : "10");
+    public AjaxResult listType(@ApiIgnore()DicType dicType, String current, String pageSize) {
+        DataDomain dd = new DataDomain(current, pageSize);
         ResultInfo resultInfo = startPage(dd);
         List<DicType> list = dicTypeService.dicTypeList(dicType);
         dd.setRecords(list);
@@ -132,13 +130,11 @@ public class DicController extends  BaseController{
     @ApiOperation(value = "分页获取字典列表", notes = "分页获取字典列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "current", value = "当前页", defaultValue = "1"),
-            @ApiImplicitParam(name = "size", value = "每页数量", defaultValue = "10")
+            @ApiImplicitParam(name = "pageSize", value = "每页数量", defaultValue = "10")
     }
     )
-    public AjaxResult list(@ApiIgnore() Dic dic, String current, String size) {
-        DataDomain dd = new DataDomain();
-        dd.setCurrent(!StringUtils.isEmptyOrWhitespace(current) ? current : "1");
-        dd.setSize(!StringUtils.isEmptyOrWhitespace(size) ? size : "10");
+    public AjaxResult list(@ApiIgnore() Dic dic, String current, String pageSize) {
+        DataDomain dd = new DataDomain(current, pageSize);
         ResultInfo resultInfo = startPage(dd);
         List<Dic> list = dicService.dicList(dic);
         dd.setRecords(list);

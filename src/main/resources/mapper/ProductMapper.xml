@@ -102,7 +102,6 @@
         ON product.brand_id = bf.brand_id
         WHERE
         product.status = '0'
---         and pf.status = '0'
         <if test="name != null and name != ''">
             and product.name
             like CONCAT('%',#{name},'%')

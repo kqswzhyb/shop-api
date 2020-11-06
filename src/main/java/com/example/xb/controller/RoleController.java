@@ -50,13 +50,11 @@ public class RoleController extends BaseController {
     @ApiOperation(value = "分页获取角色信息", notes = "分页获取角色信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "current", value = "当前页", defaultValue = "1"),
-            @ApiImplicitParam(name = "size", value = "每页数量", defaultValue = "10")
+            @ApiImplicitParam(name = "pageSize", value = "每页数量", defaultValue = "10")
     }
     )
-    public AjaxResult list(@ApiIgnore() Role role, String current, String size) {
-        DataDomain dd = new DataDomain();
-        dd.setCurrent(!StringUtils.isEmptyOrWhitespace(current) ? current : "1");
-        dd.setSize(!StringUtils.isEmptyOrWhitespace(size) ? size : "10");
+    public AjaxResult list(@ApiIgnore() Role role, String current, String pageSize) {
+        DataDomain dd = new DataDomain(current, pageSize);
         ResultInfo resultInfo = startPage(dd);
         List<Role> list = roleService.roleList(role);
         dd.setRecords(list);

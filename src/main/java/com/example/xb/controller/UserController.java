@@ -53,13 +53,11 @@ public class UserController extends BaseController {
     @ApiOperation(value = "分页获取用户信息", notes = "分页获取用户信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "current", value = "当前页", defaultValue = "1"),
-            @ApiImplicitParam(name = "size", value = "每页数量", defaultValue = "10")
+            @ApiImplicitParam(name = "pageSize", value = "每页数量", defaultValue = "10")
     }
     )
-    public AjaxResult list(@ApiIgnore() User user, String current, String size) {
-        DataDomain dd = new DataDomain();
-        dd.setCurrent(!StringUtils.isEmptyOrWhitespace(current) ? current : "1");
-        dd.setSize(!StringUtils.isEmptyOrWhitespace(size) ? size : "10");
+    public AjaxResult list(@ApiIgnore() User user, String current, String pageSize) {
+        DataDomain dd = new DataDomain(current, pageSize);
         ResultInfo resultInfo = startPage(dd);
         List<User> list = userService.selectUserList(user);
         dd.setRecords(list);
@@ -78,14 +76,12 @@ public class UserController extends BaseController {
     @ApiOperation(value = "获取用户Excel", notes = "获取Excel")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "current", value = "当前页", defaultValue = "1"),
-            @ApiImplicitParam(name = "size", value = "每页数量", defaultValue = "10")
+            @ApiImplicitParam(name = "pageSize", value = "每页数量", defaultValue = "10")
     }
     )
-    public void excel(String current, String size, HttpServletResponse response) throws IOException {
+    public void excel(String current, String pageSize, HttpServletResponse response) throws IOException {
 
-        DataDomain dd = new DataDomain();
-        dd.setCurrent(!StringUtils.isEmptyOrWhitespace(current) ? current : "1");
-        dd.setSize(!StringUtils.isEmptyOrWhitespace(size) ? size : "10");
+        DataDomain dd = new DataDomain(current, pageSize);
         startPage(dd);
         List<User> list =userService.selectUserList(new User());
         for(User child:list) {

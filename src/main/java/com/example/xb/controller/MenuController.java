@@ -37,9 +37,7 @@ public class MenuController extends  BaseController {
     @GetMapping("/list")
     @ApiOperation(value = "获取权限列表", notes = "获取权限列表")
     public AjaxResult list() {
-        DataDomain dd = new DataDomain();
-        dd.setCurrent("1");
-        dd.setSize(Integer.MAX_VALUE+"");
+        DataDomain dd = new DataDomain(1+"",Integer.MAX_VALUE+"");
         ResultInfo resultInfo = startPage(dd);
         List<MenuVo> list = menuService.queryMenuList();;
         return new AjaxResult(resultInfo, list);

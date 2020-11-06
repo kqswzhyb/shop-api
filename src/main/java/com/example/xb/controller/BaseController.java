@@ -15,7 +15,7 @@ public class BaseController {
         resultInfo.success(null);
         try {
             int pageNum = !StringUtils.isEmpty(dd.getCurrent()) ? Integer.parseInt(String.valueOf(dd.getCurrent())) : 1;
-            int pageSize = !StringUtils.isEmpty(dd.getSize()) ? Integer.parseInt(String.valueOf(dd.getSize())) : 10;
+            int pageSize = !StringUtils.isEmpty(dd.getPageSize()) ? Integer.parseInt(String.valueOf(dd.getPageSize())) : 10;
             PageHelper.startPage(pageNum, pageSize,"update_at desc");
         }catch (Exception e) {
             if(e.toString().contains("NumberFormatException")) {
@@ -33,7 +33,7 @@ public class BaseController {
         resultInfo.success(null);
         try {
             int pageNum = !StringUtils.isEmpty(dd.getCurrent()) ? Integer.parseInt(String.valueOf(dd.getCurrent())) : 1;
-            int pageSize = !StringUtils.isEmpty(dd.getSize()) ? Integer.parseInt(String.valueOf(dd.getSize())) : 10;
+            int pageSize = !StringUtils.isEmpty(dd.getPageSize()) ? Integer.parseInt(String.valueOf(dd.getPageSize())) : 10;
             PageHelper.startPage(pageNum, pageSize,orderBy);
         }catch (Exception e) {
             if(e.toString().contains("NumberFormatException")) {
