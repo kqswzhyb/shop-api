@@ -5,6 +5,7 @@ import com.example.xb.domain.DicType;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
+import com.example.xb.domain.vo.DiCTypeVo;
 import com.example.xb.service.DicService;
 import com.example.xb.service.DicTypeService;
 import com.example.xb.utils.JwtUtil;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -140,6 +142,17 @@ public class DicController extends  BaseController{
         PageInfo pageInfo = new PageInfo(list);
         dd.setTotal(pageInfo.getTotal());
         return new AjaxResult(resultInfo, "1".equals(resultInfo.getCode()) ? null : dd);
+    }
+
+    @GetMapping("/allList")
+    @ApiOperation(value = "获取所有字典map列表", notes = "获取所有字典map列表")
+    public AjaxResult allList() {
+        List<DiCTypeVo> list = dicTypeService.dicAllList();
+        HashMap<String,List<Dic>>  map= new HashMap<>();
+        for(DiCTypeVo child:list) {
+            map.put(child.getCode(),child.getDicList());
+        }
+        return new AjaxResult(new ResultInfo(), map);
     }
 
     /**

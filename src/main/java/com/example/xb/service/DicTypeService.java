@@ -1,6 +1,7 @@
 package com.example.xb.service;
 
 import com.example.xb.domain.DicType;
+import com.example.xb.domain.vo.DiCTypeVo;
 
 import java.util.List;
 
@@ -11,6 +12,12 @@ public interface DicTypeService {
      * @return
      */
     List<DicType> dicTypeList(DicType dicType);
+
+    /**
+     * 获取所有类型字典详情
+     * @return
+     */
+    List<DiCTypeVo> dicAllList();
 
     /**
      * 创建字典类型

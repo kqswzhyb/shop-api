@@ -25,7 +25,7 @@
             and file.record_id = #{recordId}
         </if>
     </select>
-    <select id="fileListById" parameterType="Integer" resultType="com.example.xb.mapper.FileRecordMapper">
+    <select id="fileListById" resultMap="fileResult">
         select  *  from  file
         WHERE
         file.status = '0'

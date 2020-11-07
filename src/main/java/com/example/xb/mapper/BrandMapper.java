@@ -15,6 +15,14 @@ public interface BrandMapper {
      */
     List<BrandVo> brandList(Brand brand);
 
+
+    /**
+     * 获取品牌列表通过Id
+     * @param brandId
+     * @return
+     */
+    List<BrandVo> brandListById(String brandId);
+
     /**
      * 创建新品牌
      * @param brandVo

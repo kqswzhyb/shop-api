@@ -28,6 +28,7 @@
     </resultMap>
     <select id="brandList" parameterType="Brand" resultMap="brandVoResult">
         select  brand.*,
+        file.file_id,
         file.record_id,
         file.file_name,
         file.file_path,
@@ -51,6 +52,28 @@
         <if test="brandCode != null and brandCode != ''">
             and brand.brand_code = #{brandCode}
         </if>
+    </select>
+
+    <select id="brandListById" resultMap="brandVoResult">
+        select  brand.*,
+        file.file_id,
+        file.record_id,
+        file.file_name,
+        file.file_path,
+        file.file_full_path,
+        file.file_ext,
+        file.status as f_status,
+        file.create_by as f_create_by,
+        file.create_at as f_create_at,
+        file.update_at as f_update_at,
+        file.remark as f_remark
+        from  brand
+        LEFT JOIN file
+        ON file.record_id = brand.brand_id
+        WHERE
+        brand.status = '0'
+        and file.status = '0'
+        and brand.brand_id = #{brandId}
     </select>
 
     <insert id="saveBrand" parameterType="BrandVo">

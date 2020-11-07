@@ -15,6 +15,12 @@ public interface DicMapper {
     List<Dic> dicList(Dic dic);
 
     /**
+     * 根据typeId获取字典列表
+     * @return
+     */
+    List<Dic> dicListByType(String typeId);
+
+    /**
      * 创建字典类型
      * @param dic
      * @return

@@ -1,6 +1,7 @@
 package com.example.xb.mapper;
 
 import com.example.xb.domain.DicType;
+import com.example.xb.domain.vo.DiCTypeVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,6 +14,12 @@ public interface DicTypeMapper {
      * @return
      */
     List<DicType> dicTypeList(DicType dicType);
+
+    /**
+     * 获取所有类型字典详情
+     * @return
+     */
+    List<DiCTypeVo> dicAllList();
 
     /**
      * 创建字典类型

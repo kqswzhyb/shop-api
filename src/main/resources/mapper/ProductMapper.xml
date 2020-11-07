@@ -14,97 +14,13 @@
         <result property="createAt" column="create_at"/>
         <result property="updateAt" column="update_at"/>
         <result property="remark" column="remark"/>
-        <association property="brand" javaType="BrandVo">
-            <id column="brand_id" property="brandId"/>
-            <result column="b_name" property="name"/>
-            <result column="brand_code" property="brandCode"/>
-            <result property="status" column="b_status"/>
-            <result property="createBy" column="b_create_by"/>
-            <result property="createAt" column="b_create_at"/>
-            <result property="updateAt" column="b_update_at"/>
-            <result property="remark" column="b_remark"/>
-            <collection property="fileRecordList" javaType="ArrayList" ofType="FileRecord">
-                <id property="fileId" column="bf_file_id"/>
-                <result property="recordId" column="bf_record_id"/>
-                <result property="fileName" column="bf_file_name"/>
-                <result property="filePath" column="bf_file_path"/>
-                <result property="fileFullPath" column="bf_file_full_path"/>
-                <result property="fileExt" column="bf_file_ext"/>
-                <result property="status" column="bf_status"/>
-                <result property="createBy" column="bf_create_by"/>
-                <result property="createAt" column="bf_create_at"/>
-                <result property="updateAt" column="bf_update_at"/>
-                <result property="remark" column="bf_remark"/>
-            </collection>
-        </association>
-        <collection property="fileRecordList" javaType="ArrayList" ofType="FileRecord">
-            <id property="fileId" column="pf_file_id"/>
-            <result property="recordId" column="pf_record_id"/>
-            <result property="fileName" column="pf_file_name"/>
-            <result property="filePath" column="pf_file_path"/>
-            <result property="fileFullPath" column="pf_file_full_path"/>
-            <result property="fileExt" column="pf_file_ext"/>
-            <result property="status" column="pf_status"/>
-            <result property="createBy" column="pf_create_by"/>
-            <result property="createAt" column="pf_create_at"/>
-            <result property="updateAt" column="pf_update_at"/>
-            <result property="remark" column="pf_remark"/>
-        </collection>
+        <association property="brand" javaType="BrandVo" column="brand_id" select="com.example.xb.mapper.BrandMapper.brandListById"/>
+        <collection property="fileRecordList" javaType="java.util.ArrayList" ofType="FileRecord" select="com.example.xb.mapper.FileRecordMapper.fileListById" column="{recordId=product_id}"/>
+        <collection property="productDesList" javaType="java.util.ArrayList" ofType="ProductDes" select="com.example.xb.mapper.ProductDesMapper.productDesList" column="{productId=product_id}"/>
     </resultMap>
     <select id="productList" parameterType="Product" resultMap="productResult">
-        select  product.*,
-        bf.file_id as bf_file_id,
-        bf.brand_id,
-        bf.brand_code,
-        bf.name as b_name,
-        bf.status as b_status,
-        bf.create_by as b_create_by,
-        bf.create_at as b_create_at,
-        bf.update_at as b_update_at,
-        bf.remark as b_remark,
-        bf.record_id as bf_record_id,
-        bf.file_name as bf_file_name,
-        bf.file_path as bf_file_path,
-        bf.file_full_path as bf_file_full_path,
-        bf.file_ext as bf_file_ext,
-        bf.f_status as bf_status,
-        bf.f_create_by as bf_create_by,
-        bf.f_create_at as bf_create_at,
-        bf.f_update_at as bf_update_at,
-        bf.f_remark as bf_remark,
-        pf.file_id as pf_file_id,
-        pf.record_id as pf_record_id,
-        pf.file_name as pf_file_name,
-        pf.file_path as pf_file_path,
-        pf.file_full_path as pf_file_full_path,
-        pf.file_ext as pf_file_ext,
-        pf.status as pf_status,
-        pf.create_by as pf_create_by,
-        pf.create_at as pf_create_at,
-        pf.update_at as pf_update_at,
-        pf.remark as pf_remark
+        select  product.*
         from  product
-        LEFT JOIN file pf
-        ON pf.record_id = product.product_id and pf.status = '0'
-        LEFT JOIN (select  brand.*,
-        file.file_id,
-        file.record_id,
-        file.file_name,
-        file.file_path,
-        file.file_full_path,
-        file.file_ext,
-        file.status as f_status,
-        file.create_by as f_create_by,
-        file.create_at as f_create_at,
-        file.update_at as f_update_at,
-        file.remark as f_remark
-        from  brand
-        LEFT JOIN file
-        ON file.record_id = brand.brand_id and file.status = '0'
-        WHERE
-        brand.status = '0'
-        ) bf
-        ON product.brand_id = bf.brand_id
         WHERE
         product.status = '0'
         <if test="name != null and name != ''">

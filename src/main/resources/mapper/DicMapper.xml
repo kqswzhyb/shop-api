@@ -28,6 +28,13 @@
         </if>
     </select>
 
+    <select id="dicListByType" resultMap="dicResult">
+        select  *  from  dic
+        WHERE
+        dic.status = '0'
+        and dic.type_id = #{typeId}
+    </select>
+
     <insert id="saveDic" parameterType="Dic">
         insert into dic(
         <if test="dicId != null and dicId != ''">dic_id,</if>

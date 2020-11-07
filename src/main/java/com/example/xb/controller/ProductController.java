@@ -2,11 +2,13 @@ package com.example.xb.controller;
 
 import com.example.xb.domain.FileRecord;
 import com.example.xb.domain.Product;
+import com.example.xb.domain.ProductDes;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
 import com.example.xb.domain.vo.ProductVo;
 import com.example.xb.service.FileRecordService;
+import com.example.xb.service.ProductDesService;
 import com.example.xb.service.ProductService;
 import com.example.xb.utils.JwtUtil;
 import com.example.xb.utils.UUIDUtil;
@@ -29,6 +31,8 @@ import java.util.List;
 public class ProductController extends BaseController{
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductDesService productDesService;
     @Autowired
     private FileRecordService fileRecordService;
     @Autowired
@@ -79,6 +83,7 @@ public class ProductController extends BaseController{
             return new AjaxResult(resultInfo, null);
         }
         String Uid= UUIDUtil.NewUUID();
+
         List<FileRecord> fileList = productVo.getFileRecordList();
         int j = 1;
         if(fileList.size()!=0) {
@@ -90,11 +95,25 @@ public class ProductController extends BaseController{
             }
             j = fileRecordService.bathSaveFile(fileList);
         }
+
+        List<ProductDes> desList = productVo.getProductDesList();
+        int k = 1;
+        if(desList.size()!=0) {
+            for(ProductDes child:desList) {
+                child.setDesId(UUIDUtil.NewUUID());
+                child.setCreateBy(jwtUtil.getJwtUserId());
+                child.setStatus("0");
+                child.setProductId(Uid);
+            }
+            k = productDesService.batchSaveProductDes(desList);
+        }
+
         productVo.setProductId(Uid);
         productVo.setCreateBy(jwtUtil.getJwtUserId());
         productVo.setStatus("0");
+
         int i = productService.saveProduct(productVo);
-        if (i == 1&& j!=0) {
+        if (i == 1&& j!=0 && k!=0) {
             resultInfo.success("创建成功");
         } else {
             resultInfo.error("创建失败");
@@ -129,9 +148,12 @@ public class ProductController extends BaseController{
             return new AjaxResult(resultInfo, null);
         }
         String Uid= productVo.getProductId();
+
+        fileRecordService.deleteFileById(Uid);
+        productDesService.deleteProductDesById(Uid);
+
         List<FileRecord> fileList = productVo.getFileRecordList();
         int j = 1;
-        fileRecordService.deleteFileById(Uid);
         if(fileList.size()!=0) {
             for(FileRecord child:fileList) {
                 child.setFileId(UUIDUtil.NewUUID());
@@ -141,8 +163,25 @@ public class ProductController extends BaseController{
             }
             j = fileRecordService.bathSaveFile(fileList);
         }
+
+        List<ProductDes> desList = productVo.getProductDesList();
+        int k = 1;
+        if(desList.size()!=0) {
+            for(ProductDes child:desList) {
+                child.setDesId(UUIDUtil.NewUUID());
+                child.setCreateBy(jwtUtil.getJwtUserId());
+                child.setStatus("0");
+                child.setProductId(Uid);
+            }
+            k = productDesService.batchSaveProductDes(desList);
+        }
+
+        productVo.setProductId(Uid);
+        productVo.setCreateBy(jwtUtil.getJwtUserId());
+        productVo.setStatus("0");
+
         int i = productService.updateProduct(productVo);
-        if (i == 1&& j!=0) {
+        if (i == 1&& j!=0 && k!=0) {
             resultInfo.success("更新成功");
         } else {
             resultInfo.error("更新失败");
@@ -166,6 +205,7 @@ public class ProductController extends BaseController{
         }
         int i = productService.deleteProductById(productId);
         fileRecordService.deleteFileById(productId);
+        productDesService.deleteProductDesById(productId);
         if (i == 1) {
             resultInfo.success("删除成功");
         } else {

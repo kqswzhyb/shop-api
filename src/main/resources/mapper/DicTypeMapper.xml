@@ -14,6 +14,17 @@
         <result property="updateAt" column="update_at"/>
         <result property="remark" column="remark"/>
     </resultMap>
+    <resultMap type="DiCTypeVo" id="dicTypeAllResult">
+        <id property="typeId" column="type_id"/>
+        <result property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+        <result property="remark" column="remark"/>
+        <collection property="dicList" javaType="java.util.ArrayList" ofType="Dic" select="com.example.xb.mapper.DicMapper.dicListByType" column="{typeId=type_id}" />
+    </resultMap>
     <select id="dicTypeList" parameterType="DicType" resultMap="dicTypeResult">
         select  *  from  dic_type
         WHERE
@@ -22,6 +33,12 @@
             and dic_type.name
             like CONCAT('%',#{name},'%')
         </if>
+    </select>
+
+    <select id="dicAllList" resultMap="dicTypeAllResult">
+        select  *  from  dic_type
+        WHERE
+        dic_type.status = '0'
     </select>
 
     <insert id="saveDicType" parameterType="DicType">

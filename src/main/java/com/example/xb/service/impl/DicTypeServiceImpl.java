@@ -1,6 +1,7 @@
 package com.example.xb.service.impl;
 
 import com.example.xb.domain.DicType;
+import com.example.xb.domain.vo.DiCTypeVo;
 import com.example.xb.mapper.DicTypeMapper;
 import com.example.xb.service.DicTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class DicTypeServiceImpl implements DicTypeService {
     @Override
     public List<DicType> dicTypeList(DicType dicType) {
         return dicTypeMapper.dicTypeList(dicType);
+    }
+
+    @Override
+    public List<DiCTypeVo> dicAllList() {
+        return dicTypeMapper.dicAllList();
     }
 
     @Override
