@@ -17,6 +17,7 @@
         <association property="brand" javaType="BrandVo" column="brand_id" select="com.example.xb.mapper.BrandMapper.brandListById"/>
         <collection property="fileRecordList" javaType="java.util.ArrayList" ofType="FileRecord" select="com.example.xb.mapper.FileRecordMapper.fileListById" column="{recordId=product_id}"/>
         <collection property="productDesList" javaType="java.util.ArrayList" ofType="ProductDes" select="com.example.xb.mapper.ProductDesMapper.productDesList" column="{productId=product_id}"/>
+        <collection property="productParameterVoList" javaType="java.util.ArrayList" ofType="ProductParameterVo" select="com.example.xb.mapper.ProductParameterMapper.productParameterList" column="{productId=product_id}"/>
     </resultMap>
     <select id="productList" parameterType="Product" resultMap="productResult">
         select  product.*

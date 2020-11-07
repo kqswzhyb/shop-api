@@ -1,9 +1,6 @@
 package com.example.xb.domain.vo;
 
-import com.example.xb.domain.Brand;
-import com.example.xb.domain.FileRecord;
-import com.example.xb.domain.Product;
-import com.example.xb.domain.ProductDes;
+import com.example.xb.domain.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -24,4 +21,8 @@ public class ProductVo extends Product {
      * 产品描述
      */
     private List<ProductDes> productDesList;
+    /**
+     * 产品参数
+     */
+    private List<ProductParameterVo> productParameterVoList;
 }

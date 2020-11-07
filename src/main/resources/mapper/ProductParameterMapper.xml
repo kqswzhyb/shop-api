@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xb.mapper.ProductParameterMapper">
+    <resultMap type="ProductParameterVo" id="productParameterResult">
+        <result property="productId" column="product_id"/>
+        <result property="parameterId" column="parameter_id"/>
+        <result property="content" column="content"/>
+        <result property="parameterCode" column="parameter_code"/>
+        <result property="parameterName" column="parameter_name"/>
+    </resultMap>
+    <select id="productParameterList" resultMap="productParameterResult">
+        select  pp.*,parameter.parameter_code,parameter.name as parameter_name  from  product_parameter pp
+        LEFT JOIN parameter
+        on pp.parameter_id = parameter.parameter_id
+        WHERE
+        <if test="productId != null and productId != ''">
+            pp.product_id = #{productId}
+        </if>
+    </select>
+
+    <insert id="bathSaveProductParameter" parameterType="list">
+        insert into product_parameter(
+        parameter_id,
+        product_id,
+        content
+        )values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.parameterId},
+            #{item.productId},
+            #{item.content}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteProductParameterById" parameterType="String">
+ 		delete from product_parameter where product_id = #{productId}
+ 	</delete>
+</mapper>

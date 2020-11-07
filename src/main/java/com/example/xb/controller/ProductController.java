@@ -3,12 +3,15 @@ package com.example.xb.controller;
 import com.example.xb.domain.FileRecord;
 import com.example.xb.domain.Product;
 import com.example.xb.domain.ProductDes;
+import com.example.xb.domain.ProductParameter;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
+import com.example.xb.domain.vo.ProductParameterVo;
 import com.example.xb.domain.vo.ProductVo;
 import com.example.xb.service.FileRecordService;
 import com.example.xb.service.ProductDesService;
+import com.example.xb.service.ProductParameterService;
 import com.example.xb.service.ProductService;
 import com.example.xb.utils.JwtUtil;
 import com.example.xb.utils.UUIDUtil;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,6 +37,8 @@ public class ProductController extends BaseController{
     private ProductService productService;
     @Autowired
     private ProductDesService productDesService;
+    @Autowired
+    private ProductParameterService productParameterService;
     @Autowired
     private FileRecordService fileRecordService;
     @Autowired
@@ -108,12 +114,25 @@ public class ProductController extends BaseController{
             k = productDesService.batchSaveProductDes(desList);
         }
 
+        List<ProductParameterVo> parameterList = productVo.getProductParameterVoList();
+        List<ProductParameter> ppList= new ArrayList<>();
+        int l = 1;
+        if(parameterList.size()!=0) {
+            for(ProductParameterVo child:parameterList) {
+                ProductParameter productParameter = new ProductParameter();
+                productParameter.setContent(child.getContent());
+                productParameter.setProductId(Uid);
+                productParameter.setParameterId(child.getParameterId());
+            }
+            l = productParameterService.batchSaveProductParameter(ppList);
+        }
+
         productVo.setProductId(Uid);
         productVo.setCreateBy(jwtUtil.getJwtUserId());
         productVo.setStatus("0");
 
         int i = productService.saveProduct(productVo);
-        if (i == 1&& j!=0 && k!=0) {
+        if (i == 1&& j!=0 && k!=0&&l!=0) {
             resultInfo.success("创建成功");
         } else {
             resultInfo.error("创建失败");
@@ -151,6 +170,7 @@ public class ProductController extends BaseController{
 
         fileRecordService.deleteFileById(Uid);
         productDesService.deleteProductDesById(Uid);
+        productParameterService.deleteProductParameterById(Uid);
 
         List<FileRecord> fileList = productVo.getFileRecordList();
         int j = 1;
@@ -176,12 +196,25 @@ public class ProductController extends BaseController{
             k = productDesService.batchSaveProductDes(desList);
         }
 
+        List<ProductParameterVo> parameterList = productVo.getProductParameterVoList();
+        List<ProductParameter> ppList= new ArrayList<>();
+        int l = 1;
+        if(parameterList.size()!=0) {
+            for(ProductParameterVo child:parameterList) {
+                ProductParameter productParameter = new ProductParameter();
+                productParameter.setContent(child.getContent());
+                productParameter.setProductId(Uid);
+                productParameter.setParameterId(child.getParameterId());
+            }
+            l = productParameterService.batchSaveProductParameter(ppList);
+        }
+
         productVo.setProductId(Uid);
         productVo.setCreateBy(jwtUtil.getJwtUserId());
         productVo.setStatus("0");
 
         int i = productService.updateProduct(productVo);
-        if (i == 1&& j!=0 && k!=0) {
+        if (i == 1&& j!=0 && k!=0&&l!=0) {
             resultInfo.success("更新成功");
         } else {
             resultInfo.error("更新失败");
@@ -206,6 +239,7 @@ public class ProductController extends BaseController{
         int i = productService.deleteProductById(productId);
         fileRecordService.deleteFileById(productId);
         productDesService.deleteProductDesById(productId);
+        productParameterService.deleteProductParameterById(productId);
         if (i == 1) {
             resultInfo.success("删除成功");
         } else {
