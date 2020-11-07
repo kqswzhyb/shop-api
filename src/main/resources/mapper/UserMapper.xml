@@ -24,6 +24,7 @@
         <result property="userName" column="user_name"/>
         <result property="nickName" column="nick_name"/>
         <result property="password" column="password"/>
+        <result property="phone" column="phone"/>
         <result property="status" column="status"/>
         <result property="createBy" column="create_by"/>
         <result property="createAt" column="create_at"/>
@@ -33,17 +34,8 @@
 
     <select id="selectUserList" parameterType="User" resultMap="userVoResult">
         select
-        user.user_id,
-        user.role_id,
-        role.role_name,
-        user.user_name,
-        user.nick_name,
-        user.password,
-        user.status,
-        user.create_by,
-        user.create_at,
-        user.update_at,
-        user.remark
+        user.*,
+        role.role_name
         from user
         LEFT JOIN role
         ON role.role_id=user.role_id
