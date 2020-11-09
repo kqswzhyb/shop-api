@@ -1,18 +1,12 @@
 package com.example.xb.controller;
 
-import com.example.xb.domain.FileRecord;
-import com.example.xb.domain.Product;
-import com.example.xb.domain.ProductDes;
-import com.example.xb.domain.ProductParameter;
+import com.example.xb.domain.*;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
 import com.example.xb.domain.vo.ProductParameterVo;
 import com.example.xb.domain.vo.ProductVo;
-import com.example.xb.service.FileRecordService;
-import com.example.xb.service.ProductDesService;
-import com.example.xb.service.ProductParameterService;
-import com.example.xb.service.ProductService;
+import com.example.xb.service.*;
 import com.example.xb.utils.JwtUtil;
 import com.example.xb.utils.UUIDUtil;
 import com.github.pagehelper.PageInfo;
@@ -34,6 +28,8 @@ import java.util.List;
 @Api(tags = "产品管理")
 public class ProductController extends BaseController{
     @Autowired
+    private AttrBaseService attrBaseService;
+    @Autowired
     private ProductService productService;
     @Autowired
     private ProductDesService productDesService;
@@ -41,6 +37,8 @@ public class ProductController extends BaseController{
     private ProductParameterService productParameterService;
     @Autowired
     private FileRecordService fileRecordService;
+    @Autowired
+    private ProductgService productgService;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -127,12 +125,36 @@ public class ProductController extends BaseController{
             l = productParameterService.batchSaveProductParameter(ppList);
         }
 
+        List<Productg> productgList = productVo.getProductgList();
+        int n = 1;
+        if(productgList.size()!=0) {
+            for(Productg child:productgList) {
+                child.setProductgId(UUIDUtil.NewUUID());
+                child.setCreateBy(jwtUtil.getJwtUserId());
+                child.setStatus("0");
+                child.setProductId(Uid);
+            }
+            n = productgService.batchSaveProductg(productgList);
+        }
+
         productVo.setProductId(Uid);
         productVo.setCreateBy(jwtUtil.getJwtUserId());
         productVo.setStatus("0");
 
+        List<AttrBase> attrBaseList = productVo.getAttrBaseList();
+        int m = 1;
+        if(attrBaseList.size()!=0) {
+            for(AttrBase child:attrBaseList) {
+                child.setAttrId(UUIDUtil.NewUUID());
+                child.setCreateBy(jwtUtil.getJwtUserId());
+                child.setStatus("0");
+                child.setProductId(Uid);
+            }
+            m = attrBaseService.batchSaveAttrBase(attrBaseList);
+        }
+
         int i = productService.saveProduct(productVo);
-        if (i == 1&& j!=0 && k!=0&&l!=0) {
+        if (i == 1&& j!=0 && k!=0&&l!=0&&m!=0&&n!=0) {
             resultInfo.success("创建成功");
         } else {
             resultInfo.error("创建失败");
@@ -171,6 +193,8 @@ public class ProductController extends BaseController{
         fileRecordService.deleteFileById(Uid);
         productDesService.deleteProductDesById(Uid);
         productParameterService.deleteProductParameterById(Uid);
+        productgService.deleteProductgById(Uid);
+        attrBaseService.deleteAttrBaseById(Uid);
 
         List<FileRecord> fileList = productVo.getFileRecordList();
         int j = 1;
@@ -209,12 +233,36 @@ public class ProductController extends BaseController{
             l = productParameterService.batchSaveProductParameter(ppList);
         }
 
+        List<Productg> productgList = productVo.getProductgList();
+        int n = 1;
+        if(productgList.size()!=0) {
+            for(Productg child:productgList) {
+                child.setProductgId(UUIDUtil.NewUUID());
+                child.setCreateBy(jwtUtil.getJwtUserId());
+                child.setStatus("0");
+                child.setProductId(Uid);
+            }
+            n = productgService.batchSaveProductg(productgList);
+        }
+
         productVo.setProductId(Uid);
         productVo.setCreateBy(jwtUtil.getJwtUserId());
         productVo.setStatus("0");
 
+        List<AttrBase> attrBaseList = productVo.getAttrBaseList();
+        int m = 1;
+        if(attrBaseList.size()!=0) {
+            for(AttrBase child:attrBaseList) {
+                child.setAttrId(UUIDUtil.NewUUID());
+                child.setCreateBy(jwtUtil.getJwtUserId());
+                child.setStatus("0");
+                child.setProductId(Uid);
+            }
+            m = attrBaseService.batchSaveAttrBase(attrBaseList);
+        }
+
         int i = productService.updateProduct(productVo);
-        if (i == 1&& j!=0 && k!=0&&l!=0) {
+        if (i == 1&& j!=0 && k!=0&&l!=0&&m!=0&&n!=0) {
             resultInfo.success("更新成功");
         } else {
             resultInfo.error("更新失败");
@@ -240,6 +288,8 @@ public class ProductController extends BaseController{
         fileRecordService.deleteFileById(productId);
         productDesService.deleteProductDesById(productId);
         productParameterService.deleteProductParameterById(productId);
+        productgService.deleteProductgById(productId);
+        attrBaseService.deleteAttrBaseById(productId);
         if (i == 1) {
             resultInfo.success("删除成功");
         } else {

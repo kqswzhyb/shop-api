@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xb.mapper.ProductAttrMapper">
+    <select id="productAttrList" resultType="String">
+        select  pa.attr_son_id  from  product_attr pa
+        <if test="productgId != null and productgId != ''">
+           where pa.productg_id = #{productgId}
+        </if>
+    </select>
+
+    <insert id="bathSaveProductAttr" parameterType="list">
+        insert into product_attr(
+        attr_son_id,
+        productg_id
+        )values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.attrSonId},
+            #{item.productgId},
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteProductAttrById" parameterType="String">
+ 		delete from product_attr where productg_id = #{productgId}
+ 	</delete>
+</mapper>

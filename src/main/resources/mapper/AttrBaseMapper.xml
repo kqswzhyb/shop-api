@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xb.mapper.AttrBaseMapper">
+    <resultMap type="AttrBase" id="attrBaseResult">
+        <id property="attrId" column="attr_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="attrName" column="attr_name"/>
+        <result property="attrValue" column="attr_value"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+        <result property="remark" column="remark"/>
+        <collection property="attrSonList" javaType="java.util.ArrayList" ofType="AttrSon" select="com.example.xb.mapper.AttrSonMapper.attrSonList" column="{attrId=attr_id}"/>
+    </resultMap>
+    <select id="attrBaseList" resultMap="attrBaseResult">
+        select  *  from  attr_base
+        WHERE
+        attr_base.status = '0'
+        <if test="productId != null and productId != ''">
+            and attr_base.product_id = #{productId}
+        </if>
+    </select>
+
+    <insert id="bathSaveAttrBase" parameterType="list">
+        insert into attr_base(
+        attr_id,
+        product_id,
+        attr_name,
+        attr_value
+        status,
+        remark,
+        create_by,
+        create_at,
+        update_at
+        )values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.attrId},
+            #{item.productId},
+            #{item.attrName},
+            #{item.attrValue},
+            #{item.status},
+            #{item.remark},
+            #{item.createBy},
+            sysdate(),
+            sysdate()
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteAttrBaseById" parameterType="String">
+ 		delete from attr_base where product_id = #{productId}
+ 	</delete>
+</mapper>

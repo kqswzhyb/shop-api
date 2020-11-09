@@ -25,4 +25,12 @@ public class ProductVo extends Product {
      * 产品参数
      */
     private List<ProductParameterVo> productParameterVoList;
+    /**
+     * 产品组员列表
+     */
+    private List<Productg> productgList;
+    /**
+     * 产品属性列表
+     */
+    private List<AttrBase> attrBaseList;
 }
