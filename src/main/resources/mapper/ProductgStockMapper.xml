@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xb.mapper.ProductgStockMapper">
+
+    <resultMap type="ProductgStock" id="productgStockResult">
+        <id property="stockId" column="stock_id"/>
+        <result property="productgId" column="productg_id"/>
+        <result property="totalStock" column="total_stock"/>
+        <result property="lockStock" column="lock_stock"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <select id="productgStockList" resultMap="productgStockResult">
+        select  *  from  productg_stock ps
+        WHERE
+        ps.status = '0'
+        <if test="productgId != null and productgId != ''">
+            and ps.productg_id = #{productgId}
+        </if>
+    </select>
+
+    <insert id="saveProductgStock" parameterType="ProductgStock">
+        insert into productg_stock(
+        stock_id,
+        productg_id,
+        total_stock,
+        lock_stock
+        status,
+        remark,
+        create_by,
+        create_at,
+        update_at
+        )values
+        (
+        #{item.stockId},
+        #{item.productgId},
+        #{item.totalStock},
+        #{item.lockStock},
+        #{item.status},
+        #{item.remark},
+        #{item.createBy},
+        sysdate(),
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateTotalStock" parameterType="ProductgStock">
+        update productg_stock
+        <set>
+            <if test="totalStock != null and totalStock != ''">total_stock = #{totalStock},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_at = sysdate()
+        </set>
+        where productg_id = #{productgId}
+    </update>
+
+    <update id="updateLockStock" parameterType="ProductgStock">
+        update productg_stock
+        <set>
+            <if test="lockStock != null and lockStock != ''">lock_stock = #{lockStock},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_at = sysdate()
+        </set>
+        where productg_id = #{productgId}
+    </update>
+
+    <delete id="deleteStock" parameterType="String">
+ 		delete from productg_stock where productg_id = #{productgId}
+ 	</delete>
+</mapper>

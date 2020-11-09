@@ -196,3 +196,16 @@ CREATE TABLE `productg`  (
   `update_at` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`productg_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品组员表' ROW_FORMAT = Dynamic;
+
+CREATE TABLE `productg_stock`  (
+  `stock_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品库存ID',
+  `productg_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品组员ID',
+  `total_stock` decimal(13, 6) NULL DEFAULT NULL COMMENT '总库存',
+  `lock_stock` decimal(13, 6) NULL DEFAULT NULL COMMENT '锁定库存',
+  `remark` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '状态',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `create_at` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_at` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`stock_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品库存表' ROW_FORMAT = Dynamic;
