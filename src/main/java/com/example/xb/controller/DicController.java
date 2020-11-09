@@ -223,11 +223,11 @@ public class DicController extends  BaseController{
             resultInfo.error("dicId不能为空");
             return new AjaxResult(resultInfo, null);
         }
-        int i = dicTypeService.deleteDicTypeById(dicId);
+        int i = dicService.deleteDicById(dicId);
         if (i == 1) {
             resultInfo.success("删除成功");
         } else {
-            resultInfo.error("该typeId不存在，无法删除");
+            resultInfo.error("该dicId不存在，无法删除");
         }
         return new AjaxResult(resultInfo, null);
     }

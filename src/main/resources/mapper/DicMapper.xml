@@ -26,6 +26,9 @@
         <if test="dicId != null and dicId != ''">
             and dic.dic_id = #{dicId}
         </if>
+        <if test="typeId != null and typeId != ''">
+            and dic.type_id = #{typeId}
+        </if>
     </select>
 
     <select id="dicListByType" resultMap="dicResult">
