@@ -10,11 +10,18 @@ import java.util.List;
  */
 public interface MenuService {
     /**
-     * 获取权限列表
+     * 获取菜单权限列表
      * @return 权限列表
      */
 
     List<MenuVo> queryMenuList();
+
+    /**
+     * 获取所有权限列表
+     * @return 权限列表
+     */
+
+    List<MenuVo> queryMenuAllList();
 
     /**
      *创建权限

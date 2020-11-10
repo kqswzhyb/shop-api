@@ -49,6 +49,33 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public List<MenuVo> queryMenuAllList() {
+        List<MenuVo>list = menuMapper.queryMenuList();
+        List<MenuVo> treeList = list.stream()
+                .filter(v -> "0".equals(v.getParentId()))
+                .map(menu -> {
+                    MenuVo node = new MenuVo();
+                    node.setChildren(new ArrayList<>());
+                    node.setMenuId(menu.getMenuId());
+                    node.setName(menu.getName());
+                    node.setPermission(menu.getPermission());
+                    node.setSort(menu.getSort());
+                    node.setRemark(menu.getRemark());
+                    node.setType(menu.getType());
+                    node.setParentId(menu.getParentId());
+                    if ("0".equals(menu.getType())) {
+                        node.setComponent(menu.getComponent());
+                        node.setIcon(menu.getIcon());
+                        node.setKeepAlive(menu.getKeepAlive());
+                        node.setPath(menu.getPath());
+                    }
+                    return node;
+                })
+                .collect(Collectors.toList());
+        return new MenuUtil().buildTree(treeList,list,"");
+    }
+
+    @Override
     public int saveMenu(Menu menu) {
         return menuMapper.saveMenu(menu);
     }

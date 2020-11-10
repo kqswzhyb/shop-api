@@ -1,7 +1,7 @@
 package com.example.xb.controller;
 
 import com.example.xb.domain.product.Brand;
-import com.example.xb.domain.FileRecord;
+import com.example.xb.domain.file.FileRecord;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;

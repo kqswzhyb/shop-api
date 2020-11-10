@@ -134,16 +134,29 @@ public class RoleController extends BaseController {
     }
 
     /**
-     * 通过roleID获取角色的权限列表
+     * 通过roleID获取角色的菜单权限列表
      *
      * @return
      */
     @GetMapping("/roleMenuByRoleId")
-    @ApiOperation(value = "通过roleID获取角色的权限列表", notes = "通过roleID获取角色的权限列表")
+    @ApiOperation(value = "通过roleID获取角色的菜单权限列表", notes = "通过roleID获取角色的菜单权限列表")
     public AjaxResult roleMenu(String roleId) {
         ResultInfo resultInfo = new ResultInfo();
         resultInfo.success("操作成功");
         return new AjaxResult(resultInfo, roleMenuService.queryRoleMenuList(roleId));
+    }
+
+    /**
+     * 通过roleID获取角色的所有权限列表
+     *
+     * @return
+     */
+    @GetMapping("/roleAllMenuByRoleId")
+    @ApiOperation(value = "通过roleID获取角色的所有权限列表", notes = "通过roleID获取角色的所有权限列表")
+    public AjaxResult roleMenuAll(String roleId) {
+        ResultInfo resultInfo = new ResultInfo();
+        resultInfo.success("操作成功");
+        return new AjaxResult(resultInfo, roleMenuService.queryRoleMenuAllList(roleId));
     }
 
     /**

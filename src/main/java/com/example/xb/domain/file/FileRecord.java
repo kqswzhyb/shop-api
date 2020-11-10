@@ -1,11 +1,12 @@
-package com.example.xb.domain;
+package com.example.xb.domain.file;
 
+import com.example.xb.domain.Base;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class FileRecord extends  Base{
+public class FileRecord extends Base {
 
     /**
      * 文件id

@@ -314,6 +314,14 @@ public class UserController extends BaseController {
             resultInfo.error("userId为空");
             return new AjaxResult(resultInfo, null);
         }
+        if (StringUtils.isEmptyOrWhitespace(userAddress.getContactName())) {
+            resultInfo.error("联系人姓名为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if (StringUtils.isEmptyOrWhitespace(userAddress.getContactPhone())) {
+            resultInfo.error("联系人电话为空");
+            return new AjaxResult(resultInfo, null);
+        }
         if (StringUtils.isEmptyOrWhitespace(userAddress.getProvinceId())) {
             resultInfo.error("省为空");
             return new AjaxResult(resultInfo, null);

@@ -8,11 +8,18 @@ import java.util.List;
 public interface RoleMenuService {
 
     /**
-     * 根据roleId获取权限列表
+     * 根据roleId获取菜单权限列表
      * @param roleId
      * @return
      */
     List<MenuVo> queryRoleMenuList(String roleId);
+
+    /**
+     * 根据roleId获取所有权限列表
+     * @param roleId
+     * @return
+     */
+    List<MenuVo> queryRoleMenuAllList(String roleId);
 
     /**
      * 根据roleId获取按钮权限列表

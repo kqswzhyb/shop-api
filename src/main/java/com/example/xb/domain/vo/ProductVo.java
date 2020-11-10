@@ -1,6 +1,6 @@
 package com.example.xb.domain.vo;
 
-import com.example.xb.domain.*;
+import com.example.xb.domain.file.FileRecord;
 import com.example.xb.domain.product.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

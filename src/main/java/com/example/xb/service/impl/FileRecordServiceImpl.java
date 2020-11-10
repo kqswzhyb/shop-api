@@ -1,6 +1,6 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.FileRecord;
+import com.example.xb.domain.file.FileRecord;
 import com.example.xb.mapper.FileRecordMapper;
 import com.example.xb.service.FileRecordService;
 import org.springframework.beans.factory.annotation.Autowired;

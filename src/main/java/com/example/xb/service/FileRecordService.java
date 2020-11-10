@@ -1,6 +1,6 @@
 package com.example.xb.service;
 
-import com.example.xb.domain.FileRecord;
+import com.example.xb.domain.file.FileRecord;
 
 import java.util.List;
 

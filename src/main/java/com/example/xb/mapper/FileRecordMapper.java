@@ -1,6 +1,6 @@
 package com.example.xb.mapper;
 
-import com.example.xb.domain.FileRecord;
+import com.example.xb.domain.file.FileRecord;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

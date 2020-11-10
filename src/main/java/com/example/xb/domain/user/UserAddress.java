@@ -24,7 +24,11 @@ public class UserAddress extends Base {
 
     private String areaName;
 
-    private String detail;
+    private String addressDetail;
+
+    private String contactName;
+
+    private String contactPhone;
 
     private String status;
 }
