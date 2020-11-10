@@ -55,7 +55,7 @@
             <if test="remark != null and remark != ''">remark = #{remark},</if>
             update_at = sysdate()
         </set>
-        where menu_id = #{menuId}
+        where parameter_id = #{parameterId}
     </update>
 
     <delete id="deleteParameterById" parameterType="String">

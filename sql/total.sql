@@ -103,8 +103,8 @@ CREATE TABLE `product`  (
   `remark` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '状态',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
-  `create_at` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_at` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `create_at` datetime COMMENT '创建时间',
+  `update_at` datetime COMMENT '修改时间',
   PRIMARY KEY (`product_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品表' ROW_FORMAT = Dynamic;
 
@@ -192,8 +192,8 @@ CREATE TABLE `productg`  (
   `remark` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '状态',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
-  `create_at` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_at` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `create_at` datetime COMMENT '创建时间',
+  `update_at` datetime COMMENT '修改时间',
   PRIMARY KEY (`productg_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品组员表' ROW_FORMAT = Dynamic;
 
@@ -205,8 +205,8 @@ CREATE TABLE `productg_stock`  (
   `remark` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '状态',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
-  `create_at` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_at` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `create_at` datetime COMMENT '创建时间',
+  `update_at` datetime COMMENT '修改时间',
   PRIMARY KEY (`stock_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品库存表' ROW_FORMAT = Dynamic;
 
@@ -225,8 +225,8 @@ CREATE TABLE `user_address`  (
   `remark` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '状态',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
-  `create_at` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_at` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `create_at` datetime COMMENT '创建时间',
+  `update_at` datetime COMMENT '修改时间',
   PRIMARY KEY (`address_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户收货地址表' ROW_FORMAT = Dynamic;
 
@@ -253,8 +253,8 @@ CREATE TABLE `order`  (
 	`is_invoice` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '是否需要开票',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '状态',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
-  `create_at` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_at` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `create_at` datetime COMMENT '创建时间',
+  `update_at` datetime COMMENT '修改时间',
   PRIMARY KEY (`order_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单表' ROW_FORMAT = Dynamic;
 
@@ -273,7 +273,7 @@ CREATE TABLE `order_detail`  (
   `remark` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '状态',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
-  `create_at` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_at` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `create_at` datetime COMMENT '创建时间',
+  `update_at` datetime COMMENT '修改时间',
   PRIMARY KEY (`order_detail_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单详情表' ROW_FORMAT = Dynamic;

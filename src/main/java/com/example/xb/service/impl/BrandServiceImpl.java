@@ -22,14 +22,7 @@ public class BrandServiceImpl  implements BrandService {
 
     @Override
     public List<BrandVo> brandList(Brand brand) {
-
         return brandMapper.brandList(brand);
-//        for(BrandVo child:list) {
-//            FileRecord fileRecord =new FileRecord();
-//            fileRecord.setRecordId(brand.getBrandId());
-//            child.setFileRecordList(fileRecordMapper.fileList(fileRecord));
-//        }
-//        return list;
     }
 
     @Override

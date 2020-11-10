@@ -12,39 +12,13 @@
         <result property="createAt" column="create_at"/>
         <result property="updateAt" column="update_at"/>
         <result property="remark" column="remark"/>
-        <collection property="fileRecordList" javaType="ArrayList" ofType="FileRecord">
-            <id property="fileId" column="file_id"/>
-            <result property="recordId" column="record_id"/>
-            <result property="fileName" column="file_name"/>
-            <result property="filePath" column="file_path"/>
-            <result property="fileFullPath" column="file_full_path"/>
-            <result property="fileExt" column="file_ext"/>
-            <result property="status" column="f_status"/>
-            <result property="createBy" column="f_create_by"/>
-            <result property="createAt" column="f_create_at"/>
-            <result property="updateAt" column="f_update_at"/>
-            <result property="remark" column="f_remark"/>
-        </collection>
+        <collection property="fileRecordList" javaType="java.util.ArrayList" ofType="FileRecord" select="com.example.xb.mapper.FileRecordMapper.fileListById" column="{recordId=brand_id}"/>
     </resultMap>
     <select id="brandList" parameterType="Brand" resultMap="brandVoResult">
-        select  brand.*,
-        file.file_id,
-        file.record_id,
-        file.file_name,
-        file.file_path,
-        file.file_full_path,
-        file.file_ext,
-        file.status as f_status,
-        file.create_by as f_create_by,
-        file.create_at as f_create_at,
-        file.update_at as f_update_at,
-        file.remark as f_remark
+        select  *
         from  brand
-        LEFT JOIN file
-        ON file.record_id = brand.brand_id
         WHERE
         brand.status = '0'
-        and file.status = '0'
         <if test="name != null and name != ''">
             and brand.name
             like CONCAT('%',#{name},'%')
@@ -55,24 +29,10 @@
     </select>
 
     <select id="brandListById" resultMap="brandVoResult">
-        select  brand.*,
-        file.file_id,
-        file.record_id,
-        file.file_name,
-        file.file_path,
-        file.file_full_path,
-        file.file_ext,
-        file.status as f_status,
-        file.create_by as f_create_by,
-        file.create_at as f_create_at,
-        file.update_at as f_update_at,
-        file.remark as f_remark
+        select  *
         from  brand
-        LEFT JOIN file
-        ON file.record_id = brand.brand_id
         WHERE
         brand.status = '0'
-        and file.status = '0'
         and brand.brand_id = #{brandId}
     </select>
 
