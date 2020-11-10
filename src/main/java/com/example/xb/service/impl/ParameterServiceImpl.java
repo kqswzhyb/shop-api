@@ -1,6 +1,6 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.Parameter;
+import com.example.xb.domain.product.Parameter;
 import com.example.xb.mapper.ParameterMapper;
 import com.example.xb.service.ParameterService;
 import org.springframework.beans.factory.annotation.Autowired;

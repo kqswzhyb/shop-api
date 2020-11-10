@@ -1,7 +1,7 @@
 package com.example.xb.controller;
 
-import com.example.xb.domain.Dic;
-import com.example.xb.domain.DicType;
+import com.example.xb.domain.dic.Dic;
+import com.example.xb.domain.dic.DicType;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;

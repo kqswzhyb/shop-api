@@ -1,6 +1,6 @@
 package com.example.xb.service;
 
-import com.example.xb.domain.DicType;
+import com.example.xb.domain.dic.DicType;
 import com.example.xb.domain.vo.DiCTypeVo;
 
 import java.util.List;

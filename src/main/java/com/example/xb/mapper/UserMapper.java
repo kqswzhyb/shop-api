@@ -1,8 +1,8 @@
 package com.example.xb.mapper;
 
-import com.example.xb.domain.LoginBody;
-import com.example.xb.domain.User;
-import com.example.xb.domain.Password;
+import com.example.xb.domain.account.LoginBody;
+import com.example.xb.domain.user.User;
+import com.example.xb.domain.user.Password;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

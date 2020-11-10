@@ -1,11 +1,12 @@
-package com.example.xb.domain;
+package com.example.xb.domain.product;
 
+import com.example.xb.domain.Base;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Brand  extends Base{
+public class Brand  extends Base {
 
     private String brandId;
 

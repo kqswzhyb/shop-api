@@ -146,6 +146,11 @@ public class JwtUtil {
         Jws<Claims> claims = Jwts.parser().setSigningKey(generateKey()).parseClaimsJws(token);
         return (String) claims.getBody().get("jti");
     }
+    public String getUserId(HttpServletRequest req) {
+        String token = resolveToken(req);
+        Map<String, Object> map = parseToken(token);
+        return (String) map.get("user_id");
+    }
 
     public String getJwtUserId() {
        return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();

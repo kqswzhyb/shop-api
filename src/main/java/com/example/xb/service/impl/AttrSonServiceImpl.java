@@ -1,6 +1,6 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.AttrSon;
+import com.example.xb.domain.product.AttrSon;
 import com.example.xb.mapper.AttrSonMapper;
 import com.example.xb.service.AttrSonService;
 import org.springframework.beans.factory.annotation.Autowired;

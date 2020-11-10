@@ -1,8 +1,8 @@
 package com.example.xb.service;
 
-import com.example.xb.domain.LoginBody;
-import com.example.xb.domain.User;
-import com.example.xb.domain.Password;
+import com.example.xb.domain.account.LoginBody;
+import com.example.xb.domain.user.User;
+import com.example.xb.domain.user.Password;
 
 import java.util.List;
 

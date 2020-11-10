@@ -1,6 +1,6 @@
 package com.example.xb.domain.vo;
 
-import com.example.xb.domain.User;
+import com.example.xb.domain.user.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

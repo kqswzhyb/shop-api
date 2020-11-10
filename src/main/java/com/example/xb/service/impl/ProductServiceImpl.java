@@ -1,6 +1,6 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.Product;
+import com.example.xb.domain.product.Product;
 import com.example.xb.domain.vo.ProductVo;
 import com.example.xb.mapper.ProductMapper;
 import com.example.xb.service.ProductService;

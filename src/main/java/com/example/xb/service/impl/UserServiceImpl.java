@@ -1,8 +1,8 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.LoginBody;
-import com.example.xb.domain.User;
-import com.example.xb.domain.Password;
+import com.example.xb.domain.account.LoginBody;
+import com.example.xb.domain.user.User;
+import com.example.xb.domain.user.Password;
 import com.example.xb.mapper.UserMapper;
 import com.example.xb.service.UserService;
 import com.example.xb.utils.AESUtil;

@@ -1,4 +1,4 @@
-package com.example.xb.domain;
+package com.example.xb.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.example.xb.mapper;
 
-import com.example.xb.domain.ProductAttr;
+import com.example.xb.domain.product.ProductAttr;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

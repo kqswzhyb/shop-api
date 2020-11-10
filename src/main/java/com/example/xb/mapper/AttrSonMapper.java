@@ -1,6 +1,6 @@
 package com.example.xb.mapper;
 
-import com.example.xb.domain.AttrSon;
+import com.example.xb.domain.product.AttrSon;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

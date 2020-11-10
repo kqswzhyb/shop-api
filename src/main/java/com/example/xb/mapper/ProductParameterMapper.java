@@ -1,6 +1,6 @@
 package com.example.xb.mapper;
 
-import com.example.xb.domain.ProductParameter;
+import com.example.xb.domain.product.ProductParameter;
 import com.example.xb.domain.vo.ProductParameterVo;
 import org.apache.ibatis.annotations.Mapper;
 

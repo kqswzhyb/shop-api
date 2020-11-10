@@ -1,4 +1,4 @@
-package com.example.xb.domain;
+package com.example.xb.domain.role;
 
 import lombok.Data;
 

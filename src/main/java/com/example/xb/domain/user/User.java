@@ -1,8 +1,9 @@
-package com.example.xb.domain;
+package com.example.xb.domain.user;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.example.xb.domain.Base;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class User extends Base  {
+public class User extends Base {
     /**
      * 用户Id
      */

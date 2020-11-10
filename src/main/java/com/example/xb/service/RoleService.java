@@ -1,6 +1,6 @@
 package com.example.xb.service;
 
-import com.example.xb.domain.Role;
+import com.example.xb.domain.role.Role;
 
 import java.util.List;
 

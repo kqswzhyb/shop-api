@@ -1,6 +1,6 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.ProductDes;
+import com.example.xb.domain.product.ProductDes;
 import com.example.xb.mapper.ProductDesMapper;
 import com.example.xb.service.ProductDesService;
 import org.springframework.beans.factory.annotation.Autowired;

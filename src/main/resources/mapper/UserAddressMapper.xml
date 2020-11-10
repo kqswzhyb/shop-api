@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xb.mapper.UserAddressMapper">
+    <resultMap type="UserAddress" id="userAddressResult">
+        <id property="addressId" column="address_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="provinceName" column="province_name"/>
+        <result property="cityId" column="city_id"/>
+        <result property="cityName" column="city_name"/>
+        <result property="areaId" column="area_id"/>
+        <result property="areaName" column="area_name"/>
+        <result property="detail" column="detail"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <select id="addressList" parameterType="String" resultMap="userAddressResult">
+        select  *  from  user_address
+        where status = '0'
+        <if test="userId != null and userId != ''">
+            and  user_id = #{userId}
+        </if>
+    </select>
+    <insert id="saveAddress" parameterType="UserAddress">
+        insert into user_address(
+        <if test="addressId != null and addressId != ''">address_id,</if>
+        <if test="userId != null and userId != ''">user_id,</if>
+        <if test="provinceId != null and provinceId != ''">province_id,</if>
+        <if test="provinceName != null and provinceName != ''">province_name,</if>
+        <if test="cityId != null and cityId != ''">city_id,</if>
+        <if test="cityName != null and cityName != ''">city_name,</if>
+        <if test="areaId != null and areaId != ''">area_id,</if>
+        <if test="areaName != null and areaName != ''">area_name,</if>
+        <if test="detail != null and detail != ''">detail,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_at,
+        update_at
+        )values(
+        <if test="addressId != null and addressId != ''">#{addressId},</if>
+        <if test="userId != null and userId != ''">#{userId},</if>
+        <if test="provinceId != null and provinceId != ''">#{provinceId},</if>
+        <if test="provinceName != null and provinceName != ''">#{provinceName},</if>
+        <if test="cityId != null and cityId != ''">#{cityId},</if>
+        <if test="cityName != null and cityName != ''">#{cityName},</if>
+        <if test="areaId != null and areaId != ''">#{areaId},</if>
+        <if test="areaName != null and areaName != ''">#{areaName},</if>
+        <if test="detail != null and detail != ''">#{detail},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate(),
+        sysdate()
+        )
+    </insert>
+    <update id="updateAddress" parameterType="UserAddress">
+        update user_address
+        <set>
+            <if test="provinceId != null and provinceId != ''">province_id = #{provinceId},</if>
+            <if test="provinceName != null and provinceName != ''">province_name = #{provinceName},</if>
+            <if test="cityId != null and cityId != ''">city_id = #{cityId},</if>
+            <if test="cityName != null and cityName != ''">city_name = #{cityName},</if>
+            <if test="areaId != null and areaId != ''">area_id = #{areaId},</if>
+            <if test="areaName != null and areaName != ''">area_name = #{areaName},</if>
+            <if test="detail != null and detail != ''">detail = #{detail},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_at = sysdate()
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteByAddress" parameterType="String">
+ 		delete from user_address where address_id = #{addressId}
+ 	</delete>
+    <delete id="deleteByUser" parameterType="String">
+ 		delete from user_address where user_id = #{userId}
+ 	</delete>
+</mapper>

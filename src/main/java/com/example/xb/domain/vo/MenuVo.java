@@ -1,6 +1,6 @@
 package com.example.xb.domain.vo;
 
-import com.example.xb.domain.Menu;
+import com.example.xb.domain.role.Menu;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

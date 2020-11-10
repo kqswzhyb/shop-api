@@ -1,6 +1,6 @@
 package com.example.xb.controller;
 
-import com.example.xb.domain.Menu;
+import com.example.xb.domain.role.Menu;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;

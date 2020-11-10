@@ -1,8 +1,9 @@
-package com.example.xb.domain;
+package com.example.xb.domain.account;
 
 import java.util.Collection;
 import java.util.Set;
 
+import com.example.xb.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

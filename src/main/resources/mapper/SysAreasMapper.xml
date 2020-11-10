@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xb.mapper.SysAreasMapper">
+    <resultMap type="Area" id="areaResult">
+        <id property="id" column="id"/>
+        <result property="areaId" column="area_id"/>
+        <result property="area" column="area"/>
+        <result property="cityId" column="city_id"/>
+        <result property="areaEn" column="area_en"/>
+    </resultMap>
+
+    <select id="areaList" parameterType="String" resultMap="areaResult">
+        select  *  from  sys_areas sa
+        <if test="cityId != null and cityId != ''">
+            where  sa.city_id = #{cityId}
+        </if>
+    </select>
+</mapper>

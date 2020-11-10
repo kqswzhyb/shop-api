@@ -3,13 +3,15 @@ package com.example.xb.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
-import com.example.xb.domain.User;
+import com.example.xb.domain.user.User;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
-import com.example.xb.domain.Password;
+import com.example.xb.domain.user.Password;
+import com.example.xb.domain.user.UserAddress;
 import com.example.xb.domain.vo.MenuVo;
 import com.example.xb.service.RoleMenuService;
+import com.example.xb.service.UserAddressService;
 import com.example.xb.service.UserService;
 import com.example.xb.utils.*;
 import com.github.pagehelper.PageInfo;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -37,6 +40,9 @@ public class UserController extends BaseController {
 
     @Autowired
     private RoleMenuService roleMenuService;
+
+    @Autowired
+    private UserAddressService userAddressService;
 
     @Value("${token.password.secret}")
     private String SECRET_KEY;
@@ -278,5 +284,125 @@ public class UserController extends BaseController {
         return new AjaxResult(new ResultInfo(), map);
     }
 
+    /**
+     * 获取用户地址列表
+     *
+     * @return
+     */
+    @GetMapping("/addressList")
+    @ApiOperation(value = "获取用户地址列表", notes = "获取用户地址列表")
+    public AjaxResult addressList(HttpServletRequest req) {
+        ResultInfo resultInfo = new ResultInfo();
+        String userId= jwtUtil.getUserId(req);
+        if (StringUtils.isEmptyOrWhitespace(userId)) {
+            resultInfo.error("userId为空");
+            return new AjaxResult(resultInfo, null);
+        }
 
+        return new AjaxResult(resultInfo, userAddressService.addressList(userId));
+    }
+    /**
+     * 创建新地址
+     *
+     * @return
+     */
+    @PostMapping("/saveAddress")
+    @ApiOperation(value = "创建新地址", notes = "创建新地址")
+    public AjaxResult saveAddress(@RequestBody UserAddress userAddress) {
+        ResultInfo resultInfo = new ResultInfo();
+        if (StringUtils.isEmptyOrWhitespace(userAddress.getUserId())) {
+            resultInfo.error("userId为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if (StringUtils.isEmptyOrWhitespace(userAddress.getProvinceId())) {
+            resultInfo.error("省为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if (StringUtils.isEmptyOrWhitespace(userAddress.getCityId())) {
+            resultInfo.error("市为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        if (StringUtils.isEmptyOrWhitespace(userAddress.getAreaId())) {
+            resultInfo.error("区为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        userAddress.setAddressId(UUIDUtil.NewUUID());
+        userAddress.setStatus("0");
+        userAddress.setCreateBy(jwtUtil.getJwtUserId());
+
+        int i = userAddressService.saveAddress(userAddress);
+        if (i == 1) {
+            resultInfo.success("创建成功");
+        } else {
+            resultInfo.error("创建失败");
+        }
+        return new AjaxResult(resultInfo, null);
+    }
+
+    /**
+     * 更新地址
+     *
+     * @return
+     */
+    @PutMapping("/updateAddress")
+    @ApiOperation(value = "更新地址", notes = "更新地址")
+    public AjaxResult updateAddress(@RequestBody UserAddress userAddress) {
+        ResultInfo resultInfo = new ResultInfo();
+        if (StringUtils.isEmptyOrWhitespace(userAddress.getAddressId())) {
+            resultInfo.error("addressId为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        int i = userAddressService.updateAddress(userAddress);
+        if (i == 1) {
+            resultInfo.success("更新成功");
+        } else {
+            resultInfo.error("更新失败");
+        }
+
+        return new AjaxResult(resultInfo, null);
+    }
+
+    /**
+     * 根据userId删除地址
+     *
+     * @return
+     */
+    @DeleteMapping("/deleteByUser")
+    @ApiOperation(value = "根据userId删除地址", notes = "根据userId删除地址")
+    public AjaxResult deleteByUser(String userId) {
+        ResultInfo resultInfo = new ResultInfo();
+        if (StringUtils.isEmptyOrWhitespace(userId)) {
+            resultInfo.error("userId不能为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        int i = userAddressService.deleteByUser(userId);
+        if (i == 1) {
+            resultInfo.success("删除成功");
+        } else {
+            resultInfo.error("该userId不存在，无法删除");
+        }
+        return new AjaxResult(resultInfo, null);
+    }
+
+    /**
+     * 根据addressId删除地址
+     *
+     * @return
+     */
+    @DeleteMapping("/deleteByAddress")
+    @ApiOperation(value = "根据addressId删除地址", notes = "根据addressId删除地址")
+    public AjaxResult deleteByAddress(String addressId) {
+        ResultInfo resultInfo = new ResultInfo();
+        if (StringUtils.isEmptyOrWhitespace(addressId)) {
+            resultInfo.error("addressId不能为空");
+            return new AjaxResult(resultInfo, null);
+        }
+        int i = userAddressService.deleteByAddress(addressId);
+        if (i == 1) {
+            resultInfo.success("删除成功");
+        } else {
+            resultInfo.error("该addressId不存在，无法删除");
+        }
+        return new AjaxResult(resultInfo, null);
+    }
 }

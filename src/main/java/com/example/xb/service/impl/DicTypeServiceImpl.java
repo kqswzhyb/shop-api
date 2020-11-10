@@ -1,6 +1,6 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.DicType;
+import com.example.xb.domain.dic.DicType;
 import com.example.xb.domain.vo.DiCTypeVo;
 import com.example.xb.mapper.DicTypeMapper;
 import com.example.xb.service.DicTypeService;

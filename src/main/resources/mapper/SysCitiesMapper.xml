@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xb.mapper.SysCitiesMapper">
+    <resultMap type="City" id="cityResult">
+        <id property="id" column="id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="city" column="city"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="cityEn" column="city_en"/>
+    </resultMap>
+
+    <select id="cityList" parameterType="String" resultMap="cityResult">
+        select  *  from  sys_cities sc
+        <if test="provinceId != null and provinceId != ''">
+            where  sc.province_id = #{provinceId}
+        </if>
+    </select>
+</mapper>

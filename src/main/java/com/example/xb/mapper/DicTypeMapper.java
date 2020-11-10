@@ -1,6 +1,6 @@
 package com.example.xb.mapper;
 
-import com.example.xb.domain.DicType;
+import com.example.xb.domain.dic.DicType;
 import com.example.xb.domain.vo.DiCTypeVo;
 import org.apache.ibatis.annotations.Mapper;
 

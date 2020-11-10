@@ -1,6 +1,6 @@
 package com.example.xb.service;
 
-import com.example.xb.domain.ProductgStock;
+import com.example.xb.domain.product.ProductgStock;
 
 import java.math.BigDecimal;
 import java.util.List;

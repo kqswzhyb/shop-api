@@ -1,6 +1,6 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.ProductgStock;
+import com.example.xb.domain.product.ProductgStock;
 import com.example.xb.service.ProductgStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.example.xb.mapper;
 
-import com.example.xb.domain.Menu;
+import com.example.xb.domain.role.Menu;
 import com.example.xb.domain.vo.MenuVo;
 import org.apache.ibatis.annotations.Mapper;
 

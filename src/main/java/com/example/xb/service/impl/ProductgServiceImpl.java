@@ -1,8 +1,8 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.ProductAttr;
-import com.example.xb.domain.Productg;
-import com.example.xb.domain.ProductgStock;
+import com.example.xb.domain.product.ProductAttr;
+import com.example.xb.domain.product.Productg;
+import com.example.xb.domain.product.ProductgStock;
 import com.example.xb.mapper.ProductgMapper;
 import com.example.xb.service.ProductAttrService;
 import com.example.xb.service.ProductgService;

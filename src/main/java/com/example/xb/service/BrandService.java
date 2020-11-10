@@ -1,6 +1,6 @@
 package com.example.xb.service;
 
-import com.example.xb.domain.Brand;
+import com.example.xb.domain.product.Brand;
 import com.example.xb.domain.vo.BrandVo;
 
 import java.util.List;

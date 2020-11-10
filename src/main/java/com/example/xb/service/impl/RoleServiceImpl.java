@@ -1,6 +1,6 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.Role;
+import com.example.xb.domain.role.Role;
 import com.example.xb.mapper.RoleMapper;
 import com.example.xb.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

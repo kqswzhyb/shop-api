@@ -1,6 +1,6 @@
 package com.example.xb.service;
 
-import com.example.xb.domain.AttrSon;
+import com.example.xb.domain.product.AttrSon;
 
 import java.util.List;
 

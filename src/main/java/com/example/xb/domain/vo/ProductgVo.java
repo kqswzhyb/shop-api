@@ -1,6 +1,6 @@
 package com.example.xb.domain.vo;
 
-import com.example.xb.domain.Productg;
+import com.example.xb.domain.product.Productg;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -1,4 +1,4 @@
-package com.example.xb.domain;
+package com.example.xb.domain.product;
 
 import lombok.Data;
 

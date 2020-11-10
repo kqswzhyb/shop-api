@@ -1,5 +1,6 @@
-package com.example.xb.domain;
+package com.example.xb.domain.role;
 
+import com.example.xb.domain.Base;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
-public class Role  extends  Base{
+public class Role  extends Base {
     /**
      * 角色id
      */

@@ -1,6 +1,6 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.Dic;
+import com.example.xb.domain.dic.Dic;
 import com.example.xb.mapper.DicMapper;
 import com.example.xb.service.DicService;
 import org.springframework.beans.factory.annotation.Autowired;

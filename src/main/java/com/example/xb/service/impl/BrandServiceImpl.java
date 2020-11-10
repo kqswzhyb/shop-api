@@ -1,7 +1,6 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.Brand;
-import com.example.xb.domain.FileRecord;
+import com.example.xb.domain.product.Brand;
 import com.example.xb.domain.vo.BrandVo;
 import com.example.xb.mapper.BrandMapper;
 import com.example.xb.mapper.FileRecordMapper;

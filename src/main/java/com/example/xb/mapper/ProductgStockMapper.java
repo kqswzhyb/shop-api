@@ -1,6 +1,6 @@
 package com.example.xb.mapper;
 
-import com.example.xb.domain.ProductgStock;
+import com.example.xb.domain.product.ProductgStock;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.math.BigDecimal;

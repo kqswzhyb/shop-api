@@ -1,6 +1,6 @@
 package com.example.xb.service;
 
-import com.example.xb.domain.Parameter;
+import com.example.xb.domain.product.Parameter;
 
 import java.util.List;
 

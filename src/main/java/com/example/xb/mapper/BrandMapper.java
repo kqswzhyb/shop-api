@@ -1,6 +1,6 @@
 package com.example.xb.mapper;
 
-import com.example.xb.domain.Brand;
+import com.example.xb.domain.product.Brand;
 import com.example.xb.domain.vo.BrandVo;
 import org.apache.ibatis.annotations.Mapper;
 

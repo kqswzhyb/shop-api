@@ -1,9 +1,9 @@
 package com.example.xb.controller;
 
 
-import com.example.xb.domain.LoginBody;
-import com.example.xb.domain.LoginUser;
-import com.example.xb.domain.User;
+import com.example.xb.domain.account.LoginBody;
+import com.example.xb.domain.account.LoginUser;
+import com.example.xb.domain.user.User;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
 import com.example.xb.service.UserService;
@@ -26,8 +26,8 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/v1")
-@Api(tags = "登录")
-public class LoginController {
+@Api(tags = "授权认证")
+public class AuthController {
 
     @Autowired
     private TokenUtil tokenUtil;
@@ -90,9 +90,7 @@ public class LoginController {
     public AjaxResult logout(HttpServletRequest req) {
         ResultInfo resultInfo = new ResultInfo();
         try {
-            String token = jwtUtil.resolveToken(req);
-            Map<String, Object> map = jwtUtil.parseToken(token);
-            redisCache.deleteObject((String) map.get("user_id"));
+            redisCache.deleteObject(jwtUtil.getUserId(req));
             resultInfo.success("退出成功");
         }catch (Exception e) {
             resultInfo.error("失败");

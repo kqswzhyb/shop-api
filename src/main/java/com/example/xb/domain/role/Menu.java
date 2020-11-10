@@ -1,5 +1,6 @@
-package com.example.xb.domain;
+package com.example.xb.domain.role;
 
+import com.example.xb.domain.Base;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,7 +9,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Menu  extends  Base{
+public class Menu  extends Base {
     /**
      * 菜单id
      */

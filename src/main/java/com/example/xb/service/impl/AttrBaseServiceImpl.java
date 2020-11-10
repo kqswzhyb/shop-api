@@ -1,7 +1,7 @@
 package com.example.xb.service.impl;
 
-import com.example.xb.domain.AttrBase;
-import com.example.xb.domain.AttrSon;
+import com.example.xb.domain.product.AttrBase;
+import com.example.xb.domain.product.AttrSon;
 import com.example.xb.mapper.AttrBaseMapper;
 import com.example.xb.service.AttrBaseService;
 import com.example.xb.service.AttrSonService;

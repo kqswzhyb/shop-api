@@ -1,6 +1,6 @@
 package com.example.xb.service;
 
-import com.example.xb.domain.RoleMenu;
+import com.example.xb.domain.role.RoleMenu;
 import com.example.xb.domain.vo.MenuVo;
 
 import java.util.List;
