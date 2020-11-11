@@ -29,21 +29,20 @@
         stock_id,
         productg_id,
         total_stock,
-        lock_stock
+        lock_stock,
         status,
         remark,
         create_by,
         create_at,
         update_at
-        )values
-        (
-        #{item.stockId},
-        #{item.productgId},
-        #{item.totalStock},
-        #{item.lockStock},
-        #{item.status},
-        #{item.remark},
-        #{item.createBy},
+        )values(
+        #{stockId},
+        #{productgId},
+        #{totalStock},
+        #{lockStock},
+        #{status},
+        #{remark},
+        #{createBy},
         sysdate(),
         sysdate()
         )

@@ -1,11 +1,14 @@
 package com.example.xb.domain.order;
 
+import com.example.xb.domain.Base;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class OrderDetail {
+public class OrderDetail extends Base {
     /**
      * 订单详情id
      */

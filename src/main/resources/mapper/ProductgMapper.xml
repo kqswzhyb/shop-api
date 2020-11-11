@@ -27,7 +27,7 @@
         </if>
     </select>
 
-    <insert id="bathSaveProductg" parameterType="list">
+    <insert id="batchSaveProductg" parameterType="list">
         insert into productg(
         productg_id,
         product_id,

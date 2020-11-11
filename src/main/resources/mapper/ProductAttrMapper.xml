@@ -10,7 +10,7 @@
         </if>
     </select>
 
-    <insert id="bathSaveProductAttr" parameterType="list">
+    <insert id="batchSaveProductAttr" parameterType="list">
         insert into product_attr(
         attr_son_id,
         productg_id
@@ -18,7 +18,7 @@
         <foreach collection="list" item="item" separator=",">
             (
             #{item.attrSonId},
-            #{item.productgId},
+            #{item.productgId}
             )
         </foreach>
     </insert>

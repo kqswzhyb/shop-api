@@ -24,12 +24,12 @@
         </if>
     </select>
 
-    <insert id="bathSaveAttrBase" parameterType="list">
+    <insert id="batchSaveAttrBase" parameterType="list">
         insert into attr_base(
         attr_id,
         product_id,
         attr_name,
-        attr_value
+        attr_value,
         status,
         remark,
         create_by,

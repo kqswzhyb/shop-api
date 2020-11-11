@@ -23,12 +23,12 @@
         </if>
     </select>
 
-    <insert id="bathSaveAttrSon" parameterType="list">
+    <insert id="batchSaveAttrSon" parameterType="list">
         insert into attr_son(
         attr_son_id,
         attr_id,
         name,
-        value
+        value,
         status,
         remark,
         create_by,

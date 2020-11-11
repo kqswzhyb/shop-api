@@ -124,6 +124,7 @@ public class ProductController extends BaseController{
                 productParameter.setContent(child.getContent());
                 productParameter.setProductId(Uid);
                 productParameter.setParameterId(child.getParameterId());
+                ppList.add(productParameter);
             }
             l = productParameterService.batchSaveProductParameter(ppList);
         }

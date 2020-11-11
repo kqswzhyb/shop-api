@@ -23,7 +23,7 @@
         </if>
     </select>
 
-    <insert id="bathSaveProductDes" parameterType="list">
+    <insert id="batchSaveProductDes" parameterType="list">
         insert into product_des(
         des_id,
         product_id,

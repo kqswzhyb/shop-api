@@ -20,7 +20,7 @@
         </if>
     </select>
 
-    <insert id="bathSaveProductParameter" parameterType="list">
+    <insert id="batchSaveProductParameter" parameterType="list">
         insert into product_parameter(
         parameter_id,
         product_id,
