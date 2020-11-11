@@ -7,6 +7,7 @@ import com.example.xb.domain.result.ResultInfo;
 import com.example.xb.domain.vo.OrderVo;
 import com.example.xb.service.OrderService;
 import com.example.xb.utils.JwtUtil;
+import com.example.xb.utils.MySnowflake;
 import com.example.xb.utils.UUIDUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -69,6 +70,7 @@ public class OrderController extends BaseController{
             return new AjaxResult(resultInfo, null);
         }
         orderVo.setOrderId(UUIDUtil.NewUUID());
+        orderVo.setOrderCode(new MySnowflake(30, 30).getUUID()+"");
         orderVo.setCreateBy(jwtUtil.getJwtUserId());
         orderVo.setOrderStatus("0");
         if (orderService.saveOrder(orderVo)) {
