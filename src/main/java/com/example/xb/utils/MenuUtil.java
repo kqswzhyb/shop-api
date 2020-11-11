@@ -21,11 +21,11 @@ public class MenuUtil {
         return menus;
     }
 
-    public List<MenuVo> buildTree(List<MenuVo> menus, List<MenuVo> all,String mode) {
+    public List<MenuVo> buildAllTree(List<MenuVo> menus, List<MenuVo> all) {
         for(MenuVo menu:menus) {
             List<MenuVo> list = all.stream().filter(v -> menu.getMenuId().equals(v.getParentId())).collect(Collectors.toList());
             if (list.size() != 0) {
-                menu.setChildren(this.buildTree(list, all));
+                menu.setChildren(this.buildAllTree(list, all));
             }
         }
         return menus;

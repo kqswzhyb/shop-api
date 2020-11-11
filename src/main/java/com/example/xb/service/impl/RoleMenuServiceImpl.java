@@ -69,7 +69,7 @@ public class RoleMenuServiceImpl implements RoleMenuService {
                     return node;
                 })
                 .collect(Collectors.toList());
-        return new MenuUtil().buildTree(treeList,list,"");
+        return new MenuUtil().buildAllTree(treeList,list);
     }
 
     @Override
