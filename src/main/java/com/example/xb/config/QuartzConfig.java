@@ -1,35 +1,28 @@
 package com.example.xb.config;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
-import com.example.xb.quartz.QuartzJob1;
+import com.example.xb.quartz.OrderStatusJob;
 import org.quartz.*;
-import org.springframework.boot.autoconfigure.quartz.QuartzDataSource;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.quartz.QuartzJobBean;
-
-import javax.sql.DataSource;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Configuration
 public class QuartzConfig {
-//    @Bean
-//    public JobDetail orderStatusJob(){
-//        return JobBuilder.newJob(QuartzJob1.class).storeDurably().build();
-//    }
-//
-//    @Bean
-//    public Trigger orderStatusTrigger(){
-//        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-//                .withIntervalInSeconds(60); //每一秒执行一次
-////                .repeatForever(); //永久重复，一直执行下去
-//        return TriggerBuilder.newTrigger()
-//                .forJob(orderStatusJob())
-//                .withSchedule(scheduleBuilder)
-//                .build();
-//    }
+
+    @Bean
+    public JobDetail orderStatusJobDetail(){
+        return JobBuilder.newJob(OrderStatusJob.class).storeDurably().build();
+    }
+
+    @Bean
+    public Trigger orderStatustrigger(){
+        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
+                .withIntervalInSeconds(60) //每一秒执行一次
+                .repeatForever(); //永久重复，一直执行下去
+        return TriggerBuilder.newTrigger()
+                .forJob(orderStatusJobDetail())
+                .withSchedule(scheduleBuilder)
+                .build();
+    }
 
 //    @Bean
 //    public JobDetail jobDetail2(){
@@ -52,12 +45,15 @@ public class QuartzConfig {
 //                .repeatForever(); //永久重复，一直执行下去
 //        return TriggerBuilder.newTrigger()
 //                .forJob(jobDetail2())
-//                .withSchedule(scheduleBuilder).build();
+//                .withSchedule(CronScheduleBuilder.cronSchedule("0/1 * * * * ?").withMisfireHandlingInstructionDoNothing()).build();
 //    }
-    @Bean
-    @QuartzDataSource
-    @ConfigurationProperties(prefix = "spring.quartz.properties.org.quartz.datasource")
-    DataSource quartzDataSource(){
-        return DruidDataSourceBuilder.create().build();
-    }
+
+    //Error:EmbeddedDatabaseType class not found，Druid数据源初始化需要引入spring-jdbc依赖，JPA或mybatis依赖已经包含该依赖
+//    @Bean
+//    @QuartzDataSource
+//    @ConfigurationProperties(prefix = "spring.quartz.properties.org.quartz.datasource")
+//    DataSource quartzDataSource(){
+//        return DruidDataSourceBuilder.create().build();
+//    }
+
 }

@@ -20,8 +20,13 @@ public class OrderServiceImpl implements OrderService {
     private OrderDetailService orderDetailService;
 
     @Override
-    public List<Order> orderList(Order order) {
+    public List<OrderVo> orderList(Order order) {
         return orderMapper.orderList(order);
+    }
+
+    @Override
+    public List<OrderVo> orderListRecent() {
+        return orderMapper.orderListRecent();
     }
 
     @Override

@@ -45,6 +45,13 @@
         </if>
     </select>
 
+    <select id="orderListRecent" parameterType="OrderVo" resultMap="orderVoResult">
+        select  *  from  `order`
+        WHERE
+            create_at = DATE_ADD(NOW(), INTERVAL -30 MINUTE)
+        and order_status in ('0','3')
+    </select>
+
     <insert id="saveOrder" parameterType="OrderVo">
         insert into `order`(
         <if test="orderId != null and orderId != ''">order_id,</if>

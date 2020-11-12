@@ -200,7 +200,7 @@ CREATE TABLE `productg`  (
 CREATE TABLE `productg_stock`  (
   `stock_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品库存ID',
   `productg_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品组员ID',
-  `total_stock` decimal(13, 2) NOT NULL DEFAULT 0 COMMENT '总库存',
+  `total_stock` decimal(13, 2) NOT NULL DEFAULT 0 COMMENT '可用库存',
   `lock_stock` decimal(13, 2) NOT NULL DEFAULT 0 COMMENT '锁定库存',
   `remark` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '状态',
@@ -262,6 +262,7 @@ CREATE TABLE `order_detail`  (
 	`order_detail_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单详情ID',
   `order_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单ID',
   `product_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品ID',
+  `productg_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品组ID',
   `product_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品编码',
   `product_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品名称',
   `brand_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '品牌ID',

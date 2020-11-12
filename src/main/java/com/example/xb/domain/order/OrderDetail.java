@@ -22,6 +22,10 @@ public class OrderDetail extends Base {
      */
     private String productId;
     /**
+     * 产品组id
+     */
+    private String productgId;
+    /**
      * 产品编码
      */
     private String productCode;

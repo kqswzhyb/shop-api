@@ -25,13 +25,8 @@ public class ProductgStockServiceImpl implements ProductgStockService{
     }
 
     @Override
-    public int updateTotalStock(BigDecimal totalStock) {
-        return productgStockMapper.updateTotalStock(totalStock);
-    }
-
-    @Override
-    public int updateLockStock(BigDecimal lockStock) {
-        return productgStockMapper.updateLockStock(lockStock);
+    public int updateStock(ProductgStock productgStock) {
+        return productgStockMapper.updateStock(productgStock);
     }
 
     @Override

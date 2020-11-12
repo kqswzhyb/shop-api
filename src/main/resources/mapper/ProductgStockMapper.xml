@@ -48,19 +48,10 @@
         )
     </insert>
 
-    <update id="updateTotalStock" parameterType="ProductgStock">
+    <update id="updateStock" parameterType="ProductgStock">
         update productg_stock
         <set>
             <if test="totalStock != null and totalStock != ''">total_stock = #{totalStock},</if>
-            <if test="remark != null">remark = #{remark},</if>
-            update_at = sysdate()
-        </set>
-        where productg_id = #{productgId}
-    </update>
-
-    <update id="updateLockStock" parameterType="ProductgStock">
-        update productg_stock
-        <set>
             <if test="lockStock != null and lockStock != ''">lock_stock = #{lockStock},</if>
             <if test="remark != null">remark = #{remark},</if>
             update_at = sysdate()

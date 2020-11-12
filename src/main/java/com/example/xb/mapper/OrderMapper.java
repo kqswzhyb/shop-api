@@ -13,7 +13,7 @@ public interface OrderMapper {
      * @param order
      * @return
      */
-    List<Order> orderList(Order order);
+    List<OrderVo> orderList(Order order);
 
     /**
      * 创建订单
@@ -35,4 +35,11 @@ public interface OrderMapper {
      * @return
      */
     int updateStatus(Order order);
+
+    /**
+     * 最近30分钟内未付款完全的订单列表
+     * @param
+     * @return
+     */
+    List<OrderVo> orderListRecent();
 }

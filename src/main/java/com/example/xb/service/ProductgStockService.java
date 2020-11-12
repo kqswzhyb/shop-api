@@ -22,18 +22,11 @@ public interface ProductgStockService {
 
 
     /**
-     * 更新指定型号产品的总库存
-     * @param totalStock
+     * 更新指定型号产品库存
+     * @param productgStock
      * @return
      */
-    int updateTotalStock(BigDecimal totalStock);
-
-    /**
-     * 更新指定型号产品的锁定库存
-     * @param lockStock
-     * @return
-     */
-    int updateLockStock(BigDecimal lockStock);
+    int updateStock(ProductgStock productgStock);
 
     /**
      * 删除指定型号产品的库存记录
