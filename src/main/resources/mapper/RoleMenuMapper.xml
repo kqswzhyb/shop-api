@@ -38,6 +38,16 @@
             role_menu.role_id = #{roleId} AND menu.`status` = '0'
     </select>
 
+    <select id="queryRoleMenuAllList" parameterType="String" resultType="java.lang.String">
+        SELECT
+            menu.menu_id
+        FROM
+            role_menu
+            LEFT JOIN menu ON role_menu.menu_id = menu.menu_id
+        WHERE
+            role_menu.role_id = #{roleId} AND menu.`status` = '0'
+    </select>
+
     <insert id="batchSave" parameterType="java.util.List">
         insert into role_menu(role_id,menu_id) values
         <!--item就是List里每一项的对象名，要用","分割每一条数据，最后要";"结尾-->
@@ -47,6 +57,6 @@
     </insert>
 
     <delete id="deleteRoleById" parameterType="String">
- 		delete from role_menu where role_id = #{roleId}
+ 		delete from role_menu where role_id = #{roleId} AND menu_id !='111'
  	</delete>
 </mapper>

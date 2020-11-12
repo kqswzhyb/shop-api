@@ -16,6 +16,13 @@ public interface RoleMenuMapper {
     List<MenuVo> queryRoleMenuList(String roleId);
 
     /**
+     * 根据roleId获取权限列表
+     * @param roleId
+     * @return
+     */
+    List<String> queryRoleMenuAllList(String roleId);
+
+    /**
      * 批量添加角色权限关系数据
      * @param list
      * @return

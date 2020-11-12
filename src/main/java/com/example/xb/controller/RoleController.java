@@ -6,6 +6,7 @@ import com.example.xb.domain.role.RoleMenu;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
+import com.example.xb.domain.role.roleMenuBody;
 import com.example.xb.service.RoleMenuService;
 import com.example.xb.service.RoleService;
 import com.example.xb.utils.JwtUtil;
@@ -15,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -167,23 +169,23 @@ public class RoleController extends BaseController {
     @PostMapping("/batchSaveRoleMenu")
     @ApiOperation(value = "通过roleID批量修改权限列表", notes = "通过roleID批量修改权限列表")
     @Transactional(rollbackFor = Exception.class)
-    public AjaxResult batchSaveRoleMenu(@RequestParam("roleId")String roleId,@RequestParam("menus")String menus) {
+    public AjaxResult batchSaveRoleMenu(@RequestBody roleMenuBody roleMenuBody) {
         ResultInfo resultInfo = new ResultInfo();
         try {
-            if (StringUtils.isEmptyOrWhitespace(roleId)) {
+            if (StringUtils.isEmptyOrWhitespace(roleMenuBody.getRoleId())) {
                 resultInfo.error("roleId不能为空");
                 return new AjaxResult(resultInfo, null);
             }
-            roleMenuService.deleteRoleById(roleId);
-            String[] list= menus.split(",");
+            roleMenuService.deleteRoleById(roleMenuBody.getRoleId());
+            String[] list= roleMenuBody.getMenus().split(",");
             List<RoleMenu> roleMenus=new ArrayList<>();
             for(String child:list) {
                 RoleMenu roleMenu = new RoleMenu();
-                roleMenu.setRoleId(roleId);
+                roleMenu.setRoleId(roleMenuBody.getRoleId());
                 roleMenu.setMenuId(child);
                 roleMenus.add(roleMenu);
             }
-            if(!StringUtils.isEmptyOrWhitespace(menus)&&list.length!=0) {
+            if(!StringUtils.isEmptyOrWhitespace(roleMenuBody.getMenus())&&list.length!=0) {
                 roleMenuService.batchSave(roleMenus);
             }
             resultInfo.success("修改成功");

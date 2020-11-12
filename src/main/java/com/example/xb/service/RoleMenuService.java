@@ -19,7 +19,7 @@ public interface RoleMenuService {
      * @param roleId
      * @return
      */
-    List<MenuVo> queryRoleMenuAllList(String roleId);
+    List<String> queryRoleMenuAllList(String roleId);
 
     /**
      * 根据roleId获取按钮权限列表
