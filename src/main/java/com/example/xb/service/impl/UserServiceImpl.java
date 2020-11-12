@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public  String userLogin(LoginBody loginBody) {
+    public  User userLogin(LoginBody loginBody) {
         return userMapeer.userLogin(loginBody);
     }
 

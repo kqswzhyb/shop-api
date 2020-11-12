@@ -47,7 +47,7 @@ public class OrderController extends BaseController{
     public AjaxResult list(@ApiIgnore() Order order, String current, String pageSize) {
         DataDomain dd = new DataDomain(current, pageSize);
         ResultInfo resultInfo = startPage(dd);
-        List<Order> list = orderService.orderList(order);
+        List<OrderVo> list = orderService.orderList(order);
         dd.setRecords(list);
         PageInfo pageInfo = new PageInfo(list);
         dd.setTotal(pageInfo.getTotal());

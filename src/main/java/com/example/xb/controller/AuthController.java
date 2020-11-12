@@ -56,21 +56,23 @@ public class AuthController {
 
         loginBody.setPassword(AESUtil.encryptIntoHexString(loginBody.getPassword(), SECRET_KEY));
 
-        String userId =userService.userLogin(loginBody);
+        User userDB =userService.userLogin(loginBody);
 
-        if(StringUtils.isEmptyOrWhitespace(userId)) {
+        if(StringUtils.isEmptyOrWhitespace(userDB.getUserId())) {
             resultInfo.error("用户名或密码错误");
-
             return new AjaxResult(resultInfo, null);
         }else {
             User user = new User();
-            user.setUserId(userId);
+            user.setUserId(userDB.getUserId());
             user.setUserName(loginBody.getUserName());
             user.setPassword(loginBody.getPassword());
+            user.setRoleId(userDB.getRoleId());
+            user.setNickName(userDB.getNickName());
+            user.setPhone(userDB.getPhone());
             LoginUser loginUser = new LoginUser();
             loginUser.setUser(user);
             String token = tokenUtil.createToken(loginUser);
-            System.out.println(token);
+//            System.out.println(token);
             Map<String, Object> map = jwtUtil.parseToken(token);
             System.out.println(map);
 

@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(pathMapping+"/file/**").permitAll()
                 .antMatchers(pathMapping + "/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, pathMapping + "/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, pathMapping + "/**").hasRole("admin")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()

@@ -59,7 +59,7 @@ public interface UserMapper {
      * @param loginBody 用户信息
      * @return 用户数据信息
      */
-    String userLogin(LoginBody loginBody);
+    User userLogin(LoginBody loginBody);
 
     /**
      * 根据userId查询密码

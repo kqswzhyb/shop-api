@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -130,7 +131,7 @@ public class JwtUtil {
             return null;
         }
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(map.get("user_id").toString());
-        return new UsernamePasswordAuthenticationToken(userDetails, "", null);
+        return new UsernamePasswordAuthenticationToken(userDetails, "", AuthorityUtils.commaSeparatedStringToAuthorityList("0".equals(map.get("role_id").toString())?"ROLE_admin":null));
     }
 
     public String getUsername(String token) {

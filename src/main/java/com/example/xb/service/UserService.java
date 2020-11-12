@@ -57,7 +57,7 @@ public interface UserService {
      * @param loginBody 登录体
      * @return 结果
      */
-    String userLogin(LoginBody loginBody);
+    User userLogin(LoginBody loginBody);
 
     /**
      *  修改密码
