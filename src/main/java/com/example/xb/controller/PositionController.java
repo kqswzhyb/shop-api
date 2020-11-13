@@ -1,8 +1,14 @@
 package com.example.xb.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.xb.domain.position.Area;
+import com.example.xb.domain.position.City;
+import com.example.xb.domain.position.Province;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
-import com.example.xb.service.PositionService;
+import com.example.xb.service.SysAreasService;
+import com.example.xb.service.SysCitiesService;
+import com.example.xb.service.SysProvincesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/position")
 @Api(tags = "省市区")
 public class PositionController {
+
     @Autowired
-    private PositionService positionService;
+    private SysProvincesService sysProvincesService;
+
+    @Autowired
+    private SysCitiesService sysCitiesService;
+
+    @Autowired
+    private SysAreasService sysAreasService;
 
     /**
      * 获取省列表
@@ -26,7 +39,10 @@ public class PositionController {
     @GetMapping("/province/{countryId}")
     @ApiOperation(value = "获取省列表", notes = "获取省列表")
     public AjaxResult provinceList(@PathVariable("countryId") String countryId) {
-        return new AjaxResult(new ResultInfo(), positionService.provinceList(countryId));
+//        QueryWrapper<Province> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("country_id", countryId);
+        return new AjaxResult(new ResultInfo(), sysProvincesService.list(new LambdaQueryWrapper<Province>()
+                .eq(Province::getCountryId, countryId)));
     }
 
     /**
@@ -37,7 +53,8 @@ public class PositionController {
     @GetMapping("/city/{provinceId}")
     @ApiOperation(value = "获取市列表", notes = "获取市列表")
     public AjaxResult cityList(@PathVariable("provinceId") String provinceId) {
-        return new AjaxResult(new ResultInfo(), positionService.cityList(provinceId));
+        return new AjaxResult(new ResultInfo(), sysCitiesService.list(new LambdaQueryWrapper<City>()
+                .eq(City::getProvinceId, provinceId)));
     }
 
     /**
@@ -48,6 +65,7 @@ public class PositionController {
     @GetMapping("/area/{cityId}")
     @ApiOperation(value = "获取区列表", notes = "获取区列表")
     public AjaxResult areaList(@PathVariable("cityId") String cityId) {
-        return new AjaxResult(new ResultInfo(), positionService.areaList(cityId));
+        return new AjaxResult(new ResultInfo(), sysAreasService.list(new LambdaQueryWrapper<Area>()
+                .eq(Area::getCityId, cityId)));
     }
 }

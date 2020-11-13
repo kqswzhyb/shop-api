@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
 public interface ProductMapper {
     /**
      * 根据条件分页查询产品数据

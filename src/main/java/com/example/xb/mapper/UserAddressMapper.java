@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
 public interface UserAddressMapper {
     /**
      * 根据userId查询所有地址

@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
 public interface RoleMenuMapper {
     /**
      * 根据roleId获取权限列表

@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
 public interface AttrSonMapper {
     /**
      * 获取产品属性详情列表

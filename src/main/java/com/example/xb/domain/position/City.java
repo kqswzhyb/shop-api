@@ -1,8 +1,10 @@
 package com.example.xb.domain.position;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
+@TableName("sys_cities")
 //市
 public class City {
 

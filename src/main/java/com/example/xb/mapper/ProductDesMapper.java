@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
 public interface ProductDesMapper {
     /**
      * 根据productId查询产品描述

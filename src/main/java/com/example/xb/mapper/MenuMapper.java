@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * @author Administrator
  */
-@Mapper
 public interface MenuMapper {
     /**
      * 获取权限列表

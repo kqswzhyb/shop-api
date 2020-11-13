@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * @author Administrator
  */
-@Mapper
 public interface UserMapper {
     /**
      * 根据条件分页查询用户数据

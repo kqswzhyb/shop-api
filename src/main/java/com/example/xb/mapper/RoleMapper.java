@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * @author Administrator
  */
-@Mapper
 public interface RoleMapper {
     /**
      * 根据条件分页查询角色数据
