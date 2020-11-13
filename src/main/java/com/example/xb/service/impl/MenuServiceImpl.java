@@ -36,7 +36,7 @@ public class MenuServiceImpl implements MenuService {
                     node.setRemark(menu.getRemark());
                     node.setType(menu.getType());
                     node.setParentId(menu.getParentId());
-                    if ("0".equals(menu.getType())) {
+                    if (!("1".equals(menu.getType()))) {
                         node.setComponent(menu.getComponent());
                         node.setIcon(menu.getIcon());
                         node.setKeepAlive(menu.getKeepAlive());
@@ -63,7 +63,7 @@ public class MenuServiceImpl implements MenuService {
                     node.setRemark(menu.getRemark());
                     node.setType(menu.getType());
                     node.setParentId(menu.getParentId());
-                    if ("0".equals(menu.getType())) {
+                    if (!("1".equals(menu.getType()))) {
                         node.setComponent(menu.getComponent());
                         node.setIcon(menu.getIcon());
                         node.setKeepAlive(menu.getKeepAlive());
