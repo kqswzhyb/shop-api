@@ -171,7 +171,7 @@ public class ProductController extends BaseController{
      *
      * @return
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "更新产品基础", notes = "更新产品基础")
     @Transactional(rollbackFor = Exception.class)
     public AjaxResult update(@RequestBody ProductVo productVo) {
