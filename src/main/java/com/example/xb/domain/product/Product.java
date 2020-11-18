@@ -18,4 +18,6 @@ public class Product extends Base {
     private String brandId;
 
     private String status;
+
+    private String saleStatus;
 }

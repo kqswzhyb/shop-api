@@ -144,6 +144,7 @@ public class ProductController extends BaseController{
         productVo.setProductId(Uid);
         productVo.setCreateBy(jwtUtil.getJwtUserId());
         productVo.setStatus("0");
+        productVo.setSaleStatus("0");
 
         List<AttrBase> attrBaseList = productVo.getAttrBaseList();
         int m = 1;
@@ -252,6 +253,7 @@ public class ProductController extends BaseController{
         productVo.setProductId(Uid);
         productVo.setCreateBy(jwtUtil.getJwtUserId());
         productVo.setStatus("0");
+        productVo.setSaleStatus("0");
 
         List<AttrBase> attrBaseList = productVo.getAttrBaseList();
         int m = 1;
