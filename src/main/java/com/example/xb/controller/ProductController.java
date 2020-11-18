@@ -172,7 +172,7 @@ public class ProductController extends BaseController{
      *
      * @return
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "更新产品基础", notes = "更新产品基础")
     @Transactional(rollbackFor = Exception.class)
     public AjaxResult update(@RequestBody ProductVo productVo) {
@@ -234,6 +234,7 @@ public class ProductController extends BaseController{
                 productParameter.setContent(child.getContent());
                 productParameter.setProductId(Uid);
                 productParameter.setParameterId(child.getParameterId());
+                ppList.add(productParameter);
             }
             l = productParameterService.batchSaveProductParameter(ppList);
         }
