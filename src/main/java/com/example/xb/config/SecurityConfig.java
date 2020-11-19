@@ -53,6 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/swagger**").permitAll()
         .antMatchers(pathMapping+"/file/**").permitAll()
+                .antMatchers(pathMapping+"/product/**").permitAll()
+                .antMatchers(pathMapping+"/brand/**").permitAll()
                 .antMatchers(pathMapping + "/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, pathMapping + "/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, pathMapping + "/**").hasRole("admin")

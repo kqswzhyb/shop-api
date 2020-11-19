@@ -45,7 +45,7 @@
         <if test="name != null and name != ''">name,</if>
         <if test="productUnit != null and productUnit != ''">product_unit,</if>
         <if test="brandId != null and brandId != ''">brand_id,</if>
-        <if test="saleStatus != null and orderStatus != ''">sale_status,</if>
+        <if test="saleStatus != null and saleStatus != ''">sale_status,</if>
         <if test="status != null and status != ''">status,</if>
         <if test="remark != null and remark != ''">remark,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
