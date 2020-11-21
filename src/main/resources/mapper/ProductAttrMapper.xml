@@ -3,10 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.xb.mapper.ProductAttrMapper">
+    <resultMap id="detail" type="AttrDetail">
+        <id property="attrSonValue" column="attr_son_id"></id>
+        <result property="attrSonName" column="name"></result>
+        <result property="attrId" column="attr_id"></result>
+    </resultMap>
     <select id="productAttrList" resultType="String">
         select  pa.attr_son_id  from  product_attr pa
         <if test="productgId != null and productgId != ''">
            where pa.productg_id = #{productgId}
+        </if>
+    </select>
+
+    <select id="productAttrDetailList" resultType="String" resultMap="detail">
+        select  pa.attr_son_id,ason.name,ason.attr_id  from  product_attr pa
+        LEFT JOIN attr_son ason
+        ON ason.value=pa.attr_son_id
+        <if test="productgId != null and productgId != ''">
+            where pa.productg_id = #{productgId}
         </if>
     </select>
 

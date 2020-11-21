@@ -19,7 +19,7 @@ public class Productg extends Base {
      */
     private BigDecimal price;
 
-    private List<String> attrList;
+    private List<AttrDetail> attrList;
 
     private String status;
 }

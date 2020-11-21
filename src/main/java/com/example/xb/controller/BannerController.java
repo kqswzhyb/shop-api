@@ -1,12 +1,14 @@
 package com.example.xb.controller;
 
-import com.example.xb.domain.product.Brand;
+import com.example.xb.domain.banner.Banner;
 import com.example.xb.domain.file.FileRecord;
 import com.example.xb.domain.page.DataDomain;
+import com.example.xb.domain.product.Brand;
 import com.example.xb.domain.result.AjaxResult;
 import com.example.xb.domain.result.ResultInfo;
+import com.example.xb.domain.vo.BannerVo;
 import com.example.xb.domain.vo.BrandVo;
-import com.example.xb.service.BrandService;
+import com.example.xb.service.BannerService;
 import com.example.xb.service.FileRecordService;
 import com.example.xb.utils.JwtUtil;
 import com.example.xb.utils.UUIDUtil;
@@ -24,12 +26,11 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/brand")
-@Api(tags = "品牌管理")
-public class BrandController extends BaseController {
-
+@RequestMapping("/v1/banner")
+@Api(tags = "广告轮播图管理")
+public class BannerController extends BaseController{
     @Autowired
-    private BrandService brandService;
+    private BannerService bannerService;
 
     @Autowired
     private FileRecordService fileRecordService;
@@ -38,21 +39,21 @@ public class BrandController extends BaseController {
     private JwtUtil jwtUtil;
 
     /**
-     * 获取品牌列表
+     * 获取轮播图列表
      *
      * @return
      */
     @GetMapping("/list")
-    @ApiOperation(value = "分页获取品牌信息", notes = "分页获取品牌信息")
+    @ApiOperation(value = "获取轮播图列表", notes = "获取轮播图列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "current", value = "当前页", defaultValue = "1"),
             @ApiImplicitParam(name = "pageSize", value = "每页数量", defaultValue = "10")
     }
     )
-    public AjaxResult list(@ApiIgnore() Brand brand, String current, String pageSize) {
+    public AjaxResult list(@ApiIgnore() Banner banner, String current, String pageSize) {
         DataDomain dd = new DataDomain(current, pageSize);
         ResultInfo resultInfo = startPage(dd);
-        List<BrandVo> list = brandService.brandList(brand);
+        List<BannerVo> list = bannerService.bannerList(banner);
         dd.setRecords(list);
         PageInfo pageInfo = new PageInfo(list);
         dd.setTotal(pageInfo.getTotal());
@@ -61,25 +62,25 @@ public class BrandController extends BaseController {
     }
 
     /**
-     * 创建新品牌
+     * 创建新轮播图
      *
      * @return
      */
     @PostMapping("/save")
-    @ApiOperation(value = "创建新品牌", notes = "创建新品牌")
+    @ApiOperation(value = "创建新轮播图", notes = "创建新轮播图")
     @Transactional(rollbackFor = Exception.class)
-    public AjaxResult save(@RequestBody BrandVo brandVo) {
+    public AjaxResult save(@RequestBody BannerVo bannerVo) {
         ResultInfo resultInfo = new ResultInfo();
-        if (StringUtils.isEmptyOrWhitespace(brandVo.getName())) {
-            resultInfo.error("品牌名为空");
+        if (StringUtils.isEmptyOrWhitespace(bannerVo.getName())) {
+            resultInfo.error("名称为空");
             return new AjaxResult(resultInfo, null);
         }
-        if (StringUtils.isEmptyOrWhitespace(brandVo.getBrandCode())) {
-            resultInfo.error("品牌编码为空");
+        if (StringUtils.isEmptyOrWhitespace(bannerVo.getLink())) {
+            resultInfo.error("链接为空");
             return new AjaxResult(resultInfo, null);
         }
         String Uid= UUIDUtil.NewUUID();
-        List<FileRecord> fileList = brandVo.getFileRecordList();
+        List<FileRecord> fileList = bannerVo.getFileRecordList();
         int j = 1;
         if(fileList.size()!=0) {
             for(FileRecord child:fileList) {
@@ -90,10 +91,10 @@ public class BrandController extends BaseController {
             }
             j = fileRecordService.bathSaveFile(fileList);
         }
-        brandVo.setBrandId(Uid);
-        brandVo.setCreateBy(jwtUtil.getJwtUserId());
-        brandVo.setStatus("0");
-        int i = brandService.saveBrand(brandVo);
+        bannerVo.setBannerId(Uid);
+        bannerVo.setCreateBy(jwtUtil.getJwtUserId());
+        bannerVo.setStatus("0");
+        int i = bannerService.saveBanner(bannerVo);
         if (i == 1&& j!=0) {
             resultInfo.success("创建成功");
         } else {
@@ -103,29 +104,29 @@ public class BrandController extends BaseController {
     }
 
     /**
-     * 更新品牌
+     * 更新banner
      *
      * @return
      */
     @PutMapping("/update")
-    @ApiOperation(value = "更新品牌", notes = "更新品牌")
+    @ApiOperation(value = "更新轮播图", notes = "更新轮播图")
     @Transactional(rollbackFor = Exception.class)
-    public AjaxResult update(@RequestBody BrandVo brandVo) {
+    public AjaxResult update(@RequestBody BannerVo bannerVo) {
         ResultInfo resultInfo = new ResultInfo();
-        if (StringUtils.isEmptyOrWhitespace(brandVo.getBrandId())) {
-            resultInfo.error("品牌Id为空");
+        if (StringUtils.isEmptyOrWhitespace(bannerVo.getBannerId())) {
+            resultInfo.error("bannerId为空");
             return new AjaxResult(resultInfo, null);
         }
-        if (StringUtils.isEmptyOrWhitespace(brandVo.getName())) {
-            resultInfo.error("品牌名为空");
+        if (StringUtils.isEmptyOrWhitespace(bannerVo.getName())) {
+            resultInfo.error("名称为空");
             return new AjaxResult(resultInfo, null);
         }
-        if (StringUtils.isEmptyOrWhitespace(brandVo.getBrandCode())) {
-            resultInfo.error("品牌编码为空");
+        if (StringUtils.isEmptyOrWhitespace(bannerVo.getLink())) {
+            resultInfo.error("链接为空");
             return new AjaxResult(resultInfo, null);
         }
-        String Uid= brandVo.getBrandId();
-        List<FileRecord> fileList = brandVo.getFileRecordList();
+        String Uid= bannerVo.getBannerId();
+        List<FileRecord> fileList = bannerVo.getFileRecordList();
         int j = 1;
         fileRecordService.deleteFileById(Uid);
         if(fileList.size()!=0) {
@@ -137,7 +138,7 @@ public class BrandController extends BaseController {
             }
             j = fileRecordService.bathSaveFile(fileList);
         }
-        int i = brandService.updateBrand(brandVo);
+        int i = bannerService.updateBanner(bannerVo);
         if (i == 1&& j!=0) {
             resultInfo.success("更新成功");
         } else {
@@ -147,25 +148,25 @@ public class BrandController extends BaseController {
     }
 
     /**
-     * 根据id删除品牌
+     * 根据id删除轮播图
      *
      * @return
      */
     @DeleteMapping("/delete")
-    @ApiOperation(value = "根据id删除品牌", notes = "根据id删除品牌")
+    @ApiOperation(value = "根据id删除轮播图", notes = "根据id删除轮播图")
     @Transactional(rollbackFor = Exception.class)
-    public AjaxResult delete(String brandId) {
+    public AjaxResult delete(String bannerId) {
         ResultInfo resultInfo = new ResultInfo();
-        if (StringUtils.isEmptyOrWhitespace(brandId)) {
+        if (StringUtils.isEmptyOrWhitespace(bannerId)) {
             resultInfo.error("brandId不能为空");
             return new AjaxResult(resultInfo, null);
         }
-        int i = brandService.deleteBrandById(brandId);
-        fileRecordService.deleteFileById(brandId);
+        int i = bannerService.deleteBannerById(bannerId);
+        fileRecordService.deleteFileById(bannerId);
         if (i == 1) {
             resultInfo.success("删除成功");
         } else {
-            resultInfo.error("该brandId不存在，无法删除");
+            resultInfo.error("该bannerId不存在，无法删除");
         }
         return new AjaxResult(resultInfo, null);
     }

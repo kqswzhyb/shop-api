@@ -1,8 +1,10 @@
 package com.example.xb.service.impl;
 
+import com.example.xb.domain.product.AttrDetail;
 import com.example.xb.domain.product.ProductAttr;
 import com.example.xb.domain.product.Productg;
 import com.example.xb.domain.product.ProductgStock;
+import com.example.xb.domain.vo.ProductgVo;
 import com.example.xb.mapper.ProductgMapper;
 import com.example.xb.service.ProductAttrService;
 import com.example.xb.service.ProductgService;
@@ -30,9 +32,14 @@ public class ProductgServiceImpl implements ProductgService {
     }
 
     @Override
+    public List<ProductgVo> productgListAll(String productId) {
+        return productgMapper.productgListAll(productId);
+    }
+
+    @Override
     public int batchSaveProductg(List<Productg> list) {
         for(Productg child:list) {
-          List<String> attrList = child.getAttrList();
+          List<AttrDetail> attrList = child.getAttrList();
           productAttrService.deleteProductAttrById(child.getProductgId());
           productgStockService.deleteStock(child.getProductgId());
           ProductgStock productgStock = new ProductgStock();
@@ -44,9 +51,9 @@ public class ProductgServiceImpl implements ProductgService {
           productgStockService.saveProductgStock(productgStock);
           if(attrList.size()!=0) {
               List<ProductAttr> newList = new ArrayList<>();
-              for(String attr:attrList) {
+              for(AttrDetail attr:attrList) {
                   ProductAttr productAttr = new ProductAttr();
-                  productAttr.setAttrSonId(attr);
+                  productAttr.setAttrSonId(attr.getAttrSonValue());
                   productAttr.setProductgId(child.getProductgId());
                   newList.add(productAttr);
               }

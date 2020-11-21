@@ -1,5 +1,6 @@
 package com.example.xb.domain.vo;
 
+import com.example.xb.domain.product.Product;
 import com.example.xb.domain.product.Productg;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,4 +18,6 @@ public class ProductgVo extends Productg {
      * 产品锁定库存
      */
     private BigDecimal lockStock;
+
+    private Product product;
 }
