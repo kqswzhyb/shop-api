@@ -47,6 +47,9 @@
         <if test="productCode != null and productCode != ''">
             and product.product_code = #{productCode}
         </if>
+        <if test="productId != null and productId != ''">
+            and product.product_id = #{productId}
+        </if>
         <if test="saleStatus != null and saleStatus != ''">
             and product.sale_status = #{saleStatus}
         </if>

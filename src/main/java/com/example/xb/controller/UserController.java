@@ -271,7 +271,7 @@ public class UserController extends BaseController {
      */
     @GetMapping("/info")
     @ApiOperation(value = "获取登录用户详情", notes = "获取登录用户详情")
-    public AjaxResult info() {
+    public AjaxResult info( String mode) {
         User user= new User();
         user.setUserId(jwtUtil.getJwtUserId());
         User loginUser = userService.selectUserList(user).get(0);
@@ -279,8 +279,10 @@ public class UserController extends BaseController {
         List<String> permission = roleMenuService.queryPermissionList(loginUser.getRoleId());
         HashMap<String,Object> map= new HashMap<>();
         map.put("info",loginUser);
-        map.put("menus",menus);
-        map.put("permission",permission);
+        if(mode==null) {
+            map.put("menus",menus);
+            map.put("permission",permission);
+        }
         return new AjaxResult(new ResultInfo(), map);
     }
 
