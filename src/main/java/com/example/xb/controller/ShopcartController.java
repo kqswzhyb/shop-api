@@ -41,8 +41,7 @@ public class ShopcartController {
     @GetMapping("/list")
     @ApiOperation(value = "获取用户购物车", notes = "获取用户购物车")
     public AjaxResult shopcartList(HttpServletRequest req) {
-        return new AjaxResult(new ResultInfo(), shopcartService.list(new LambdaQueryWrapper<Shopcart>()
-                .eq(Shopcart::getUserId, jwtUtil.getUserId(req))));
+        return new AjaxResult(new ResultInfo(), shopcartService.getShopcartList(jwtUtil.getUserId(req)));
     }
 
     /**

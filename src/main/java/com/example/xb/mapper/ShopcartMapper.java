@@ -2,6 +2,7 @@ package com.example.xb.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.xb.domain.shopcart.Shopcart;
+import com.example.xb.domain.vo.ShopcartVo;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface ShopcartMapper extends BaseMapper<Shopcart> {
      * @param userId
      * @return
      */
-    List<Shopcart> getShopcartList(String userId);
+    List<ShopcartVo> getShopcartList(String userId);
 
     /**
      * 向购物车中添加产品

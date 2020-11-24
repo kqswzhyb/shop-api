@@ -30,6 +30,20 @@
         <association property="product" javaType="Product" column="product_id" select="com.example.xb.mapper.ProductMapper.productBaseList"/>
         <collection property="attrList" javaType="java.util.ArrayList" ofType="AttrSon" select="com.example.xb.mapper.ProductAttrMapper.productAttrDetailList" column="{productgId=productg_id}"/>
     </resultMap>
+    <resultMap type="ProductgVo" id="productgAllResult2">
+        <id property="productgId" column="productg_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="price" column="price"/>
+        <result property="totalStock" column="total_stock"/>
+        <result property="lockStock" column="lock_stock"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+        <result property="remark" column="remark"/>
+        <association property="productVo" javaType="ProductVo" column="product_id" select="com.example.xb.mapper.ProductMapper.productVoList"/>
+        <collection property="attrList" javaType="java.util.ArrayList" ofType="AttrSon" select="com.example.xb.mapper.ProductAttrMapper.productAttrDetailList" column="{productgId=productg_id}"/>
+    </resultMap>
     <select id="productgList" resultMap="productgResult">
         select  pg.*,ps.total_stock,ps.lock_stock  from  productg pg
         LEFT JOIN productg_stock ps
@@ -49,6 +63,17 @@
         pg.status = '0'
         <if test="productId != null and productId != ''">
             and pg.product_id = #{productId}
+        </if>
+    </select>
+
+    <select id="productgAll" resultMap="productgAllResult2">
+        select  pg.*,ps.total_stock,ps.lock_stock  from  productg pg
+        LEFT JOIN productg_stock ps
+        on ps.productg_id = pg.productg_id
+        WHERE
+        pg.status = '0'
+        <if test="productgId != null and productgId != ''">
+            and pg.productg_id = #{productgId}
         </if>
     </select>
 

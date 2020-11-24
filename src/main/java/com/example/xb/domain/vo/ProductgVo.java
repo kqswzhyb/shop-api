@@ -20,4 +20,6 @@ public class ProductgVo extends Productg {
     private BigDecimal lockStock;
 
     private Product product;
+
+    private ProductVo productVo;
 }
