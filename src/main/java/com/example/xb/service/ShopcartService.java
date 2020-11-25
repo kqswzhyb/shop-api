@@ -13,4 +13,11 @@ public interface ShopcartService extends IService<Shopcart> {
      * @return
      */
     List<ShopcartVo> getShopcartList(String userId);
+
+    /**
+     * 批量删除
+     * @param list
+     * @return
+     */
+    int batchDelete(List<String> list);
 }

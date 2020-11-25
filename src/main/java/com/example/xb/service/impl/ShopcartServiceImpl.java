@@ -19,4 +19,9 @@ public class ShopcartServiceImpl extends ServiceImpl<ShopcartMapper, Shopcart> i
     public List<ShopcartVo> getShopcartList(String userId) {
         return shopcartMapper.getShopcartList(userId);
     }
+
+    @Override
+    public int batchDelete(List<String> list) {
+        return shopcartMapper.batchDelete(list);
+    }
 }

@@ -24,4 +24,11 @@
             and user_id = #{userId}
         </if>
     </select>
+
+    <delete id="batchDelete" parameterType="List">
+        delete from shopcart where shopcart_id in
+        <foreach collection="list" item="balance" open="(" separator="," close=")">
+            #{balance}
+        </foreach>
+ 	</delete>
 </mapper>

@@ -21,6 +21,13 @@ public interface ShopcartMapper extends BaseMapper<Shopcart> {
      */
     int addShopcart(Shopcart shopcart);
 
+    /**
+     * 批量删除
+     * @param list
+     * @return
+     */
+    int batchDelete(List<String> list);
+
 
     /**
      * 从购物车中删除产品

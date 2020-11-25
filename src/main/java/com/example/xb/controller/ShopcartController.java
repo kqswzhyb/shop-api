@@ -18,7 +18,7 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.*;
 
 @RestController
 @RequestMapping("/v1/shopcart")
@@ -131,13 +131,32 @@ public class ShopcartController {
     @DeleteMapping("/deleteByUser")
     @ApiOperation(value = "根据userId清空购物车", notes = "根据userId清空购物车")
     @Transactional(rollbackFor = Exception.class)
-    public AjaxResult deleteShopcartByUser(String userId) {
+    public AjaxResult deleteShopcartByUser(HttpServletRequest req) {
+        return new AjaxResult(new ResultInfo(), shopcartService.remove(new LambdaQueryWrapper<Shopcart>()
+                .eq(Shopcart::getUserId, jwtUtil.getUserId(req))));
+    }
+
+    /**
+     * 批量删除购物车商品
+     *
+     * @return
+     */
+    @DeleteMapping("/batchDelete")
+    @ApiOperation(value = "批量删除购物车商品", notes = "批量删除购物车商品")
+    @Transactional(rollbackFor = Exception.class)
+    public AjaxResult batchDeleteShopcart(String ids,@RequestBody Map<String,String> map) {
         ResultInfo resultInfo = new ResultInfo();
-        if (StringUtils.isEmptyOrWhitespace(userId)) {
-            resultInfo.error("userId为空");
+        if (StringUtils.isEmptyOrWhitespace(ids) && StringUtils.isEmptyOrWhitespace(map.get("ids"))) {
+            resultInfo.error("ids为空");
             return new AjaxResult(resultInfo, null);
         }
-        return new AjaxResult(resultInfo, shopcartService.remove(new LambdaQueryWrapper<Shopcart>()
-                .eq(Shopcart::getUserId, userId)));
+        List<String> list = new ArrayList<>();
+        if(new Boolean(ids)) {
+            list = Arrays.asList(ids.split(","));
+        }else {
+            list = Arrays.asList(map.get("ids").split(","));
+        }
+
+        return new AjaxResult(resultInfo, shopcartService.batchDelete(list));
     }
 }
