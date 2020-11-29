@@ -1,10 +1,11 @@
 package com.example.xb.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.xb.domain.user.UserAddress;
 
 import java.util.List;
 
-public interface UserAddressService {
+public interface UserAddressService extends IService<UserAddress> {
     /**
      * 根据userId查询所有地址
      *

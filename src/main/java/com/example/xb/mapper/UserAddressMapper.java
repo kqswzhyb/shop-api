@@ -1,11 +1,12 @@
 package com.example.xb.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.xb.domain.user.UserAddress;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-public interface UserAddressMapper {
+public interface UserAddressMapper extends BaseMapper<UserAddress> {
     /**
      * 根据userId查询所有地址
      *

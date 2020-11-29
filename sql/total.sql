@@ -271,6 +271,7 @@ CREATE TABLE `order_detail`  (
 	`origin_price` decimal(13, 2) NOT NULL DEFAULT '0' COMMENT '产品价格',
 	`product_num` decimal(13, 2) NOT NULL DEFAULT '0' COMMENT '产品数量',
 	`product_unit` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品单位',
+	`imgUrl` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品图片',
 	`attrs` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品属性组',
   `remark` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '状态',

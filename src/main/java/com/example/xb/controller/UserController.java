@@ -3,6 +3,7 @@ package com.example.xb.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.xb.domain.user.User;
 import com.example.xb.domain.page.DataDomain;
 import com.example.xb.domain.result.AjaxResult;
@@ -271,7 +272,7 @@ public class UserController extends BaseController {
      */
     @GetMapping("/info")
     @ApiOperation(value = "获取登录用户详情", notes = "获取登录用户详情")
-    public AjaxResult info( String mode) {
+    public AjaxResult info( String mode,HttpServletRequest req) {
         User user= new User();
         user.setUserId(jwtUtil.getJwtUserId());
         User loginUser = userService.selectUserList(user).get(0);
@@ -282,6 +283,8 @@ public class UserController extends BaseController {
         if(mode==null) {
             map.put("menus",menus);
             map.put("permission",permission);
+        }else {
+            map.put("address",userAddressService.addressList(jwtUtil.getUserId(req)));
         }
         return new AjaxResult(new ResultInfo(), map);
     }
@@ -303,6 +306,17 @@ public class UserController extends BaseController {
 
         return new AjaxResult(resultInfo, userAddressService.addressList(userId));
     }
+
+    /**
+     * id获取地址
+     *
+     * @return
+     */
+    @GetMapping("/address/{addressId}")
+    @ApiOperation(value = "id获取地址", notes = "id获取地址")
+    public AjaxResult getAddress(@PathVariable("addressId") String addressId) {
+        return new AjaxResult(new ResultInfo(), userAddressService.getById(addressId));
+    }
     /**
      * 创建新地址
      *
@@ -310,12 +324,8 @@ public class UserController extends BaseController {
      */
     @PostMapping("/saveAddress")
     @ApiOperation(value = "创建新地址", notes = "创建新地址")
-    public AjaxResult saveAddress(@RequestBody UserAddress userAddress) {
+    public AjaxResult saveAddress(@RequestBody UserAddress userAddress,HttpServletRequest req) {
         ResultInfo resultInfo = new ResultInfo();
-        if (StringUtils.isEmptyOrWhitespace(userAddress.getUserId())) {
-            resultInfo.error("userId为空");
-            return new AjaxResult(resultInfo, null);
-        }
         if (StringUtils.isEmptyOrWhitespace(userAddress.getContactName())) {
             resultInfo.error("联系人姓名为空");
             return new AjaxResult(resultInfo, null);
@@ -336,6 +346,7 @@ public class UserController extends BaseController {
             resultInfo.error("区为空");
             return new AjaxResult(resultInfo, null);
         }
+        userAddress.setUserId(jwtUtil.getUserId(req));
         userAddress.setAddressId(UUIDUtil.NewUUID());
         userAddress.setStatus("0");
         userAddress.setCreateBy(jwtUtil.getJwtUserId());
@@ -377,15 +388,11 @@ public class UserController extends BaseController {
      *
      * @return
      */
-    @DeleteMapping("/deleteByUser")
+    @DeleteMapping("/deleteAddressByUser")
     @ApiOperation(value = "根据userId删除地址", notes = "根据userId删除地址")
-    public AjaxResult deleteByUser(String userId) {
+    public AjaxResult deleteByUser(HttpServletRequest req) {
         ResultInfo resultInfo = new ResultInfo();
-        if (StringUtils.isEmptyOrWhitespace(userId)) {
-            resultInfo.error("userId不能为空");
-            return new AjaxResult(resultInfo, null);
-        }
-        int i = userAddressService.deleteByUser(userId);
+        int i = userAddressService.deleteByUser(jwtUtil.getUserId(req));
         if (i == 1) {
             resultInfo.success("删除成功");
         } else {
@@ -399,15 +406,15 @@ public class UserController extends BaseController {
      *
      * @return
      */
-    @DeleteMapping("/deleteByAddress")
+    @DeleteMapping("/deleteAddressById")
     @ApiOperation(value = "根据addressId删除地址", notes = "根据addressId删除地址")
-    public AjaxResult deleteByAddress(String addressId) {
+    public AjaxResult deleteByAddress(String addressId,@RequestBody Map<String,String> map) {
         ResultInfo resultInfo = new ResultInfo();
-        if (StringUtils.isEmptyOrWhitespace(addressId)) {
+        if (StringUtils.isEmptyOrWhitespace(addressId)&& StringUtils.isEmptyOrWhitespace(map.get("id"))) {
             resultInfo.error("addressId不能为空");
             return new AjaxResult(resultInfo, null);
         }
-        int i = userAddressService.deleteByAddress(addressId);
+        int i = userAddressService.deleteByAddress(!StringUtils.isEmptyOrWhitespace(addressId)?addressId:map.get("id"));
         if (i == 1) {
             resultInfo.success("删除成功");
         } else {

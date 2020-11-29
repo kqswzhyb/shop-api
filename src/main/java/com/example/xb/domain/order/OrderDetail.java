@@ -54,6 +54,10 @@ public class OrderDetail extends Base {
      */
     private String productUnit;
     /**
+     * 产品图片
+     */
+    private String imgUrl;
+    /**
      * 属性组
      */
     private String attrs;

@@ -1,5 +1,6 @@
 package com.example.xb.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.xb.domain.user.UserAddress;
 import com.example.xb.mapper.UserAddressMapper;
 import com.example.xb.service.UserAddressService;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserAddressServiceImpl implements UserAddressService {
+public class UserAddressServiceImpl extends ServiceImpl<UserAddressMapper,UserAddress> implements UserAddressService {
     @Autowired
     private UserAddressMapper userAddressMapper;
 
