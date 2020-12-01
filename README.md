@@ -1,5 +1,5 @@
 # 商城练手项目
-java语言开发，使用的主要技术spring，spring-boot，spring-security，spring-mvc，jwt，redis，swagger，lombok，腾讯云,mybatis-plus。
+java语言开发，使用的主要技术spring，spring-boot，mybatis-plus，spring-security，spring-mvc，jwt，redis，swagger，lombok，腾讯云。
 ## 功能模块
 1.角色管理 √
 
@@ -19,6 +19,8 @@ java语言开发，使用的主要技术spring，spring-boot，spring-security�
  
  9.订单管理 √
  
- 10.库存管理 =》Todo
+ 10.库存管理 √
+ 
+ 11.订单管理 √
  
  

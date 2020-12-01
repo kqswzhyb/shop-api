@@ -43,6 +43,9 @@
         <if test="userId != null and userId != ''">
             and user_id= #{userId}
         </if>
+        <if test="userName != null and userName != ''">
+            and user_name= #{userName}
+        </if>
     </select>
 
     <select id="orderListRecent" parameterType="OrderVo" resultMap="orderVoResult">

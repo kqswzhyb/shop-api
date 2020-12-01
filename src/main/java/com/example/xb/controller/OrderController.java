@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -63,7 +64,7 @@ public class OrderController extends BaseController{
     @PostMapping("/save")
     @ApiOperation(value = "创建新订单", notes = "创建新订单")
     @Transactional(rollbackFor = Exception.class)
-    public AjaxResult save(@RequestBody OrderVo orderVo) {
+    public AjaxResult save(@RequestBody OrderVo orderVo, HttpServletRequest req) {
         ResultInfo resultInfo = new ResultInfo();
         if (StringUtils.isEmptyOrWhitespace(orderVo.getUserId())) {
             resultInfo.error("userId为空");
@@ -72,6 +73,7 @@ public class OrderController extends BaseController{
         orderVo.setOrderId(UUIDUtil.NewUUID());
         orderVo.setOrderCode(new MySnowflake(30, 30).getUUID()+"");
         orderVo.setCreateBy(jwtUtil.getJwtUserId());
+        orderVo.setUserId(jwtUtil.getUserId(req));
         orderVo.setOrderStatus("0");
         if (orderService.saveOrder(orderVo)) {
             resultInfo.success("创建成功");
@@ -111,13 +113,13 @@ public class OrderController extends BaseController{
     @PutMapping("/updateStatus")
     @ApiOperation(value = "更新订单状态", notes = "更新订单状态")
     @Transactional(rollbackFor = Exception.class)
-    public AjaxResult updateStatus(@RequestBody OrderVo orderVo) {
+    public AjaxResult updateStatus(@RequestBody Order order) {
         ResultInfo resultInfo = new ResultInfo();
-        if (StringUtils.isEmptyOrWhitespace(orderVo.getOrderId())) {
+        if (StringUtils.isEmptyOrWhitespace(order.getOrderId())) {
             resultInfo.error("orderId为空");
             return new AjaxResult(resultInfo, null);
         }
-        if (orderService.updateOrder(orderVo)) {
+        if (orderService.updateStatus(order)) {
             resultInfo.success("更新成功");
         } else {
             resultInfo.error("更新失败");
