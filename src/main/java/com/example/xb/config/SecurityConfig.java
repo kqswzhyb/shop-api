@@ -57,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(pathMapping+"/brand/**").permitAll()
                 .antMatchers(pathMapping+"/banner/**").permitAll()
                 .antMatchers(pathMapping + "/login").permitAll()
+                .antMatchers(pathMapping + "/captcha/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, pathMapping + "/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, pathMapping + "/**").hasRole("admin")
                 .anyRequest().authenticated()
