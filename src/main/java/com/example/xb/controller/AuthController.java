@@ -74,7 +74,7 @@ public class AuthController {
             resultInfo.error("验证码已过期");
             return new AjaxResult(resultInfo, null);
         }
-        if(Integer.parseInt(loginBody.getX()) > (int) redisCache.getCacheObject(loginBody.getUid())+5 || Integer.parseInt(loginBody.getX()) < (int) redisCache.getCacheObject(loginBody.getUid())-5) {
+        if(Integer.parseInt(loginBody.getX()) > (int) redisCache.getCacheObject(loginBody.getUid())+10 || Integer.parseInt(loginBody.getX()) < (int) redisCache.getCacheObject(loginBody.getUid())-10) {
             resultInfo.error("验证失败");
             return new AjaxResult(resultInfo, 1);
         }
@@ -83,6 +83,10 @@ public class AuthController {
         loginBody.setPassword(AESUtil.encryptIntoHexString(loginBody.getPassword(), SECRET_KEY));
 
         User userDB =userService.userLogin(loginBody);
+        if(userDB==null){
+            resultInfo.error("用户名不存在");
+            return new AjaxResult(resultInfo, null);
+        }
 
         if(StringUtils.isEmptyOrWhitespace(userDB.getUserId())) {
             resultInfo.error("用户名或密码错误");
