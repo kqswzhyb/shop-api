@@ -5,6 +5,7 @@ import com.example.xb.domain.vo.BrandVo;
 import com.example.xb.mapper.BrandMapper;
 import com.example.xb.mapper.FileRecordMapper;
 import com.example.xb.service.BrandService;
+import com.example.xb.service.FileRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class BrandServiceImpl  implements BrandService {
     private BrandMapper brandMapper;
 
     @Autowired
-    private FileRecordMapper fileRecordMapper;
+    private FileRecordService fileRecordService;
 
 
     @Override
@@ -38,7 +39,7 @@ public class BrandServiceImpl  implements BrandService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteBrandById(String brandId) {
-        fileRecordMapper.deleteFileById(brandId);
+        fileRecordService.deleteFileById(brandId);
         return brandMapper.deleteBrandById(brandId);
     }
 }

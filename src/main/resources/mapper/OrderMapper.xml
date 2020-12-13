@@ -51,7 +51,8 @@
     <select id="orderListRecent" parameterType="OrderVo" resultMap="orderVoResult">
         select  *  from  `order`
         WHERE
-            create_at = DATE_ADD(NOW(), INTERVAL -30 MINUTE)
+        create_at >= DATE_ADD(sysdate(), INTERVAL -30 MINUTE)
+        and  create_at &lt;= sysdate()
         and order_status in ('0','3')
     </select>
 

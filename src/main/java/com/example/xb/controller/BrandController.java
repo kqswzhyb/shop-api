@@ -161,7 +161,6 @@ public class BrandController extends BaseController {
             return new AjaxResult(resultInfo, null);
         }
         int i = brandService.deleteBrandById(brandId);
-        fileRecordService.deleteFileById(brandId);
         if (i == 1) {
             resultInfo.success("删除成功");
         } else {

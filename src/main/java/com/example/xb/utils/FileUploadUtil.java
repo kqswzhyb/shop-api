@@ -58,4 +58,19 @@ public class FileUploadUtil {
         cosClient.shutdown();
         return map;
     }
+
+    public  void deleteImg(String key) {
+        String secretKey = cloudSetting.getSecretKey();
+        String secretId = cloudSetting.getSecretId();
+        COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
+        String region = cloudSetting.getRegion();
+        ClientConfig clientConfig = new ClientConfig(new Region(region));
+        COSClient cosClient = new COSClient(cred, clientConfig);
+        String bucketName = cloudSetting.getBucketName();
+        System.out.println(key);
+        cosClient.deleteObject(bucketName, key);
+
+        // 关闭客户端
+        cosClient.shutdown();
+    }
 }
